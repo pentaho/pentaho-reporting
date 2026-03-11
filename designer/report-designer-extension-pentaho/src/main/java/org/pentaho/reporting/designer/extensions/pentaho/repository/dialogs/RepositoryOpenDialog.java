@@ -31,6 +31,7 @@ import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
+import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
 import javax.swing.AbstractAction;
@@ -445,6 +446,23 @@ public class RepositoryOpenDialog extends CommonDialog {
   public String performOpen( final AuthenticationData loginData, final String previousSelection )
     throws FileSystemException, UnsupportedEncodingException {
     fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
+    
+    // Always refresh to get latest files from server
+    // This is needed because VFS caches filesystems per connection,
+    // and files published via one auth method won't show in another's cache
+    try {
+      if ( fileSystemRoot.getFileSystem() instanceof JCRSolutionFileSystem ) {
+        final JCRSolutionFileSystem fileSystem = (JCRSolutionFileSystem) fileSystemRoot.getFileSystem();
+        fileSystem.getLocalFileModel().refresh();
+      } else if ( fileSystemRoot.getFileSystem() instanceof WebSolutionFileSystem ) {
+        final WebSolutionFileSystem fileSystem = (WebSolutionFileSystem) fileSystemRoot.getFileSystem();
+        fileSystem.getLocalFileModel().refresh();
+      }
+      fileSystemRoot.refresh();
+    } catch ( Exception e ) {
+      logger.debug( "Failed to refresh file system", e );
+    }
+    
     if ( previousSelection == null ) {
       setSelectedView( fileSystemRoot );
     } else {
@@ -452,6 +470,13 @@ public class RepositoryOpenDialog extends CommonDialog {
       if ( view == null ) {
         setSelectedView( fileSystemRoot );
       } else {
+        // Refresh the selected folder too
+        try {
+          view.refresh();
+        } catch ( Exception e ) {
+          // Ignore
+        }
+        
         if ( view.exists() == false ) {
           setSelectedView( fileSystemRoot );
         } else if ( view.getType() == FileType.FOLDER ) {

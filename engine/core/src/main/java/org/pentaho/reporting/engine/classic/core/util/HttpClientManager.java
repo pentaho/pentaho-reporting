@@ -14,16 +14,23 @@
 package org.pentaho.reporting.engine.classic.core.util;
 
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.RedirectStrategy;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.protocol.HttpContext;
 
 /**
  * Single entry point for all {@link org.apache.http.client.HttpClient HttpClient instances} usages in pentaho projects.
@@ -66,6 +73,7 @@ public class HttpClientManager {
   public class HttpClientBuilderFacade {
     private RedirectStrategy redirectStrategy;
     private CredentialsProvider provider;
+    private BasicCookieStore cookieStore;
     private int connectionTimeout;
     private int socketTimeout;
     private int maxRedirects;
@@ -73,6 +81,7 @@ public class HttpClientManager {
     private Boolean allowCircularRedirects = false;
     private Boolean rejectRelativeRedirect = true;
     private HttpHost proxy;
+    private String sessionCookieHeader;
 
     public HttpClientBuilderFacade setConnectionTimeout( int connectionTimeout ) {
       this.connectionTimeout = connectionTimeout;
@@ -114,6 +123,40 @@ public class HttpClientManager {
 
     public HttpClientBuilderFacade setCredentials( String user, String password ) {
       return setCredentials( user, password, AuthScope.ANY );
+    }
+
+    public HttpClientBuilderFacade setCookie( String name, String value, String domain ) {
+      if ( cookieStore == null ) {
+        cookieStore = new BasicCookieStore();
+      }
+      BasicClientCookie cookie = new BasicClientCookie( name, value );
+      cookie.setPath( "/" );
+      if ( domain != null && !domain.isEmpty() ) {
+        cookie.setDomain( domain );
+      }
+      cookieStore.addCookie( cookie );
+      // Also set cookie spec to ensure cookies are sent
+      if ( this.cookieSpec == null ) {
+        this.cookieSpec = CookieSpecs.DEFAULT;
+      }
+      return this;
+    }
+
+    /**
+     * Sets a session cookie that is sent via a raw {@code Cookie} header on every
+     * request, bypassing Apache HttpClient's cookie-spec domain validation.
+     * <p>
+     * Use this instead of {@link #setCookie(String, String, String)} when the
+     * server is accessed by IP address, because the default cookie spec rejects
+     * cookies whose domain is an IP address.
+     *
+     * @param name  cookie name (e.g. {@code JSESSIONID})
+     * @param value cookie value
+     * @return this builder for chaining
+     */
+    public HttpClientBuilderFacade setSessionCookie( String name, String value ) {
+      this.sessionCookieHeader = name + "=" + value;
+      return this;
     }
 
     public HttpClientBuilderFacade setProxy( String proxyHost, int proxyPort ) {
@@ -166,6 +209,19 @@ public class HttpClientManager {
       }
       if ( redirectStrategy != null ) {
         httpClientBuilder.setRedirectStrategy( redirectStrategy );
+      }
+      if ( cookieStore != null ) {
+        httpClientBuilder.setDefaultCookieStore( cookieStore );
+      }
+
+      if ( sessionCookieHeader != null ) {
+        final String cookieHeaderValue = sessionCookieHeader;
+        httpClientBuilder.addInterceptorFirst( new HttpRequestInterceptor() {
+          @Override
+          public void process( HttpRequest request, HttpContext context ) {
+            request.setHeader( "Cookie", cookieHeaderValue );
+          }
+        } );
       }
 
       return httpClientBuilder.build();

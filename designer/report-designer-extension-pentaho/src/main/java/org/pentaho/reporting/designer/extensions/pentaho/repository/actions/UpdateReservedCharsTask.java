@@ -38,10 +38,23 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
 
   private HttpClient createHttpClient() {
     HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
-    HttpClient client =
-      clientBuilder.setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
-        .setCredentials( loginData.getUsername(), loginData.getPassword() ).setCookieSpec( CookieSpecs.DEFAULT )
-        .build();
+    
+    // Check for session-based authentication (browser login)
+    final String sessionId = loginData.getOption( "sessionId" );
+    final boolean isBrowserAuth = "true".equals( loginData.getOption( "browserAuth" ) );
+    
+    if ( isBrowserAuth && sessionId != null && !sessionId.isEmpty() ) {
+      // Browser authentication - use session cookie via raw header
+      // (bypasses cookie-spec domain validation that rejects IP addresses)
+      clientBuilder.setSessionCookie( "JSESSIONID", sessionId );
+    } else {
+      clientBuilder.setCredentials( loginData.getUsername(), loginData.getPassword() );
+    }
+    
+    HttpClient client = clientBuilder
+      .setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
+      .setCookieSpec( CookieSpecs.DEFAULT )
+      .build();
 
     return client;
   }

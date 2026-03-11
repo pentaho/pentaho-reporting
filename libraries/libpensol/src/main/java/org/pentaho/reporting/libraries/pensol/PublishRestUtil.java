@@ -53,6 +53,7 @@ public class PublishRestUtil {
   private final String baseUrl;
   private final String username;
   private final String password;
+  private final String sessionId;
 
   private Client client = null;
 
@@ -60,8 +61,29 @@ public class PublishRestUtil {
     this.baseUrl = baseUrl.endsWith( "/" ) ? baseUrl : baseUrl + '/';
     this.username = username;
     this.password = password;
+    this.sessionId = null;
 
     initRestService();
+  }
+
+  /**
+   * Creates a session-based PublishRestUtil that uses JSESSIONID cookie
+   * instead of BasicAuth. Use this after browser/SSO authentication.
+   *
+   * @param baseUrl   the Pentaho server base URL
+   * @param sessionId the JSESSIONID value obtained from SSO
+   * @return a PublishRestUtil configured for session-based auth
+   */
+  public static PublishRestUtil withSessionAuth( String baseUrl, String sessionId ) {
+    return new PublishRestUtil( baseUrl, sessionId );
+  }
+
+  private PublishRestUtil( String baseUrl, String sessionId ) {
+    this.baseUrl = baseUrl.endsWith( "/" ) ? baseUrl : baseUrl + '/';
+    this.username = null;
+    this.password = null;
+    this.sessionId = sessionId;
+    initRestServiceForSession();
   }
 
   /**
@@ -72,6 +94,15 @@ public class PublishRestUtil {
     clientConfig.register( MultiPartFeature.class );
     HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
     client = ClientBuilder.newClient( clientConfig ).register( feature );
+  }
+
+  /**
+   * Initialise REST client for session-based authentication (no BasicAuth).
+   */
+  private void initRestServiceForSession() {
+    ClientConfig clientConfig = new ClientConfig();
+    clientConfig.register( MultiPartFeature.class );
+    client = ClientBuilder.newClient( clientConfig );
   }
 
   /**
@@ -134,7 +165,11 @@ public class PublishRestUtil {
       fdmp.field( "fileUpload", fileInputStream, MULTIPART_FORM_DATA_TYPE );
       fdmp.getField( "fileUpload" ).setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
 
-      Response response = target.request().post( Entity.entity( fdmp , MediaType.MULTIPART_FORM_DATA ) );
+      jakarta.ws.rs.client.Invocation.Builder requestBuilder = target.request();
+      if ( sessionId != null && !sessionId.isEmpty() ) {
+        requestBuilder = requestBuilder.cookie( "JSESSIONID", sessionId );
+      }
+      Response response = requestBuilder.post( Entity.entity( fdmp , MediaType.MULTIPART_FORM_DATA ) );
 
       if ( response != null ) {
         String message = response.readEntity( String.class );

@@ -44,6 +44,8 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.URLDecoder;
+import jakarta.ws.rs.client.ClientRequestContext;
+import jakarta.ws.rs.client.ClientRequestFilter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,6 +117,48 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     config.property( ClientProperties.READ_TIMEOUT, timeout );
     HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
     this.client = ClientBuilder.newClient( config ).register( feature );
+    this.majorVersion = "999";
+    this.minorVersion = "999";
+    this.releaseVersion = "999";
+    this.buildVersion = "999";
+    this.milestoneVersion = "999";
+    this.loadTreePartially = Boolean.parseBoolean( PARTIAL_LOADING_ENABLED );
+  }
+
+  /**
+   * Constructor for session-based authentication.
+   * Uses a per-client request filter to send the JSESSIONID cookie instead of
+   * the global CookieHandler, which avoids interference between cached VFS
+   * file systems and ensures each instance carries its own session.
+   *
+   * Signature: (String url, int timeout, String hostname, String sessionId)
+   * to avoid conflict with the username/password constructor.
+   */
+  public JCRSolutionFileModel( final String url,
+                               final int timeout,
+                               final String hostname,
+                               final String sessionId ) {
+    if ( url == null ) {
+      throw new NullPointerException();
+    }
+    if ( sessionId == null ) {
+      throw new NullPointerException( "Session ID cannot be null" );
+    }
+    this.url = url;
+    descriptionEntries = new HashMap<FileName, String>();
+
+    final ClientConfig config = new ClientConfig();
+    config.property( ClientProperties.FOLLOW_REDIRECTS, true );
+    config.property( ClientProperties.READ_TIMEOUT, timeout );
+    // Register a per-client filter that adds the JSESSIONID cookie header
+    // to every outgoing request. This replaces the fragile global
+    // CookieHandler.setDefault() approach and ensures re-login with a new
+    // session ID works correctly even when VFS returns a cached file system.
+    final String sid = sessionId;
+    this.client = ClientBuilder.newClient( config ).register(
+      (ClientRequestFilter) requestContext ->
+        requestContext.getHeaders().add( "Cookie", "JSESSIONID=" + sid )
+    );
     this.majorVersion = "999";
     this.minorVersion = "999";
     this.releaseVersion = "999";

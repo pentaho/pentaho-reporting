@@ -37,15 +37,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 
 public class RepositoryLoginDialog extends CommonDialog {
   private class URLChangeHandler implements ActionListener {
@@ -63,11 +68,20 @@ public class RepositoryLoginDialog extends CommonDialog {
     }
   }
 
+  public enum LoginMethod {
+    SSO,
+    USERNAME_PASSWORD
+  }
+
   private JComboBox urlCombo;
   private JSpinner timeoutField;
   private JTextField userField;
   private JPasswordField userPasswordField;
   private JCheckBox rememberSettings;
+  private JRadioButton ssoRadio;
+  private JRadioButton usernamePasswordRadio;
+  private JPanel userPanel;
+  private LoginMethod selectedLoginMethod = LoginMethod.USERNAME_PASSWORD;
   private ReportDesignerContext context;
   private DefaultComboBoxModel urlModel;
   private boolean loginForPublish;
@@ -128,12 +142,20 @@ public class RepositoryLoginDialog extends CommonDialog {
     return data;
   }
 
+  /**
+   * Shows the login dialog and returns authentication data if user confirms.
+   * 
+   * @param context The designer context
+   * @param config Initial authentication config (can be null)
+   * @return AuthenticationData or null if cancelled
+   */
   public AuthenticationData performLogin( final ReportDesignerContext context, AuthenticationData config ) {
     if ( context == null ) {
       throw new NullPointerException();
     }
 
     this.context = context;
+    
     if ( config == null ) {
       config = getDefaultData( context );
     }
@@ -157,13 +179,34 @@ public class RepositoryLoginDialog extends CommonDialog {
       urlCombo.setSelectedItem( config.getUrl() );
       userField.setText( config.getUsername() );
       userPasswordField.setText( config.getPassword() );
+      
+      // Check if this is browser auth
+      boolean isBrowserAuth = "true".equals( config.getOption( "browserAuth" ) );
+      if ( isBrowserAuth ) {
+        ssoRadio.setSelected( true );
+        selectedLoginMethod = LoginMethod.SSO;
+        userPanel.setVisible( false );
+      } else {
+        usernamePasswordRadio.setSelected( true );
+        selectedLoginMethod = LoginMethod.USERNAME_PASSWORD;
+        userPanel.setVisible( true );
+      }
     } else {
       timeoutField.setValue( WorkspaceSettings.getInstance().getConnectionTimeout() );
       urlCombo.setSelectedItem( null );
       userField.setText( null );
       userPasswordField.setText( null );
+      usernamePasswordRadio.setSelected( true );
+      selectedLoginMethod = LoginMethod.USERNAME_PASSWORD;
+      userPanel.setVisible( true );
     }
 
+    // Repack the dialog to fit the current visibility state of panels.
+    // This is necessary because a previously saved dialog size (e.g. from SSO mode where userPanel
+    // was hidden) may be too small for username/password mode, causing fields to overlap on first open.
+    pack();
+
+    // Show the traditional username/password login dialog
     if ( !super.performEdit() ) {
       return null;
     }
@@ -190,7 +233,7 @@ public class RepositoryLoginDialog extends CommonDialog {
     urlCombo = new JComboBox( urlModel );
 
     userField = new JTextField( 25 );
-    userPasswordField = new JPasswordField();
+    userPasswordField = new JPasswordField( 25 );
 
     final SpinnerNumberModel spinnerModel = new SpinnerNumberModel();
     spinnerModel.setMinimum( 0 );
@@ -198,6 +241,19 @@ public class RepositoryLoginDialog extends CommonDialog {
 
     timeoutField = new JSpinner( spinnerModel );
     timeoutField.setEditor( new JSpinner.NumberEditor( timeoutField, "#####" ) );
+
+    // Create radio buttons for login method
+    ssoRadio = new JRadioButton( Messages.getInstance().getString( "RepositoryLoginDialog.LoginWithSSO" ) );
+    usernamePasswordRadio = new JRadioButton( 
+        Messages.getInstance().getString( "RepositoryLoginDialog.LoginWithUsernamePassword" ), true );
+    
+    ButtonGroup loginMethodGroup = new ButtonGroup();
+    loginMethodGroup.add( ssoRadio );
+    loginMethodGroup.add( usernamePasswordRadio );
+    
+    // Add listeners to radio buttons
+    ssoRadio.addActionListener( e -> handleLoginMethodChange( LoginMethod.SSO, false ) );
+    usernamePasswordRadio.addActionListener( e -> handleLoginMethodChange( LoginMethod.USERNAME_PASSWORD, true ) );
 
     rememberSettings =
         new JCheckBox( Messages.getInstance().getString( "RepositoryLoginDialog.RememberTheseSettings" ), true );
@@ -229,10 +285,17 @@ public class RepositoryLoginDialog extends CommonDialog {
 
     c.gridy = 1;
     c.insets = new Insets( 0, 10, 5, 10 );
-    contentPane.add( buildUserPanel(), c );
+    contentPane.add( buildLoginMethodPanel(), c );
 
     c.gridy = 2;
+    c.insets = new Insets( 0, 10, 5, 10 );
+    userPanel = buildUserPanel();
+    userPanel.setVisible( true ); // Initially visible (username/password selected by default)
+    contentPane.add( userPanel, c );
+
+    c.gridy = 3;
     contentPane.add( rememberSettings, c );
+
     return contentPane;
   }
 
@@ -247,28 +310,34 @@ public class RepositoryLoginDialog extends CommonDialog {
     serverPanel.add( new JLabel( Messages.getInstance().getString( "RepositoryLoginDialog.URL" ) ), c );
 
     c.gridy = 1;
-    c.insets = new Insets( 0, 20, 5, 20 );
+    c.insets = new Insets( 0, 20, 10, 20 );
     c.anchor = GridBagConstraints.WEST;
     c.fill = GridBagConstraints.HORIZONTAL;
     c.weightx = 1.0;
     serverPanel.add( urlCombo, c );
 
-    c.insets = new Insets( 0, 20, 5, 20 );
-    c.gridy = 2;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    serverPanel.add( new JLabel( Messages.getInstance().getString( "RepositoryLoginDialog.Timeout" ) ), c );
-
-    c.gridy = 3;
-    c.insets = new Insets( 0, 20, 5, 20 );
-    c.anchor = GridBagConstraints.WEST;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.weightx = 1.0;
-    serverPanel.add( timeoutField, c );
-
     serverPanel.setBorder( BorderFactory.createTitledBorder( Messages.getInstance().getString(
         "RepositoryLoginDialog.Server" ) ) );
     return serverPanel;
+  }
+
+  private JPanel buildLoginMethodPanel() {
+    final JPanel methodPanel = new JPanel( new GridBagLayout() );
+    final GridBagConstraints c = new GridBagConstraints();
+    c.insets = new Insets( 5, 20, 5, 20 );
+    c.gridx = 0;
+    c.gridy = 0;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    c.anchor = GridBagConstraints.WEST;
+    methodPanel.add( ssoRadio, c );
+
+    c.gridy = 1;
+    c.insets = new Insets( 0, 20, 5, 20 );
+    methodPanel.add( usernamePasswordRadio, c );
+
+    methodPanel.setBorder( BorderFactory.createTitledBorder( 
+        Messages.getInstance().getString( "RepositoryLoginDialog.LoginMethod" ) ) );
+    return methodPanel;
   }
 
   private JPanel buildUserPanel() {
@@ -330,6 +399,20 @@ public class RepositoryLoginDialog extends CommonDialog {
 
   public boolean isRememberSettings() {
     return rememberSettings.isSelected();
+  }
+
+  public LoginMethod getLoginMethod() {
+    return selectedLoginMethod;
+  }
+
+  /**
+   * Handles login method selection changes (SSO or Username/Password).
+   * Extracted to avoid code duplication in radio button listeners.
+   */
+  private void handleLoginMethodChange( final LoginMethod loginMethod, final boolean showUserPanel ) {
+    selectedLoginMethod = loginMethod;
+    userPanel.setVisible( showUserPanel );
+    pack();
   }
 
 }
