@@ -108,7 +108,7 @@ public class CSVQuoter {
    *
    * @param original the unquoted string.
    * @param writer   the writer.
-   * @throws IOException if an IO error occured.
+   * @throws IOException if an IO error occurred.
    */
   public void doQuoting( final String original, final Writer writer ) throws IOException {
     if ( forceEnclosure || requiresEnclosure( original ) ) {

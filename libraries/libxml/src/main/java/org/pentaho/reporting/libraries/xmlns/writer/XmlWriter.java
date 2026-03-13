@@ -205,7 +205,7 @@ public class XmlWriter {
    *
    * @param s                the string to be written.
    * @param transformNewLine whether to encode newlines using character-entities.
-   * @throws IOException if an IO error occured.
+   * @throws IOException if an IO error occurred.
    */
   public void writeTextNormalized( final String s,
                                    final boolean transformNewLine ) throws IOException {
