@@ -130,7 +130,7 @@ public class CSVQuoter {
    */
   public String undoQuoting( final String nativeString ) {
     final int strLength = nativeString.length();
-    if ( isEnclosedByEnclosure( nativeString ) ) {
+    if ( isEnclosed( nativeString ) ) {
       final StringBuilder b = new StringBuilder( strLength );
       final int length = strLength - 1;
       int start = 1;
@@ -152,7 +152,7 @@ public class CSVQuoter {
     }
   }
 
-  private boolean isEnclosedByEnclosure( final String nativeString ) {
+  private boolean isEnclosed( final String nativeString ) {
     final int strLength = nativeString.length();
     return strLength >= 2 && nativeString.charAt( 0 ) == enclosure && nativeString.charAt( strLength - 1 ) == enclosure;
   }
