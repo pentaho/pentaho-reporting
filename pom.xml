@@ -37,7 +37,6 @@
     <plugin.enforcer.version>1.4.1</plugin.enforcer.version>
     <xalan.version>2.6.0</xalan.version>
     <ftp4che.version>0.7.1</ftp4che.version>
-    <hibernate.version>5.4.24.Final</hibernate.version>
     <groovy.version>2.4.21</groovy.version>
     <mockito.version>5.10.0</mockito.version>
     <powermock.version>1.6.3</powermock.version>
@@ -507,9 +506,9 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-core</artifactId>
-        <version>${hibernate.version}</version>
+        <version>${hibernate-core.version}</version>
         <exclusions>
           <exclusion>
             <groupId>dom4j</groupId>
@@ -519,18 +518,10 @@
             <groupId>antlr</groupId>
             <artifactId>antlr</artifactId>
           </exclusion>
-          <exclusion>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.jboss.spec.javax.transaction</groupId>
-            <artifactId>jboss-transaction-api_1.2_spec</artifactId>
-          </exclusion>
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.hibernate</groupId>
+        <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-jcache</artifactId>
         <version>${hibernate-jcache.version}</version>
         <exclusions>
