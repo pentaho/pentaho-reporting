@@ -57,11 +57,11 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
 
     final boolean forceQuoting =
         Boolean.parseBoolean( metaData.getConfiguration()
-            .getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT ) );
+            .getConfigProperty( CSVTableModule.FORCE_ENCLOSURE, CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) );
     final String quoteChar =
-        metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
+        metaData.getConfiguration().getConfigProperty( CSVTableModule.ENCLOSURE_CHAR, CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
     if ( quoteChar.length() != 1 ) {
-      throw new IllegalArgumentException( "CSV quote char must be a single character." );
+      throw new IllegalArgumentException( "CSV enclosure must be a single character." );
     }
 
     if ( this.encoding == null ) {

@@ -105,13 +105,13 @@ public class CSVPrinter {
         }
 
         final String quoteChar =
-            metaData.getConfiguration().getConfigProperty( CSVTableModule.QUOTE_CHAR, CSVTableModule.QUOTE_CHAR_DEFAULT );
+            metaData.getConfiguration().getConfigProperty( CSVTableModule.ENCLOSURE_CHAR, CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
         if ( quoteChar.length() != 1 ) {
-          throw new IllegalArgumentException( "CSV quote char must be a single character." );
+          throw new IllegalArgumentException( "CSV enclosure must be a single character." );
         }
 
         final String forceQuotingConfig =
-          metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_QUOTING, CSVTableModule.FORCE_QUOTING_DEFAULT );
+          metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_ENCLOSURE, CSVTableModule.FORCE_ENCLOSURE_DEFAULT );
         final boolean forceQuoting = Boolean.parseBoolean( forceQuotingConfig );
 
         quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );

@@ -41,6 +41,22 @@ public class CSVProcessorTest extends TestCase {
     assertFalse( processor.isAlwaysDoQuotesOnLayoutManager() );
   }
 
+  public void testCreateLayoutManagerReadsEnclosureCharConfig() throws Exception {
+    final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty( CSVProcessor.CSV_ENCLOSURE_CHAR, "'" );
+
+    final TestableCSVProcessor processor = new TestableCSVProcessor( report );
+
+    assertEquals( '\'', processor.getEnclosureOnLayoutManager() );
+  }
+
+  public void testCreateLayoutManagerDefaultEnclosureCharIsDoubleQuote() throws Exception {
+    final MasterReport report = new MasterReport();
+    final TestableCSVProcessor processor = new TestableCSVProcessor( report );
+
+    assertEquals( '"', processor.getEnclosureOnLayoutManager() );
+  }
+
   private static class TestableCSVProcessor extends CSVProcessor {
     private TestableCSVProcessor( final MasterReport report ) throws ReportProcessingException {
       super( report );
@@ -49,6 +65,11 @@ public class CSVProcessorTest extends TestCase {
     private boolean isAlwaysDoQuotesOnLayoutManager() {
       final CSVWriter layoutManager = (CSVWriter) createLayoutManager();
       return layoutManager.isAlwaysDoQuotes();
+    }
+
+    private char getEnclosureOnLayoutManager() {
+      final CSVWriter layoutManager = (CSVWriter) createLayoutManager();
+      return layoutManager.getEnclosure();
     }
   }
 }

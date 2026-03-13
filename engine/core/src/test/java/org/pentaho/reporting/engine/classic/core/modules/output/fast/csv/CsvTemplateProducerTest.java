@@ -66,10 +66,10 @@ public class CsvTemplateProducerTest {
     when( metaData.getConfiguration() ).thenReturn( configuration );
     when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
       CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
-    when( configuration.getConfigProperty( CSVTableModule.QUOTE_CHAR,
-      CSVTableModule.QUOTE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.QUOTE_CHAR_DEFAULT );
-    when( configuration.getConfigProperty( CSVTableModule.FORCE_QUOTING,
-      CSVTableModule.FORCE_QUOTING_DEFAULT ) ).thenReturn( CSVTableModule.FORCE_QUOTING_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.ENCLOSURE_CHAR,
+      CSVTableModule.ENCLOSURE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_ENCLOSURE,
+      CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) ).thenReturn( CSVTableModule.FORCE_ENCLOSURE_DEFAULT );
     contentProducer = spy( new TableContentProducer( sheetLayout, metaData ) );
     csvTemplateProducer = new CsvTemplateProducer( metaData, sheetLayout, null );
   }
@@ -80,10 +80,10 @@ public class CsvTemplateProducerTest {
     when( metaData.getConfiguration() ).thenReturn( configuration );
     when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
       CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
-    when( configuration.getConfigProperty( CSVTableModule.QUOTE_CHAR,
-      CSVTableModule.QUOTE_CHAR_DEFAULT ) ).thenReturn( "'" );
-    when( configuration.getConfigProperty( CSVTableModule.FORCE_QUOTING,
-      CSVTableModule.FORCE_QUOTING_DEFAULT ) ).thenReturn( "true" );
+    when( configuration.getConfigProperty( CSVTableModule.ENCLOSURE_CHAR,
+      CSVTableModule.ENCLOSURE_CHAR_DEFAULT ) ).thenReturn( "'" );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_ENCLOSURE,
+      CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) ).thenReturn( "true" );
     when( configuration.getConfigProperty( CSVTableModule.ENCODING,
       EncodingRegistry.getPlatformDefaultEncoding() ) ).thenReturn( EncodingRegistry.getPlatformDefaultEncoding() );
 
@@ -154,10 +154,10 @@ public class CsvTemplateProducerTest {
     when( metaData.getConfiguration() ).thenReturn( configuration );
     when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
       CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
-    when( configuration.getConfigProperty( CSVTableModule.QUOTE_CHAR,
-      CSVTableModule.QUOTE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.QUOTE_CHAR_DEFAULT );
-    when( configuration.getConfigProperty( CSVTableModule.FORCE_QUOTING,
-      CSVTableModule.FORCE_QUOTING_DEFAULT ) ).thenReturn( "true" );
+    when( configuration.getConfigProperty( CSVTableModule.ENCLOSURE_CHAR,
+      CSVTableModule.ENCLOSURE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_ENCLOSURE,
+      CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) ).thenReturn( "true" );
     when( configuration.getConfigProperty( CSVTableModule.ENCODING,
       EncodingRegistry.getPlatformDefaultEncoding() ) ).thenReturn( EncodingRegistry.getPlatformDefaultEncoding() );
 

@@ -26,4 +26,17 @@ public class CSVWriterTest extends TestCase {
 
     assertTrue( writer.isAlwaysDoQuotes() );
   }
+
+  public void testDefaultEnclosureIsDoubleQuote() {
+    final CSVWriter writer = new CSVWriter();
+
+    assertEquals( '"', writer.getEnclosure() );
+  }
+
+  public void testSetAndGetEnclosure() {
+    final CSVWriter writer = new CSVWriter();
+    writer.setEnclosure( '\'' );
+
+    assertEquals( '\'', writer.getEnclosure() );
+  }
 }
