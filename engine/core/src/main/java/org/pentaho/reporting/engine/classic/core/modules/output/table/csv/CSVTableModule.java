@@ -28,11 +28,15 @@ public class CSVTableModule extends AbstractModule {
    * The default value for the separator string (",").
    */
   public static final String SEPARATOR_DEFAULT = ",";
+  public static final String ENCLOSURE_CHAR_DEFAULT = "\"";
+  public static final String FORCE_ENCLOSURE_DEFAULT = "false";
 
   public static final String STRICT_LAYOUT =
       "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StrictLayout";
   public static final String ENCODING = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding";
   public static final String SEPARATOR = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Separator";
+  public static final String FORCE_ENCLOSURE = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.ForceEnclosure";
+  public static final String ENCLOSURE_CHAR = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Enclosure";
   public static final String TABLE_CSV_STREAM_EXPORT_TYPE = "table/csv;page-mode=stream";
   public static final String TABLE_CSV_FLOW_EXPORT_TYPE = "table/csv;page-mode=flow";
 

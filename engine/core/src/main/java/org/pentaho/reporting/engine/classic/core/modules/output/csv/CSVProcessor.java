@@ -61,6 +61,12 @@ public class CSVProcessor extends AbstractReportProcessor {
   public static final String CSV_ENCODING = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Encoding";
   public static final String CSV_DATAROWNAME =
       "org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteDatarowNames";
+  public static final String CSV_ENCLOSURE_CHAR =
+      "org.pentaho.reporting.engine.classic.core.modules.output.csv.Enclosure";
+  public static final String CSV_ENCLOSURE_CHAR_DEFAULT = "\"";
+
+  public static final String CSV_ENCLOSURE_FORCED =
+      "org.pentaho.reporting.engine.classic.core.modules.output.csv.ForceEnclosure";
 
   public static final String CSV_WRITE_STATECOLUMNS =
       "org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteStateColumns";
@@ -81,8 +87,8 @@ public class CSVProcessor extends AbstractReportProcessor {
   private Writer writer;
 
   private static final String EXPORT_DESCRIPTOR = "data/csv";
-  private String separator;
-  private boolean writeDataRowNames;
+  private final String separator;
+  private final boolean writeDataRowNames;
 
   /**
    * Creates a new <code>CSVProcessor</code>. The processor will use a comma (",") to separate the column values, unless
@@ -166,6 +172,11 @@ public class CSVProcessor extends AbstractReportProcessor {
     lm.setWriter( getWriter() );
 
     final Configuration config = getReport().getReportConfiguration();
+    final String enclosureChar = config.getConfigProperty( CSVProcessor.CSV_ENCLOSURE_CHAR, CSVProcessor.CSV_ENCLOSURE_CHAR_DEFAULT );
+    if ( enclosureChar.length() == 1 ) {
+      lm.setEnclosure( enclosureChar.charAt( 0 ) );
+    }
+    lm.setAlwaysDoQuotes( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENCLOSURE_FORCED ) );
     lm.setWriteStateColumns( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_WRITE_STATECOLUMNS ) );
     lm.setEnableReportHeader( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTHEADER ) );
     lm.setEnableReportFooter( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTFOOTER ) );

@@ -54,6 +54,21 @@
     <description>Defines the column separator, defaults to comma.</description>
     <text/>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.Enclosure" global="false" hidden="false">
+    <description>Defines the quote character used in CSV output.</description>
+    <enum>
+      <text>"</text>
+      <text>'</text>
+      <text>`</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.ForceEnclosure" global="false" hidden="false">
+    <description>Defines whether all values are enclosed in quote characters.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteDatarowNames" global="false"
        hidden="false">
     <description>Defines whether to write the column names of the datarow into the first row.</description>

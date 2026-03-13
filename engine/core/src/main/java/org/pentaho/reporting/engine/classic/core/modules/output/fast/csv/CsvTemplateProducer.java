@@ -47,12 +47,21 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.encoding = encoding;
-    this.idMapping = new HashMap<InstanceID, String>();
+    this.idMapping = new HashMap<>();
 
     final String separator =
         metaData.getConfiguration().getConfigProperty( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
-    if ( separator.length() == 0 ) {
-      throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
+    if ( separator.isEmpty() ) {
+      throw new IllegalArgumentException( "CSV separator cannot be an empty string." );
+    }
+
+    final boolean forceQuoting =
+        Boolean.parseBoolean( metaData.getConfiguration()
+            .getConfigProperty( CSVTableModule.FORCE_ENCLOSURE, CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) );
+    final String quoteChar =
+        metaData.getConfiguration().getConfigProperty( CSVTableModule.ENCLOSURE_CHAR, CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
+    if ( quoteChar.length() != 1 ) {
+      throw new IllegalArgumentException( "CSV enclosure must be a single character." );
     }
 
     if ( this.encoding == null ) {
@@ -62,7 +71,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
               EncodingRegistry.getPlatformDefaultEncoding() );
     }
 
-    quoter = new CSVQuoter( separator.charAt( 0 ) );
+    quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );
   }
 
   public void produceTemplate( final LogicalPageBox pageBox ) {
@@ -82,7 +91,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
       for ( short col = 0; col < columnCount; col++ ) {
         final RenderBox content = contentProducer.getContent( row, col );
         if ( content == null ) {
-          writer.print( quoter.getSeparator() );
+          writeEmptyCell( writer, col, lastColumn );
           continue;
         }
 
@@ -100,7 +109,7 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
              so that we can accurately set the cells (this was previously a copy from the Excel Template producer, but
              they handle spanned cells differently.
           */
-          writer.print( quoter.getSeparator() );
+          writeEmptyCell( writer, col, lastColumn );
           continue;
         }
 
@@ -140,5 +149,16 @@ public class CsvTemplateProducer implements FastExportTemplateProducer {
     messageFormatSupport.setFormatString( getTemplate() );
     messageFormatSupport.setNullString( "" );
     return new CsvFormattedDataBuilder( idMapping, messageFormatSupport, getQuoter(), encoding );
+  }
+
+  private void writeEmptyCell( final PrintWriter writer, final short col, final int lastColumn ) {
+    if ( quoter.isForceQuote() ) {
+      writer.write( quoter.doQuoting( "" ) );
+      if ( col < lastColumn ) {
+        writer.print( quoter.getSeparator() );
+      }
+    } else {
+      writer.print( quoter.getSeparator() );
+    }
   }
 }
