@@ -57,6 +57,42 @@ public class CSVProcessorTest extends TestCase {
     assertEquals( '"', processor.getEnclosureOnLayoutManager() );
   }
 
+  public void testConstructorThrowsOnMultiCharEnclosure() throws Exception {
+    final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty( CSVProcessor.CSV_ENCLOSURE_CHAR, "!!" );
+
+    try {
+      new TestableCSVProcessor( report );
+      fail( "Expected IllegalArgumentException for multi-character enclosure" );
+    } catch ( final IllegalArgumentException e ) {
+      // expected
+    }
+  }
+
+  public void testConstructorThrowsOnEmptyEnclosure() throws Exception {
+    final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty( CSVProcessor.CSV_ENCLOSURE_CHAR, "" );
+
+    try {
+      new TestableCSVProcessor( report );
+      fail( "Expected IllegalArgumentException for empty enclosure" );
+    } catch ( final IllegalArgumentException e ) {
+      // expected
+    }
+  }
+
+  public void testConstructorThrowsOnEmptySeparator() throws Exception {
+    final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty( CSVProcessor.CSV_SEPARATOR, "" );
+
+    try {
+      new TestableCSVProcessor( report );
+      fail( "Expected IllegalArgumentException for empty separator" );
+    } catch ( final IllegalArgumentException e ) {
+      // expected
+    }
+  }
+
   private static class TestableCSVProcessor extends CSVProcessor {
     private TestableCSVProcessor( final MasterReport report ) throws ReportProcessingException {
       super( report );

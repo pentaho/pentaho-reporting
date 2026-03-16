@@ -57,6 +57,7 @@ public class CSVProcessor extends AbstractReportProcessor {
   protected static final int MIN_ROWS_PER_EVENT = 200;
 
   public static final String CSV_SEPARATOR = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Separator";
+  public static final String CSV_SEPARATOR_DEFAULT = ",";
 
   public static final String CSV_ENCODING = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Encoding";
   public static final String CSV_DATAROWNAME =
@@ -89,11 +90,11 @@ public class CSVProcessor extends AbstractReportProcessor {
   private static final String EXPORT_DESCRIPTOR = "data/csv";
   private final String separator;
   private final boolean writeDataRowNames;
+  private final char enclosure;
 
   /**
-   * Creates a new <code>CSVProcessor</code>. The processor will use a comma (",") to separate the column values, unless
-   * defined otherwise in the report configuration. The processor creates a private copy of the clone, so that no change
-   * to the original report will influence the report processing. DataRow names are not written.
+   * Creates a new <code>CSVProcessor</code>. Separator, enclosure and writeDataRowNames are read from the report
+   * configuration. DataRow names are not written by default.
    *
    * @param report
    *          the report to be processed.
@@ -101,45 +102,67 @@ public class CSVProcessor extends AbstractReportProcessor {
    *           if the report initialisation failed.
    */
   public CSVProcessor( final MasterReport report ) throws ReportProcessingException {
-    this( report, report.getReportConfiguration().getConfigProperty( CSVProcessor.CSV_SEPARATOR, "," ) );
+    this( report,
+        readSeparator( report.getReportConfiguration() ),
+        readEnclosureChar( report.getReportConfiguration() ) );
   }
 
   /**
-   * Creates a new CSVProcessor. The processor will use the specified separator, the report configuration is not queried
-   * for a separator. The processor creates a private copy of the clone, so that no change to the original report will
-   * influence the report processing. DataRowNames are not written.
+   * Creates a new CSVProcessor with explicit separator and enclosure. The report configuration is not queried for
+   * either. DataRowNames are not written.
    *
    * @param report
    *          the report to be processed.
    * @param separator
    *          the separator string to mark column boundaries.
+   * @param enclosure
+   *          the enclosure character to wrap field values.
    * @throws ReportProcessingException
    *           if the report initialisation failed.
    */
-  public CSVProcessor( final MasterReport report, final String separator ) throws ReportProcessingException {
-    this( report, separator, CSVProcessor.queryBoolConfig( report.getReportConfiguration(),
-        CSVProcessor.CSV_DATAROWNAME ) );
+  public CSVProcessor( final MasterReport report, final String separator, final char enclosure )
+    throws ReportProcessingException {
+    this( report, separator, enclosure,
+        CSVProcessor.queryBoolConfig( report.getReportConfiguration(), CSVProcessor.CSV_DATAROWNAME ) );
   }
 
   /**
-   * Creates a new CSVProcessor. The processor will use the specified separator, the report configuration is not queried
-   * for a separator. The processor creates a private copy of the clone, so that no change to the original report will
-   * influence the report processing. The first row will contain the datarow names.
+   * Creates a new CSVProcessor with explicit separator, enclosure and writeDataRowNames flag.
    *
    * @param report
    *          the report to be processed.
    * @param separator
    *          the separator string to mark column boundaries.
+   * @param enclosure
+   *          the enclosure character to wrap field values.
    * @param writeDataRowNames
    *          controls whether or not the data row names are output.
    * @throws ReportProcessingException
    *           if the report initialisation failed.
    */
-  public CSVProcessor( final MasterReport report, final String separator, final boolean writeDataRowNames )
+  public CSVProcessor( final MasterReport report, final String separator, final char enclosure,
+      final boolean writeDataRowNames )
     throws ReportProcessingException {
     super( report, new CSVDataOutputProcessor() );
     this.separator = separator;
+    this.enclosure = enclosure;
     this.writeDataRowNames = writeDataRowNames;
+  }
+
+  private static char readEnclosureChar( final Configuration config ) {
+    final String enclosureStr = config.getConfigProperty( CSV_ENCLOSURE_CHAR, CSV_ENCLOSURE_CHAR_DEFAULT );
+    if ( enclosureStr.length() != 1 ) {
+      throw new IllegalArgumentException( "CSV enclosure must be a single character." );
+    }
+    return enclosureStr.charAt( 0 );
+  }
+
+  private static String readSeparator( final Configuration config ) {
+    final String separator = config.getConfigProperty( CSV_SEPARATOR, CSV_SEPARATOR_DEFAULT );
+    if ( separator.isEmpty() ) {
+      throw new IllegalArgumentException( "CSV separator cannot be an empty string." );
+    }
+    return separator;
   }
 
   private static boolean queryBoolConfig( final Configuration config, final String name ) {
@@ -172,10 +195,7 @@ public class CSVProcessor extends AbstractReportProcessor {
     lm.setWriter( getWriter() );
 
     final Configuration config = getReport().getReportConfiguration();
-    final String enclosureChar = config.getConfigProperty( CSVProcessor.CSV_ENCLOSURE_CHAR, CSVProcessor.CSV_ENCLOSURE_CHAR_DEFAULT );
-    if ( enclosureChar.length() == 1 ) {
-      lm.setEnclosure( enclosureChar.charAt( 0 ) );
-    }
+    lm.setEnclosure( enclosure );
     lm.setAlwaysDoQuotes( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENCLOSURE_FORCED ) );
     lm.setWriteStateColumns( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_WRITE_STATECOLUMNS ) );
     lm.setEnableReportHeader( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTHEADER ) );
