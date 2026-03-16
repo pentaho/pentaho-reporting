@@ -16,21 +16,21 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.TemplatingOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTableModule;
-import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
+import org.mockito.MockedStatic;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -50,7 +50,6 @@ public class CsvTemplateProducerTest {
     + "$(0)" + CSVTableModule.SEPARATOR_DEFAULT + "$(0)" + System.lineSeparator() + CSVTableModule.SEPARATOR_DEFAULT
     + CSVTableModule.SEPARATOR_DEFAULT + CSVTableModule.SEPARATOR_DEFAULT + System.lineSeparator();
 
-  private StyleSheet styleSheet;
   private SheetLayout sheetLayout;
   private NodeLayoutProperties nodeLayoutProperties;
   private OutputProcessorMetaData metaData;
@@ -59,7 +58,7 @@ public class CsvTemplateProducerTest {
 
   @Before
   public void setUp() throws Exception {
-    styleSheet = mock( StyleSheet.class );
+    ClassicEngineBoot.getInstance().start();
     sheetLayout = mock( SheetLayout.class );
     metaData = mock( OutputProcessorMetaData.class );
     nodeLayoutProperties = mock( NodeLayoutProperties.class );
@@ -67,8 +66,31 @@ public class CsvTemplateProducerTest {
     when( metaData.getConfiguration() ).thenReturn( configuration );
     when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
       CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.ENCLOSURE_CHAR,
+      CSVTableModule.ENCLOSURE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_ENCLOSURE,
+      CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) ).thenReturn( CSVTableModule.FORCE_ENCLOSURE_DEFAULT );
     contentProducer = spy( new TableContentProducer( sheetLayout, metaData ) );
     csvTemplateProducer = new CsvTemplateProducer( metaData, sheetLayout, null );
+  }
+
+  @Test
+  public void testConstructorUsesQuoteCharAndForceQuotingConfig() {
+    final HierarchicalConfiguration configuration = mock( HierarchicalConfiguration.class );
+    when( metaData.getConfiguration() ).thenReturn( configuration );
+    when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
+      CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.ENCLOSURE_CHAR,
+      CSVTableModule.ENCLOSURE_CHAR_DEFAULT ) ).thenReturn( "'" );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_ENCLOSURE,
+      CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) ).thenReturn( "true" );
+    when( configuration.getConfigProperty( CSVTableModule.ENCODING,
+      EncodingRegistry.getPlatformDefaultEncoding() ) ).thenReturn( EncodingRegistry.getPlatformDefaultEncoding() );
+
+    final CsvTemplateProducer producer = new CsvTemplateProducer( metaData, sheetLayout, null );
+
+    assertEquals( '\'', producer.getQuoter().getQuote() );
+    assertEquals( "'Classic Cars'", producer.getQuoter().doQuoting( "Classic Cars" ) );
   }
 
   /**
@@ -82,46 +104,79 @@ public class CsvTemplateProducerTest {
     LogicalPageBox pageBox = mock( LogicalPageBox.class );
     RenderBox content = mock( ParagraphRenderBox.class );
     TableRectangle rectangle = mock( TableRectangle.class );
-    mockStatic( TemplatingOutputProcessor.class );
     Long contentOffset = 0L;
 
+    try ( MockedStatic<TemplatingOutputProcessor> templatingOutputProcessor = mockStatic( TemplatingOutputProcessor.class ) ) {
+      templatingOutputProcessor.when( () -> TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData ) )
+          .thenReturn( contentProducer );
+      when( contentProducer.getColumnCount() ).thenReturn( 3 );
+      when( contentProducer.getFinishedRows() ).thenReturn( 0 );
+      when( contentProducer.getFilledRows() ).thenReturn( 3 );
 
-    when( TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData ) ).thenReturn( contentProducer );
-    when( contentProducer.getColumnCount() ).thenReturn( 3 );
-    when( contentProducer.getFinishedRows() ).thenReturn( 0 );
-    when( contentProducer.getFilledRows() ).thenReturn( 3 );
+      when( content.isCommited() ).thenReturn( true );
+      when( content.getX() ).thenReturn( 100000L );
+      when( content.getY() ).thenReturn( 100000L );
+      when( content.getWidth() ).thenReturn( 185600000L );
+      when( content.getHeight() ).thenReturn( 6200000L );
+      when( sheetLayout.getTableBounds( content.getX(), content.getY() + contentOffset,
+        content.getWidth(), content.getHeight(), null ) ).thenReturn( rectangle );
 
-    when( content.isCommited() ).thenReturn( true );
-    when( content.getX() ).thenReturn( 100000L );
-    when( content.getY() ).thenReturn( 100000L );
-    when( content.getWidth() ).thenReturn( 185600000L );
-    when( content.getHeight() ).thenReturn( 6200000L );
-    when( sheetLayout.getTableBounds( content.getX(), content.getY() + contentOffset,
-      content.getWidth(), content.getHeight(), null ) ).thenReturn( rectangle );
+      when( content.getNodeLayoutProperties() ).thenReturn( nodeLayoutProperties );
+      when( nodeLayoutProperties.getInstanceId() ).thenReturn( instanceId );
 
-    when( content.getNodeLayoutProperties() ).thenReturn( nodeLayoutProperties );
-    when( nodeLayoutProperties.getInstanceId() ).thenReturn( instanceId );
+      // First line should be null content, to show that it will print the separators only.
+      for ( int i = 0; i < 3; i++ ) {
+        when( contentProducer.getContent( 0, i ) ).thenReturn( null );
+      }
+      // Second line should print content, we're mocking it with a single InstanceID, so it will print the same
+      // value multiple times (3x)
+      for ( int i = 0; i < 3; i++ ) {
+        when( contentProducer.getContent( 1, i ) ).thenReturn( content );
+        when( contentProducer.getContentOffset( 1, i ) ).thenReturn( contentOffset );
+        when( rectangle.isOrigin( i, 1 ) ).thenReturn( true );
+      }
+      // Third line would contain content, but it's actually an empty spanned cell, so it should see this and still
+      // print a separator for the CSV template. We have to print the separator to signify a move to the next column
+      for ( int i = 0; i < 3; i++ ) {
+        when( contentProducer.getContent( 2, i ) ).thenReturn( content );
+        when( contentProducer.getContentOffset( 2, i ) ).thenReturn( contentOffset );
+        when( rectangle.isOrigin( i, 2 ) ).thenReturn( false );
+      }
 
-    // First line should be null content, to show that it will print the separators only.
-    for ( int i = 0; i < 3; i++ ) {
-      when( contentProducer.getContent( 0, i ) ).thenReturn( null );
+      csvTemplateProducer.produceTemplate( pageBox );
+      assertEquals( csvTemplateProducer.getTemplate(), COMPLETE_TEMPLATE );
     }
-    // Second line should print content, we're mocking it with a single InstanceID, so it will print the same
-    // value multiple times (3x)
-    for ( int i = 0; i < 3; i++ ) {
-      when( contentProducer.getContent( 1, i ) ).thenReturn( content );
-      when( contentProducer.getContentOffset( 1, i ) ).thenReturn( contentOffset );
-      when( rectangle.isOrigin( i, 1 ) ).thenReturn( true );
-    }
-    // Third line would contain content, but it's actually an empty spanned cell, so it should see this and still
-    // print a separator for the CSV template. We have to print the separator to signify a move to the next column
-    for ( int i = 0; i < 3; i++ ) {
-      when( contentProducer.getContent( 2, i ) ).thenReturn( content );
-      when( contentProducer.getContentOffset( 2, i ) ).thenReturn( contentOffset );
-      when( rectangle.isOrigin( i, 2 ) ).thenReturn( false );
+  }
+
+  @Test
+  public void testProduceTemplateForceQuotingWritesQuotedEmptyCellForNullContent() {
+    final HierarchicalConfiguration configuration = mock( HierarchicalConfiguration.class );
+    when( metaData.getConfiguration() ).thenReturn( configuration );
+    when( configuration.getConfigProperty( CSVTableModule.SEPARATOR,
+      CSVTableModule.SEPARATOR_DEFAULT ) ).thenReturn( CSVTableModule.SEPARATOR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.ENCLOSURE_CHAR,
+      CSVTableModule.ENCLOSURE_CHAR_DEFAULT ) ).thenReturn( CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
+    when( configuration.getConfigProperty( CSVTableModule.FORCE_ENCLOSURE,
+      CSVTableModule.FORCE_ENCLOSURE_DEFAULT ) ).thenReturn( "true" );
+    when( configuration.getConfigProperty( CSVTableModule.ENCODING,
+      EncodingRegistry.getPlatformDefaultEncoding() ) ).thenReturn( EncodingRegistry.getPlatformDefaultEncoding() );
+
+    final CsvTemplateProducer producer = new CsvTemplateProducer( metaData, sheetLayout, null );
+    final LogicalPageBox pageBox = mock( LogicalPageBox.class );
+    final TableContentProducer producerContent = mock( TableContentProducer.class );
+
+    try ( MockedStatic<TemplatingOutputProcessor> templatingOutputProcessor = mockStatic( TemplatingOutputProcessor.class ) ) {
+      templatingOutputProcessor.when( () -> TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData ) )
+          .thenReturn( producerContent );
+      when( producerContent.getSheetLayout() ).thenReturn( sheetLayout );
+      when( producerContent.getColumnCount() ).thenReturn( 1 );
+      when( producerContent.getFinishedRows() ).thenReturn( 0 );
+      when( producerContent.getFilledRows() ).thenReturn( 1 );
+      when( producerContent.getContent( 0, (short) 0 ) ).thenReturn( null );
+
+      producer.produceTemplate( pageBox );
     }
 
-    csvTemplateProducer.produceTemplate( pageBox );
-    assertEquals( csvTemplateProducer.getTemplate(), COMPLETE_TEMPLATE );
+    assertEquals( "\"\"" + System.lineSeparator(), producer.getTemplate() );
   }
 }

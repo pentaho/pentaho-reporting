@@ -10,5 +10,22 @@
     <description>Defines the default separator, that should be used for the output.</description>
     <text/>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Enclosure" global="false"
+       hidden="false">
+    <description>Defines the quote character used in CSV output.</description>
+    <enum>
+      <text>"</text>
+      <text>'</text>
+      <text>`</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.ForceEnclosure" global="false"
+       hidden="false">
+    <description>Defines whether all values should be quoted in CSV output.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
 
 </config-description>
