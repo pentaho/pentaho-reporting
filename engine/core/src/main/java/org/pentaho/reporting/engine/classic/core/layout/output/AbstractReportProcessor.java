@@ -162,6 +162,17 @@ public abstract class AbstractReportProcessor implements ReportProcessor {
     return activeDataFactory;
   }
 
+  /**
+   * Allows subclasses to set the active data factory handle when overriding
+   * {@code prepareReportProcessing()}. This ensures that {@code close()} can
+   * properly clean up resources.
+   *
+   * @param handle the process state handle from the initialized ProcessState.
+   */
+  protected void setProcessStateHandle( final ProcessStateHandle handle ) {
+    this.activeDataFactory = handle;
+  }
+
   protected MasterReport getReport() {
     return report;
   }
