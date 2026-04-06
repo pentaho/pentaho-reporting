@@ -63,13 +63,22 @@ public final class ResultSetTableModelFactory {
   public static final String COLUMN_NAME_MAPPING_KEY =
       "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode"; //$NON-NLS-1$
 
+
   /**
    * The 'ResultSet factory mode'.
    */
   public static final String RESULTSET_FACTORY_MODE
       = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableFactoryMode"; //$NON-NLS-1$
 
-  /**
+  public static final String DISK_BACKED_TABLE_MODEL
+          = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.useDiskBackedModel";
+
+  public static final String POSTGRES_FETCH_SIZE
+            = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.postgresFetchSize";
+
+  private static final String LEGACY_COLUMN_MAPPING = "legacy"; //$NON-NLS-1$
+
+    /**
    * Singleton instance of the factory.
    */
   private static ResultSetTableModelFactory defaultInstance;
@@ -255,10 +264,10 @@ public final class ResultSetTableModelFactory {
       // any interpretation or interpolation.
       final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
       final boolean useLegacyColumnMapping =
-          "legacy".equalsIgnoreCase(                                                                            // NON-NLS
+          LEGACY_COLUMN_MAPPING.equalsIgnoreCase(                                                                            // NON-NLS
               globalConfig.getConfigProperty(
-                  "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode",
-                  "legacy" ) );  // NON-NLS
+                      COLUMN_NAME_MAPPING_KEY,
+                      LEGACY_COLUMN_MAPPING ) );  // NON-NLS
 
       final String[] header = new String[ colcount ];
       final AttributeMap[] columnMeta = new AttributeMap[ colcount ];
@@ -309,6 +318,65 @@ public final class ResultSetTableModelFactory {
         logger.warn( "Failed to close statement", sqle );
       }
     }
+  }
+
+  /**
+   * Generates a disk-backed {@code TableModel} that spills row data to a temporary file instead of
+   * holding all rows in heap memory. This is designed for very large result sets (millions of rows)
+   * where the standard in-memory approach would cause {@code OutOfMemoryError}.
+   * <p/>
+   * The caller must ensure that the JDBC connection is configured for streaming:
+   * <ul>
+   *   <li>{@code autoCommit = false} (required for PostgreSQL streaming cursors)</li>
+   *   <li>{@code fetchSize} set to a reasonable value (e.g., 5000)</li>
+   *   <li>{@code ResultSet.TYPE_FORWARD_ONLY} and {@code ResultSet.CONCUR_READ_ONLY}</li>
+   * </ul>
+   * The {@code DiskBackedTableModel} constructor reads all rows from the ResultSet, writes them to
+   * a temp file, and closes the ResultSet and its Statement.
+   *
+   * @param rs                the result set (must be forward-only).
+   * @param columnNameMapping defines whether to use column names or column labels.
+   * @return a closeable, disk-backed table model.
+   * @throws SQLException if there is a problem with the result set.
+   */
+  public CloseableTableModel generateDiskBackedTableModel( final ResultSet rs, final boolean columnNameMapping )
+      throws SQLException {
+    final ResultSetMetaData rsmd = rs.getMetaData();
+    final int colcount = rsmd.getColumnCount();
+    final Class[] colTypes = TypeMapper.mapTypes( rsmd );
+
+    final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
+    final boolean useLegacyColumnMapping =
+            LEGACY_COLUMN_MAPPING.equalsIgnoreCase(
+            globalConfig.getConfigProperty(
+                    COLUMN_NAME_MAPPING_KEY,
+                    LEGACY_COLUMN_MAPPING ) );
+
+    final String[] header = new String[ colcount ];
+    final AttributeMap[] columnMeta = new AttributeMap[ colcount ];
+
+    for ( int columnIndex = 0; columnIndex < colcount; columnIndex++ ) {
+      String columnLabel = rsmd.getColumnLabel( columnIndex + 1 );
+      if ( useLegacyColumnMapping ) {
+        if ( ( columnLabel == null ) || ( columnLabel.isEmpty() ) ) {
+          columnLabel = rsmd.getColumnName( columnIndex + 1 );
+        }
+        header[ columnIndex ] = columnLabel;
+      } else {
+        if ( columnNameMapping ) {
+          header[ columnIndex ] = rsmd.getColumnName( columnIndex + 1 );
+        } else {
+          header[ columnIndex ] = columnLabel;
+        }
+      }
+
+      columnMeta[ columnIndex ] = ResultSetTableModelFactory.collectData( rsmd, columnIndex, header[ columnIndex ] );
+    }
+
+    ImmutableTableMetaData metaData = new ImmutableTableMetaData( ImmutableDataAttributes.EMPTY,
+        map( columnMeta ) );
+
+    return new DiskBackedTableModel( rs, header, colTypes, metaData );
   }
 
   public static ImmutableDataAttributes[] map( AttributeMap[] data ) {
