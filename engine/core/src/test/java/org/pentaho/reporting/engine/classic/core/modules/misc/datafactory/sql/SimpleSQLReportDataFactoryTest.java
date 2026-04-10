@@ -194,7 +194,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
@@ -243,7 +243,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
@@ -297,7 +297,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
@@ -351,7 +351,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     Date currentDate = new Date();
@@ -409,7 +409,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     Date currentDate = new Date();
@@ -544,8 +544,7 @@ public class SimpleSQLReportDataFactoryTest {
 
     // Set globalConfig to return null for POSTGRES_FETCH_SIZE
     Configuration conf = mock( Configuration.class );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
-    SimpleSQLReportDataFactory.globalConfig = conf;
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
 
     ResultSet result = factory.performQuery( statement, QUERY, new String[] {} );
 
@@ -560,7 +559,7 @@ public class SimpleSQLReportDataFactoryTest {
     doReturn( res ).when( pstmt ).executeQuery();
 
     Configuration conf = mock( Configuration.class );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     ResultSet result = factory.performQuery( pstmt, QUERY, new String[] { "param1" } );
@@ -587,7 +586,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -624,7 +623,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -665,7 +664,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -704,7 +703,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "7000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "7000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -743,7 +742,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( pstmt ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
@@ -778,7 +777,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( cstmt ).when( con ).prepareCall( anyString(), anyInt(), anyInt() );
@@ -813,7 +812,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -846,7 +845,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -878,7 +877,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -915,7 +914,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -974,7 +973,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "table" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -1015,7 +1014,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -1059,7 +1058,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
@@ -1103,7 +1102,7 @@ public class SimpleSQLReportDataFactoryTest {
     Configuration conf = mock( Configuration.class );
     doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
     doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
-    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.POSTGRES_FETCH_SIZE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
     SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( cstmt ).when( con ).prepareCall( anyString(), anyInt(), anyInt() );

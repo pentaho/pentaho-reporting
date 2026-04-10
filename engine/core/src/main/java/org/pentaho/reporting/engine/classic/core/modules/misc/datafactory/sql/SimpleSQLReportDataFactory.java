@@ -433,7 +433,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
     else {
       int fetchSize = 5000;
         if (globalConfig != null) {
-            String value = globalConfig.getConfigProperty(ResultSetTableModelFactory.POSTGRES_FETCH_SIZE);
+            String value = globalConfig.getConfigProperty(ResultSetTableModelFactory.FETCH_SIZE);
 
             if (value == null) {
                 return;
