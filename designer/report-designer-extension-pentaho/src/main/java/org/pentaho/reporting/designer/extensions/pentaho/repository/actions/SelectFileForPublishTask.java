@@ -14,6 +14,7 @@
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs.RepositoryOpenDialog;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs.RepositoryPublishDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -25,6 +26,7 @@ import java.io.IOException;
 
 public class SelectFileForPublishTask {
   private RepositoryPublishDialog repositoryBrowserDialog;
+  private RepositoryOpenDialog.ReLoginListener reLoginListener;
 
   public SelectFileForPublishTask( final Component uiContext ) {
     final Window parent = LibSwingUtil.getWindowAncestor( uiContext );
@@ -39,8 +41,15 @@ public class SelectFileForPublishTask {
     LibSwingUtil.centerFrameOnScreen( repositoryBrowserDialog );
   }
 
+  public void setReLoginListener( final RepositoryOpenDialog.ReLoginListener listener ) {
+    this.reLoginListener = listener;
+  }
+
   public String selectFile( final AuthenticationData loginData,
                             final String selectedFile ) throws IOException {
+    if ( reLoginListener != null ) {
+      repositoryBrowserDialog.setReLoginListener( reLoginListener );
+    }
     return ( repositoryBrowserDialog.performOpen( loginData, selectedFile ) );
   }
 

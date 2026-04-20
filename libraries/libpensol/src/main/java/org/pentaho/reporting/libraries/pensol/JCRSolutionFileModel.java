@@ -37,6 +37,7 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 import java.io.ByteArrayInputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -44,6 +45,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.URLDecoder;
+import jakarta.ws.rs.client.ClientRequestFilter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +53,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class JCRSolutionFileModel implements SolutionFileModel {
+public class JCRSolutionFileModel implements SolutionFileModel, Closeable {
   private static final Log logger = LogFactory.getLog( JCRSolutionFileModel.class );
 
   private static final String LOAD_REPOSITORY_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty(
@@ -106,7 +108,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
       throw new NullPointerException();
     }
     this.url = url;
-    descriptionEntries = new HashMap<FileName, String>();
+    descriptionEntries = new HashMap<>();
 
     CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
 
@@ -123,12 +125,95 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     this.loadTreePartially = Boolean.parseBoolean( PARTIAL_LOADING_ENABLED );
   }
 
+  /**
+   * Constructor for session-based authentication.
+   * Uses a per-client request filter to send the JSESSIONID cookie instead of
+   * the global CookieHandler, which avoids interference between cached VFS
+   * file systems and ensures each instance carries its own session.
+   *
+  * Signature: (String url, int timeout, String sessionId)
+   * to avoid conflict with the username/password constructor.
+   */
+  public JCRSolutionFileModel( final String url,
+                               final int timeout,
+                               final String sessionId ) {
+    if ( url == null ) {
+      throw new NullPointerException();
+    }
+    if ( sessionId == null ) {
+      throw new NullPointerException( "Session ID cannot be null" );
+    }
+    validateSessionId( sessionId );
+    this.url = url;
+    descriptionEntries = new HashMap<>();
+    clearGlobalJSessionIdCookies();
+
+    final ClientConfig config = new ClientConfig();
+    config.property( ClientProperties.FOLLOW_REDIRECTS, true );
+    config.property( ClientProperties.READ_TIMEOUT, timeout );
+    final String sid = sessionId;
+    this.client = ClientBuilder.newClient( config );
+    this.client.register(
+      (ClientRequestFilter) requestContext ->
+        requestContext.getHeaders().add( "Cookie", "JSESSIONID=" + sid )
+    );
+    this.majorVersion = "999";
+    this.minorVersion = "999";
+    this.releaseVersion = "999";
+    this.buildVersion = "999";
+    this.milestoneVersion = "999";
+    this.loadTreePartially = Boolean.parseBoolean( PARTIAL_LOADING_ENABLED );
+  }
+
+  private static void validateSessionId( final String sessionId ) {
+    for ( int i = 0; i < sessionId.length(); i++ ) {
+      char ch = sessionId.charAt( i );
+      if ( ch == '\r' || ch == '\n' || ch == ';' ) {
+        throw new IllegalArgumentException(
+          "Session ID contains illegal character at index " + i );
+      }
+    }
+  }
+
+  /**
+   * Removes any JSESSIONID cookies cached by the JVM-wide
+   * {@link CookieHandler} default. Called from the SSO constructor so the
+   * underlying HttpURLConnection cannot auto-attach a stale JSESSIONID
+   * (typically captured by a previous username/password session) to the new
+   * SSO requests, which would otherwise cause the server to reject the
+   * fresh session as if it had expired.
+   */
+  static void clearGlobalJSessionIdCookies() {
+    try {
+      final CookieHandler handler = CookieHandler.getDefault();
+      if ( handler instanceof CookieManager ) {
+        final CookieManager cookieManager = (CookieManager) handler;
+        final java.net.CookieStore store = cookieManager.getCookieStore();
+        final java.util.List<java.net.HttpCookie> all = new java.util.ArrayList<>( store.getCookies() );
+        for ( java.net.HttpCookie cookie : all ) {
+          if ( "JSESSIONID".equalsIgnoreCase( cookie.getName() ) ) {
+            store.remove( null, cookie );
+          }
+        }
+      }
+    } catch ( Exception ignore ) {
+      // Best-effort cleanup; never let cookie housekeeping break login.
+    }
+  }
+
   // package-local constructor for testing purposes
   JCRSolutionFileModel( String url, Client client, boolean loadTreePartially ) {
     this.url = url;
-    this.descriptionEntries = new HashMap<FileName, String>();
+    this.descriptionEntries = new HashMap<>();
     this.client = client;
     this.loadTreePartially = loadTreePartially;
+  }
+
+  @Override
+  public void close() {
+    if ( client != null ) {
+      client.close();
+    }
   }
 
   public void refresh() throws IOException {

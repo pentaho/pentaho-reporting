@@ -14,16 +14,20 @@
 package org.pentaho.reporting.engine.classic.core.util;
 
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.RedirectStrategy;
+import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.impl.cookie.BasicClientCookie;
 
 /**
  * Single entry point for all {@link org.apache.http.client.HttpClient HttpClient instances} usages in pentaho projects.
@@ -64,8 +68,10 @@ public class HttpClientManager {
   }
 
   public class HttpClientBuilderFacade {
+    private static final String COOKIE_HEADER = "Cookie";
     private RedirectStrategy redirectStrategy;
     private CredentialsProvider provider;
+    private BasicCookieStore cookieStore;
     private int connectionTimeout;
     private int socketTimeout;
     private int maxRedirects;
@@ -73,6 +79,7 @@ public class HttpClientManager {
     private Boolean allowCircularRedirects = false;
     private Boolean rejectRelativeRedirect = true;
     private HttpHost proxy;
+    private String sessionCookieHeader;
 
     public HttpClientBuilderFacade setConnectionTimeout( int connectionTimeout ) {
       this.connectionTimeout = connectionTimeout;
@@ -116,6 +123,46 @@ public class HttpClientManager {
       return setCredentials( user, password, AuthScope.ANY );
     }
 
+    public HttpClientBuilderFacade setCookie( String name, String value, String domain ) {
+      if ( cookieStore == null ) {
+        cookieStore = new BasicCookieStore();
+      }
+      BasicClientCookie cookie = new BasicClientCookie( name, value );
+      cookie.setPath( "/" );
+      if ( domain != null && !domain.isEmpty() ) {
+        cookie.setDomain( domain );
+      }
+      cookieStore.addCookie( cookie );
+      // Also set cookie spec to ensure cookies are sent
+      if ( this.cookieSpec == null ) {
+        this.cookieSpec = CookieSpecs.DEFAULT;
+      }
+      return this;
+    }
+
+    public HttpClientBuilderFacade setSessionCookie( String name, String value ) {
+      if ( name == null || name.isEmpty() || value == null || value.isEmpty() ) {
+        this.sessionCookieHeader = null;
+        return this;
+      }
+      validateSessionCookiePart( name, "name" );
+      validateSessionCookiePart( value, "value" );
+      this.sessionCookieHeader = name + "=" + value;
+      return this;
+    }
+
+    static void validateSessionCookiePart( String part, String partName ) {
+      if ( part == null || part.isEmpty() ) {
+        return;
+      }
+      for ( int i = 0; i < part.length(); i++ ) {
+        char ch = part.charAt( i );
+        if ( ch == '\r' || ch == '\n' || ch == ';' ) {
+          throw new IllegalArgumentException( "Session cookie " + partName + " contains illegal character at index " + i );
+        }
+      }
+    }
+
     public HttpClientBuilderFacade setProxy( String proxyHost, int proxyPort ) {
       setProxy( proxyHost, proxyPort, "http" );
       return this;
@@ -135,12 +182,57 @@ public class HttpClientManager {
       HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
       httpClientBuilder.setConnectionManager( manager );
 
+      httpClientBuilder.setDefaultRequestConfig( buildRequestConfig() );
+
+      if ( provider != null ) {
+        httpClientBuilder.setDefaultCredentialsProvider( provider );
+      }
+      if ( redirectStrategy != null ) {
+        httpClientBuilder.setRedirectStrategy( redirectStrategy );
+      }
+      if ( cookieStore != null ) {
+        httpClientBuilder.setDefaultCookieStore( cookieStore );
+      }
+
+      if ( sessionCookieHeader != null ) {
+        httpClientBuilder.addInterceptorFirst( createSessionCookieInterceptor( sessionCookieHeader ) );
+      }
+
+      return httpClientBuilder.build();
+    }
+
+    // Package-private for direct unit testing.
+    static HttpRequestInterceptor createSessionCookieInterceptor( final String cookieHeaderValue ) {
+      return ( request, context ) -> {
+        final org.apache.http.Header existingCookieHeader = request.getFirstHeader( COOKIE_HEADER );
+        if ( existingCookieHeader == null || existingCookieHeader.getValue() == null
+          || existingCookieHeader.getValue().isEmpty() ) {
+          request.setHeader( COOKIE_HEADER, cookieHeaderValue );
+        } else if ( !hasCookiePair( existingCookieHeader.getValue(), cookieHeaderValue ) ) {
+          request.setHeader( COOKIE_HEADER, existingCookieHeader.getValue() + "; " + cookieHeaderValue );
+        }
+      };
+    }
+
+    // Package-private for direct unit testing.
+    static boolean hasCookiePair( String cookieHeader, String pairToFind ) {
+      // Parse cookie pairs to avoid false positives (e.g., JSESSIONID=1 matches JSESSIONID=12)
+      String[] pairs = cookieHeader.split( ";" );
+      for ( String pair : pairs ) {
+        if ( pair.trim().equals( pairToFind ) ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    private RequestConfig buildRequestConfig() {
       RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
       if ( socketTimeout > 0 ) {
         requestConfigBuilder.setSocketTimeout( socketTimeout );
       }
       if ( connectionTimeout > 0 ) {
-        requestConfigBuilder.setConnectTimeout( socketTimeout );
+        requestConfigBuilder.setConnectTimeout( connectionTimeout );
       }
       if ( proxy != null ) {
         requestConfigBuilder.setProxy( proxy );
@@ -157,18 +249,7 @@ public class HttpClientManager {
       if ( !rejectRelativeRedirect ) {
         requestConfigBuilder.setRelativeRedirectsAllowed( true );
       }
-
-      // RequestConfig built
-      httpClientBuilder.setDefaultRequestConfig( requestConfigBuilder.build() );
-
-      if ( provider != null ) {
-        httpClientBuilder.setDefaultCredentialsProvider( provider );
-      }
-      if ( redirectStrategy != null ) {
-        httpClientBuilder.setRedirectStrategy( redirectStrategy );
-      }
-
-      return httpClientBuilder.build();
+      return requestConfigBuilder.build();
     }
   }
 }

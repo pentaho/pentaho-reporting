@@ -79,23 +79,81 @@ public class PublishUtil {
     }
 
     final String urlPath = path.replaceAll( "%", "%25" ).replaceAll( "%2B", "+" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" );
+    MasterReport report;
+    try {
+      final byte[] data = downloadReportBytes( loginData, urlPath, path );
+      report = loadReport( data, path );
+    } catch ( ResourceException re ) {
+      if ( !isHtmlLoginPageError( re ) ) {
+        throw re;
+      }
+      final byte[] data = downloadReportBytes( loginData, urlPath, path );
+      report = loadReport( data, path );
+    }
+
+    final int index = context.addMasterReport( report );
+    return context.getReportRenderContext( index );
+  }
+
+  private static byte[] downloadReportBytes( final AuthenticationData loginData,
+      final String urlPath, final String originalPath ) throws IOException, ResourceException {
     final FileObject connection = createVFSConnection( loginData );
     final FileObject object = connection.resolveFile( urlPath );
     if ( object.exists() == false ) {
-      throw new FileNotFoundException( path );
+      throw new FileNotFoundException( originalPath );
     }
-
     final InputStream inputStream = object.getContent().getInputStream();
+    final byte[] bytes;
     try {
       final ByteArrayOutputStream out = new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) );
       IOUtils.getInstance().copyStreams( inputStream, out );
-      final MasterReport report = loadReport( out.toByteArray(), path );
-      final int index = context.addMasterReport( report );
-      return context.getReportRenderContext( index );
+      bytes = out.toByteArray();
     } finally {
       inputStream.close();
     }
+    // Eagerly detect a Spring login HTML page so the caller can decide to retry.
+    if ( looksLikeHtmlLoginPage( bytes ) ) {
+      throw new ResourceException( "Server returned HTML login page instead of report content for: " + originalPath );
+    }
+    return bytes;
   }
+
+  private static boolean looksLikeHtmlLoginPage( final byte[] data ) {
+    if ( data == null || data.length == 0 ) {
+      return false;
+    }
+    int i = 0;
+    // Skip leading whitespace / BOM
+    while ( i < data.length && i < 8 && ( data[ i ] == ' ' || data[ i ] == '\t'
+        || data[ i ] == '\r' || data[ i ] == '\n' || ( data[ i ] & 0xFF ) == 0xEF
+        || ( data[ i ] & 0xFF ) == 0xBB || ( data[ i ] & 0xFF ) == 0xBF ) ) {
+      i++;
+    }
+    if ( i >= data.length || data[ i ] != '<' ) {
+      return false;
+    }
+    // Inspect a small prefix for HTML markers.
+    final int len = Math.min( data.length - i, 512 );
+    final String head = new String( data, i, len ).toLowerCase( Locale.ROOT );
+    return head.startsWith( "<!doctype html" ) || head.startsWith( "<html" )
+        || head.contains( "<title>login" ) || head.contains( "j_spring_security_check" )
+        || head.contains( "name=\"j_username\"" );
+  }
+
+  private static boolean isHtmlLoginPageError( final ResourceException re ) {
+    Throwable t = re;
+    while ( t != null ) {
+      final String msg = t.getMessage();
+      if ( msg != null
+          && ( msg.contains( "HTML login page" )
+              || msg.contains( "Content is not allowed in prolog" ) ) ) {
+        return true;
+      }
+      t = t.getCause();
+    }
+    return false;
+  }
+
 
   private static MasterReport loadReport( final byte[] data, final String fileName ) throws IOException,
     ResourceException {
@@ -146,10 +204,29 @@ public class PublishUtil {
         propertiesForPublish = new Properties();
       }
       //Force overwrite flag here so that the server does not fail with an error in case the report already exists in the JCR
-      fileProperties.setProperty( PublishRestUtil.OVERWRITE_FILE_KEY, Boolean.TRUE.toString() );
+      propertiesForPublish.setProperty( PublishRestUtil.OVERWRITE_FILE_KEY, Boolean.TRUE.toString() );
 
-      PublishRestUtil publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
-      responseCode = publishRestUtil.publishFile( path, data, propertiesForPublish );
+      // Check for browser-based (SSO) authentication — use session cookie instead
+      // of BasicAuth which would send an empty password and lock the account.
+      final String publishSessionId = loginData.getOption( "sessionId" );
+      final boolean isPublishBrowserAuth = "true".equals( loginData.getOption( "browserAuth" ) );
+
+      responseCode = doPublish( loginData, path, data, propertiesForPublish,
+          isPublishBrowserAuth, publishSessionId );
+
+      // PublishRestUtil swallows transport exceptions and returns the
+      // HTTP_RESPONSE_FAIL sentinel (504). The first multipart POST after a
+      // U/P login can fail this way because the server's Spring filter chain
+      // sometimes intercepts the very first authenticated request before
+      // the BasicAuth filter has established a session — exactly the same
+      // class of issue that openReport handles via retry. A second attempt
+      // with a fresh PublishRestUtil instance reliably succeeds because the
+      // JSESSIONID is now established. SSO publishes already carry a valid
+      // session cookie so they don't need this retry.
+      if ( responseCode == HTTP_RESPONSE_FAIL && !isPublishBrowserAuth ) {
+        responseCode = doPublish( loginData, path, data, propertiesForPublish,
+            false, null );
+      }
     } else {
       final FileObject connection = createVFSConnection( loginData );
       final FileObject object = connection.resolveFile( path );
@@ -162,6 +239,18 @@ public class PublishUtil {
       }
     }
     return responseCode;
+  }
+
+  private static int doPublish( final AuthenticationData loginData, final String path, final byte[] data,
+      final Properties propertiesForPublish, final boolean isPublishBrowserAuth,
+      final String publishSessionId ) throws IOException {
+    final PublishRestUtil publishRestUtil;
+    if ( isPublishBrowserAuth && publishSessionId != null && !publishSessionId.isEmpty() ) {
+      publishRestUtil = PublishRestUtil.withSessionAuth( loginData.getUrl(), publishSessionId );
+    } else {
+      publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
+    }
+    return publishRestUtil.publishFile( path, data, propertiesForPublish );
   }
 
   /**
@@ -207,8 +296,23 @@ public class PublishUtil {
     final FileSystemOptions fileSystemOptions = new FileSystemOptions();
     final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
     configBuilder.setTimeOut( fileSystemOptions, getTimeout( loginData ) * 1000 );
-    configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, loginData
-        .getUsername(), loginData.getPassword() ) );
+    
+    // Check if this is browser-based authentication (session-based)
+    final String sessionId = loginData.getOption( "sessionId" );
+    final boolean isBrowserAuth = "true".equals( loginData.getOption( "browserAuth" ) );
+    
+    if ( isBrowserAuth && sessionId != null && !sessionId.isEmpty() ) {
+      // Browser authentication - store session ID in file system options
+      configBuilder.setSessionId( fileSystemOptions, sessionId );
+      // Still need authenticator for username (but password can be empty)
+      configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, 
+          loginData.getUsername(), "" ) );
+    } else {
+      // Traditional username/password authentication
+      configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, loginData
+          .getUsername(), loginData.getPassword() ) );
+    }
+    
     return fileSystemManager.resolveFile( normalizedUrl, fileSystemOptions );
   }
 
@@ -248,7 +352,7 @@ public class PublishUtil {
         throw new IllegalArgumentException( "Not a expected URL" );
       }
     }
-    return prefix.append( url2 ).toString();
+    return prefix.append( url2 ).append( url2.endsWith( "!" ) ? "" : "!" ).toString();
   }
 
   private static Pattern makePattern( String reservedChars ) {

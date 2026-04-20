@@ -23,6 +23,11 @@ import org.apache.commons.vfs2.VFS;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.RepositorySessionManager;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.AuthenticationHelper;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.BrowserLoginHandler;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.OAuthProvider;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.auth.SessionAuthenticationUtil;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
@@ -31,6 +36,7 @@ import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
+import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
 import javax.swing.AbstractAction;
@@ -70,6 +76,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class RepositoryOpenDialog extends CommonDialog {
 
   protected class LevelUpAction extends AbstractAction {
@@ -78,10 +86,10 @@ public class RepositoryOpenDialog extends CommonDialog {
      */
     public LevelUpAction() {
       putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString(
-          "RepositoryPublishDialog.LevelUpAction.Description" ) );
+        "RepositoryPublishDialog.LevelUpAction.Description" ) );
       final URL location =
-          RepositoryOpenDialog.class
-              .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/upOneFolder.png" ); // NON-NLS
+        RepositoryOpenDialog.class
+          .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/upOneFolder.png" ); // NON-NLS
       if ( location != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( location ) );
       } else {
@@ -113,10 +121,10 @@ public class RepositoryOpenDialog extends CommonDialog {
      */
     public BrowseRepositoryAction() {
       putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString(
-          "RepositoryPublishDialog.BrowseRepositoryAction.Description" ) );
+        "RepositoryPublishDialog.BrowseRepositoryAction.Description" ) );
       final URL location =
-          RepositoryOpenDialog.class
-              .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/exploreSolution.png" ); // NON-NLS
+        RepositoryOpenDialog.class
+          .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/exploreSolution.png" ); // NON-NLS
       if ( location != null ) {
         putValue( Action.SMALL_ICON, new ImageIcon( location ) );
       } else {
@@ -133,7 +141,7 @@ public class RepositoryOpenDialog extends CommonDialog {
       }
 
       final RepositoryTreeDialog treeDialog =
-          new RepositoryTreeDialog( RepositoryOpenDialog.this, isCreateFolderAllowed() );
+        new RepositoryTreeDialog( RepositoryOpenDialog.this, isCreateFolderAllowed() );
       try {
         final FileObject newLocation = treeDialog.performSelectLocation( fileSystemRoot, getFilters(), selectedView );
         if ( newLocation != null ) {
@@ -144,7 +152,12 @@ public class RepositoryOpenDialog extends CommonDialog {
           table.refresh();
         }
       } catch ( FileSystemException e1 ) {
-        UncaughtExceptionsModel.getInstance().addException( e1 );
+        if ( AuthenticationHelper.isAuthenticationError( e1 )
+          && AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+          handleSessionExpired();
+        } else {
+          UncaughtExceptionsModel.getInstance().addException( e1 );
+        }
       }
     }
   }
@@ -182,7 +195,10 @@ public class RepositoryOpenDialog extends CommonDialog {
             setSelectedView( selectedFileObject );
           }
         } catch ( FileSystemException e1 ) {
-          // ignore ..
+          if ( AuthenticationHelper.isAuthenticationError( e1 )
+              && AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+            handleSessionExpired();
+          }
         }
       }
     }
@@ -229,7 +245,10 @@ public class RepositoryOpenDialog extends CommonDialog {
           setVisible( false );
         }
       } catch ( FileSystemException e1 ) {
-        // ignore ..
+        if ( AuthenticationHelper.isAuthenticationError( e1 )
+            && AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+          handleSessionExpired();
+        }
       }
     }
 
@@ -253,7 +272,7 @@ public class RepositoryOpenDialog extends CommonDialog {
       try {
         if ( selectedFileObject.getType() == FileType.FILE ) {
           fileNameTextField.setText( URLDecoder.decode( selectedFileObject.getName().getBaseName().replaceAll( "\\+",
-              "%2B" ), "UTF-8" ) );
+            "%2B" ), "UTF-8" ) );
         }
       } catch ( FileSystemException e1 ) {
         // ignore ..
@@ -267,8 +286,9 @@ public class RepositoryOpenDialog extends CommonDialog {
     private FileObjectRenderer() {
     }
 
+    @Override
     public Component getListCellRendererComponent( final JList list, final Object value, final int index,
-        final boolean isSelected, final boolean cellHasFocus ) {
+                                                   final boolean isSelected, final boolean cellHasFocus ) {
       if ( value instanceof WebSolutionFileObject ) {
         final WebSolutionFileObject fo = (WebSolutionFileObject) value;
         final FileName fileName = fo.getName();
@@ -338,6 +358,15 @@ public class RepositoryOpenDialog extends CommonDialog {
   private JComboBox locationCombo;
   private FileObject fileSystemRoot;
   private FileObject selectedView;
+  private AuthenticationData currentLoginData;
+  private boolean sessionCheckInProgress;
+  private boolean initialNavigationInProgress;
+
+  public interface ReLoginListener {
+    void onReLoginSuccess( AuthenticationData newLoginData );
+  }
+
+  private transient ReLoginListener reLoginListener;
 
   public RepositoryOpenDialog() {
     init();
@@ -390,6 +419,18 @@ public class RepositoryOpenDialog extends CommonDialog {
     this.selectedView = selectedView;
     if ( selectedView != null ) {
       logger.debug( "Setting selected view to " + selectedView );
+
+      try {
+        selectedView.refresh();
+      } catch ( FileSystemException refreshEx ) {
+        logger.debug( "VFS refresh failed for " + selectedView, refreshEx );
+        if ( AuthenticationHelper.isAuthenticationError( refreshEx )
+            && AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+          handleSessionExpired();
+          return;
+        }
+      }
+
       try {
         if ( selectedView.getType() == FileType.FILE ) {
           logger.debug( "Setting filename in selected view to " + selectedView.getName().getBaseName() );
@@ -402,6 +443,8 @@ public class RepositoryOpenDialog extends CommonDialog {
       final ComboBoxModel comboBoxModel = createLocationModel( selectedView );
       this.locationCombo.setModel( comboBoxModel );
       this.table.setSelectedPath( (FileObject) comboBoxModel.getSelectedItem() );
+
+      checkForExpiredSession();
     } else {
       this.fileNameTextField.setText( null );
       this.table.setSelectedPath( null );
@@ -442,25 +485,14 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
   }
 
+  public void setReLoginListener( final ReLoginListener listener ) {
+    this.reLoginListener = listener;
+  }
+
   public String performOpen( final AuthenticationData loginData, final String previousSelection )
     throws FileSystemException, UnsupportedEncodingException {
-    fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
-    if ( previousSelection == null ) {
-      setSelectedView( fileSystemRoot );
-    } else {
-      final FileObject view = fileSystemRoot.resolveFile( previousSelection );
-      if ( view == null ) {
-        setSelectedView( fileSystemRoot );
-      } else {
-        if ( view.exists() == false ) {
-          setSelectedView( fileSystemRoot );
-        } else if ( view.getType() == FileType.FOLDER ) {
-          setSelectedView( view );
-        } else {
-          setSelectedView( view.getParent() );
-        }
-      }
-    }
+    this.currentLoginData = loginData;
+    connectAndNavigate( loginData, previousSelection );
 
     if ( StringUtils.isEmpty( fileNameTextField.getText(), true ) && previousSelection != null ) {
       final String fileName = IOUtils.getInstance().getFileName( previousSelection );
@@ -469,11 +501,179 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
 
     getConfirmAction().setEnabled( validateInputs( false ) );
-    if ( super.performEdit() == false || selectedView == null ) {
+    if ( !super.performEdit() || selectedView == null ) {
       return null;
     }
 
     return getSelectedFile();
+  }
+
+  protected void connectAndNavigate( final AuthenticationData loginData, final String previousSelection )
+    throws FileSystemException {
+    fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
+    refreshFileSystem();
+    initialNavigationInProgress = true;
+    try {
+      navigateToPreviousSelection( previousSelection );
+    } finally {
+      initialNavigationInProgress = false;
+    }
+  }
+
+  private void refreshFileSystem() throws FileSystemException {
+    try {
+      if ( fileSystemRoot.getFileSystem() instanceof JCRSolutionFileSystem jcrSolutionFileSystem ) {
+        jcrSolutionFileSystem.getLocalFileModel().refresh();
+      } else if ( fileSystemRoot.getFileSystem() instanceof WebSolutionFileSystem webSolutionFileSystem ) {
+        webSolutionFileSystem.getLocalFileModel().refresh();
+      }
+      fileSystemRoot.refresh();
+    } catch ( FileSystemException fse ) {
+      logger.debug( "Failed to refresh file system", fse );
+      throw fse;
+    } catch ( Exception e ) {
+      logger.debug( "Failed to refresh file system", e );
+      throw new FileSystemException( "vfs.provider/connect.error", e );
+    }
+  }
+
+  private void navigateToPreviousSelection( final String previousSelection ) {
+    if ( previousSelection == null ) {
+      setSelectedView( fileSystemRoot );
+      return;
+    }
+    try {
+      final FileObject view = fileSystemRoot.resolveFile( previousSelection );
+      if ( view == null || !view.exists() ) {
+        setSelectedView( fileSystemRoot );
+      } else if ( view.getType() == FileType.FOLDER ) {
+        setSelectedView( view );
+      } else {
+        setSelectedView( view.getParent() );
+      }
+    } catch ( FileSystemException e ) {
+      logger.debug( "Could not resolve previous selection, falling back to root", e );
+      setSelectedView( fileSystemRoot );
+    }
+  }
+
+  private void checkForExpiredSession() {
+    if ( !AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+      return;
+    }
+    // Skip while the dialog is performing its initial navigation (the
+    // connectAndNavigate() call already proves session validity, and an extra
+    // HTTP probe at that point only adds latency to the dialog opening).
+    if ( initialNavigationInProgress || sessionCheckInProgress || currentLoginData == null ) {
+      return;
+    }
+    sessionCheckInProgress = true;
+    try {
+      if ( !isSessionStillActive() ) {
+        handleSessionExpired();
+      }
+    } finally {
+      sessionCheckInProgress = false;
+    }
+  }
+
+  private boolean isSessionStillActive() {
+    if ( currentLoginData == null || currentLoginData.getUrl() == null ) {
+      return true;
+    }
+    // Delegate to the shared, redirect-aware, content-type-aware probe.
+    // Treat only an explicit FALSE as expired; null (network error) leaves the
+    // dialog alone so transient connectivity glitches don't trigger false re-login.
+    Boolean result = SessionAuthenticationUtil.checkSessionValidity( currentLoginData );
+    return !Boolean.FALSE.equals( result );
+  }
+
+  protected void handleSessionExpired() {
+    final String currentPath = getCurrentPath();
+
+    final String[] options = {
+      Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.LoginAgain" ),
+      Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Cancel" )
+    };
+    final int choice = JOptionPane.showOptionDialog( this,
+      Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Message" ),
+      Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Title" ),
+      JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0] );
+
+    if ( choice != JOptionPane.YES_OPTION ) {
+      return;
+    }
+
+    final AuthenticationData newLoginData;
+    if ( AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+      final OAuthProvider previousProvider = BrowserLoginHandler.recoverOAuthProvider( currentLoginData );
+      newLoginData = BrowserLoginHandler.performBrowserLoginWithRetry(
+        this, currentLoginData.getUrl(), previousProvider );
+    } else {
+      newLoginData = showReLoginDialog();
+    }
+    if ( newLoginData == null ) {
+      return;
+    }
+
+    this.currentLoginData = newLoginData;
+
+    RepositorySessionManager.getInstance().setSession( newLoginData, newLoginData.getUsername() );
+
+    if ( reLoginListener != null ) {
+      reLoginListener.onReLoginSuccess( newLoginData );
+    }
+
+    try {
+      connectAndNavigate( newLoginData, currentPath );
+      table.refresh();
+    } catch ( Exception ex ) {
+      logger.error( "Failed to reconnect after re-login", ex );
+      UncaughtExceptionsModel.getInstance().addException( ex );
+    }
+  }
+
+  protected String getCurrentPath() {
+    if ( selectedView == null ) {
+      return null;
+    }
+    try {
+      return selectedView.getName().getPathDecoded();
+    } catch ( FileSystemException e ) {
+      logger.debug( "Unable to decode current path", e );
+      return null;
+    }
+  }
+
+  protected AuthenticationData showReLoginDialog() {
+    final RepositoryLoginDialog loginDialog;
+    if ( getOwner() instanceof Frame frame ) {
+      loginDialog = new RepositoryLoginDialog( frame, false );
+    } else if ( getOwner() instanceof Dialog dialog ) {
+      loginDialog = new RepositoryLoginDialog( dialog, false );
+    } else {
+      loginDialog = new RepositoryLoginDialog( false );
+    }
+
+    if ( AuthenticationHelper.isBrowserAuth( currentLoginData ) ) {
+      loginDialog.setDialogMode( RepositoryLoginDialog.DialogMode.SSO_ONLY );
+    } else {
+      loginDialog.setDialogMode( RepositoryLoginDialog.DialogMode.CREDENTIALS_ONLY );
+    }
+
+    final AuthenticationData basicData = loginDialog.performReLogin( currentLoginData );
+    if ( basicData == null ) {
+      return null;
+    }
+    if ( loginDialog.getLoginMethod() == RepositoryLoginDialog.LoginMethod.SSO ) {
+      return BrowserLoginHandler.performBrowserLoginWithRetry( this, basicData.getUrl(),
+        loginDialog.getSelectedOAuthProvider() );
+    }
+    return basicData;
+  }
+
+  protected AuthenticationData getCurrentLoginData() {
+    return currentLoginData;
   }
 
   protected String getSelectedFile() throws FileSystemException, UnsupportedEncodingException {
@@ -486,8 +686,8 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
 
     final FileObject targetFile =
-        selectedView.resolveFile( fileNameTextField.getText().replaceAll( "\\%", "%25" ).replaceAll( "\\!", "%21" )
-            .replaceAll( ":", "%3A" ) );
+      selectedView.resolveFile( fileNameTextField.getText().replace( "%", "%25" ).replace( "!", "%21" )
+        .replace( ":", "%3A" ) );
     return targetFile.getName().getPathDecoded();
   }
 
@@ -585,6 +785,10 @@ public class RepositoryOpenDialog extends CommonDialog {
 
   protected boolean validateInputs( final boolean onConfirm ) {
     if ( StringUtils.isEmpty( fileNameTextField.getText() ) ) {
+      return false;
+    }
+    if ( onConfirm && AuthenticationHelper.isBrowserAuth( currentLoginData ) && !isSessionStillActive() ) {
+      handleSessionExpired();
       return false;
     }
     return true;

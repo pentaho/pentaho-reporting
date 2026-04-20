@@ -27,6 +27,7 @@ public class SelectFileFromRepositoryTask {
   private Component uiContext;
   private RepositoryOpenDialog repositoryBrowserDialog;
   private String[] filters;
+  private RepositoryOpenDialog.ReLoginListener reLoginListener;
 
   public SelectFileFromRepositoryTask( final Component uiContext ) {
     this.uiContext = uiContext;
@@ -38,6 +39,10 @@ public class SelectFileFromRepositoryTask {
 
   public void setFilters( final String[] filters ) {
     this.filters = filters;
+  }
+
+  public void setReLoginListener( final RepositoryOpenDialog.ReLoginListener listener ) {
+    this.reLoginListener = listener;
   }
 
   public String selectFile( final AuthenticationData loginData,
@@ -56,6 +61,10 @@ public class SelectFileFromRepositoryTask {
         repositoryBrowserDialog.setFilters( filters );
       }
       LibSwingUtil.centerFrameOnScreen( repositoryBrowserDialog );
+    }
+
+    if ( reLoginListener != null ) {
+      repositoryBrowserDialog.setReLoginListener( reLoginListener );
     }
 
     return ( repositoryBrowserDialog.performOpen( loginData, selectedFile ) );
