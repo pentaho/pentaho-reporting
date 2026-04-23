@@ -100,11 +100,21 @@ public class CSVPrinter {
 
         final String separator =
             metaData.getConfiguration().getConfigProperty( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
-        if ( separator.length() == 0 ) {
-          throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
+        if ( separator.isEmpty() ) {
+          throw new IllegalArgumentException( "CSV separator cannot be an empty string." );
         }
 
-        quoter = new CSVQuoter( separator.charAt( 0 ) );
+        final String quoteChar =
+            metaData.getConfiguration().getConfigProperty( CSVTableModule.ENCLOSURE_CHAR, CSVTableModule.ENCLOSURE_CHAR_DEFAULT );
+        if ( quoteChar.length() != 1 ) {
+          throw new IllegalArgumentException( "CSV enclosure must be a single character." );
+        }
+
+        final String forceQuotingConfig =
+          metaData.getConfiguration().getConfigProperty( CSVTableModule.FORCE_ENCLOSURE, CSVTableModule.FORCE_ENCLOSURE_DEFAULT );
+        final boolean forceQuoting = Boolean.parseBoolean( forceQuotingConfig );
+
+        quoter = new CSVQuoter( separator.charAt( 0 ), quoteChar.charAt( 0 ), forceQuoting );
       }
 
       if ( documentContentItem == null ) {
@@ -134,7 +144,7 @@ public class CSVPrinter {
         for ( short col = 0; col < columnCount; col++ ) {
           final RenderBox content = contentProducer.getContent( row, col );
           if ( content == null ) {
-            writer.print( quoter.getSeparator() );
+            writeEmptyCell( col, lastColumn );
             continue;
           }
 
@@ -146,8 +156,7 @@ public class CSVPrinter {
           final long colPos = sheetLayout.getXPosition( col );
           final long rowPos = sheetLayout.getYPosition( row );
           if ( content.getX() != colPos || ( content.getY() + contentOffset ) != rowPos ) {
-            // A spanned cell ..
-            writer.print( quoter.getSeparator() );
+            writeEmptyCell( col, lastColumn );
             continue;
           }
 
@@ -192,5 +201,16 @@ public class CSVPrinter {
 
   public void close() {
 
+  }
+
+  private void writeEmptyCell( final short col, final int lastColumn ) throws IOException {
+    if ( quoter.isForceQuote() ) {
+      quoter.doQuoting( "", writer );
+      if ( col < lastColumn ) {
+        writer.print( quoter.getSeparator() );
+      }
+    } else {
+      writer.print( quoter.getSeparator() );
+    }
   }
 }

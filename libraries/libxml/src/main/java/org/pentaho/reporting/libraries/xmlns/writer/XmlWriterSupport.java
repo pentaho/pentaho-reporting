@@ -664,7 +664,7 @@ public class XmlWriterSupport {
    * @param entry      the attribute enty.
    * @param namespaces the currently known namespaces.
    * @param writer     the writer that should receive the formatted attribute name.
-   * @throws IOException if an IO error occured.
+   * @throws IOException if an IO error occurred.
    */
   private void buildAttributeName( final AttributeList.AttributeEntry entry,
                                    final DeclaredNamespaces namespaces,
