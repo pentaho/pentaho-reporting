@@ -1350,11 +1350,6 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcmail-jdk15to18</artifactId>
-        <version>${bcprov-jdk15to18.version}</version>
-      </dependency>
-      <dependency>
         <groupId>barbecue</groupId>
         <artifactId>barbecue</artifactId>
         <version>${barbecue.version}</version>
