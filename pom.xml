@@ -147,7 +147,6 @@
     <encryption-support.version>11.1.0.0-SNAPSHOT</encryption-support.version>
     <commons-compress.version>1.28.0</commons-compress.version>
     <commons-io.version>2.21.0</commons-io.version>
-    <log4j.version>2.25.3</log4j.version>
     <xmlbeans.version>5.3.0</xmlbeans.version>
   </properties>
   <dependencyManagement>
