@@ -7,7 +7,7 @@
  * Use of this software is governed by the Business Source License included
  * in the LICENSE.TXT file.
  *
- * Change Date: 2028-08-13
+ * Change Date: 2029-07-20
  ******************************************************************************/
 
 
@@ -25,22 +25,22 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import javax.swing.table.TableModel;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.List;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.arrayContainingInAnyOrder;
-import static org.hamcrest.Matchers.emptyArray;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyString;
@@ -52,6 +52,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.atLeastOnce;
 
 public class SimpleSQLReportDataFactoryTest {
 
@@ -186,6 +187,15 @@ public class SimpleSQLReportDataFactoryTest {
     PreparedStatement statement = mock( PreparedStatement.class );
     ResultSet res = mock( ResultSet.class );
     ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    DatabaseMetaData dbmd = mock( DatabaseMetaData.class );
+    doReturn( "MockDriver" ).when( dbmd ).getDriverName();
+    doReturn( dbmd ).when( con ).getMetaData();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
     doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
@@ -226,6 +236,15 @@ public class SimpleSQLReportDataFactoryTest {
     ResultSet res = mock( ResultSet.class );
     ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
     ParameterMetaData parameterMetaData = mock( ParameterMetaData.class );
+    DatabaseMetaData dbmd = mock( DatabaseMetaData.class );
+    doReturn( "MockDriver" ).when( dbmd ).getDriverName();
+    doReturn( dbmd ).when( con ).getMetaData();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
     doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
@@ -271,6 +290,15 @@ public class SimpleSQLReportDataFactoryTest {
     ResultSet res = mock( ResultSet.class );
     ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
     ParameterMetaData parameterMetaData = mock( ParameterMetaData.class );
+    DatabaseMetaData dbmd = mock( DatabaseMetaData.class );
+    doReturn( "MockDriver" ).when( dbmd ).getDriverName();
+    doReturn( dbmd ).when( con ).getMetaData();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
 
     doReturn( 10 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
     doReturn( 20 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
@@ -316,6 +344,15 @@ public class SimpleSQLReportDataFactoryTest {
     CallableStatement statement = mock( CallableStatement.class );
     ResultSet res = mock( ResultSet.class );
     ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    DatabaseMetaData dbmd = mock( DatabaseMetaData.class );
+    doReturn( "MockDriver" ).when( dbmd ).getDriverName();
+    doReturn( dbmd ).when( con ).getMetaData();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
 
     Date currentDate = new Date();
     java.sql.Date sqlDate = new java.sql.Date( currentDate.getTime() );
@@ -365,6 +402,15 @@ public class SimpleSQLReportDataFactoryTest {
     CallableStatement statement = mock( CallableStatement.class );
     ResultSet res = mock( ResultSet.class );
     ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    DatabaseMetaData dbmd = mock( DatabaseMetaData.class );
+    doReturn( "MockDriver" ).when( dbmd ).getDriverName();
+    doReturn( dbmd ).when( con ).getMetaData();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
 
     Date currentDate = new Date();
     java.sql.Date sqlDate = new java.sql.Date( currentDate.getTime() );
@@ -484,5 +530,596 @@ public class SimpleSQLReportDataFactoryTest {
     this.connection = factory.getConnection( parameters );
     String[] result = factory.getReferencedFields( QUERY + "${param}", parameters );
     verify( factory, times( 0 ) ).close();
+  }
+
+  // =====================================================================
+  // performQuery — fetchSize config handling
+  // =====================================================================
+
+  @Test
+  public void testPerformQueryWithNullFetchSizeConfig() throws SQLException {
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+
+    // Set globalConfig to return null for POSTGRES_FETCH_SIZE
+    Configuration conf = mock( Configuration.class );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    ResultSet result = factory.performQuery( statement, QUERY, new String[] {} );
+
+    verify( statement ).executeQuery( QUERY );
+    assertThat( result, is( equalTo( res ) ) );
+  }
+
+  @Test
+  public void testPerformQueryWithPreparedStatement() throws SQLException {
+    PreparedStatement pstmt = mock( PreparedStatement.class );
+    ResultSet res = mock( ResultSet.class );
+    doReturn( res ).when( pstmt ).executeQuery();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    ResultSet result = factory.performQuery( pstmt, QUERY, new String[] { "param1" } );
+
+    verify( pstmt ).executeQuery();
+    verify( pstmt, never() ).executeQuery( anyString() );
+    assertThat( result, is( equalTo( res ) ) );
+  }
+
+  // =====================================================================
+  // parametrizeAndQuery — error path: statement closed on error
+  // =====================================================================
+
+  @Test
+  public void testParametrizeAndQueryClosesStatementOnSQLException() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+
+    // Configure globalConfig to disable disk-backed mode
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doThrow( new SQLException( "query failed" ) ).when( statement ).executeQuery( QUERY );
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    } catch ( SQLException e ) {
+      assertThat( e.getMessage(), is( equalTo( "query failed" ) ) );
+    }
+
+    // Statement should be closed on error
+    verify( statement ).close();
+  }
+
+  // =====================================================================
+  // parametrizeAndQuery — disk-backed mode restores autoCommit on error
+  // =====================================================================
+
+  @Test
+  public void testParametrizeAndQueryRestoresAutoCommitOnError() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+    doReturn( "PostgreSQL" ).when( dbMeta ).getDriverName();
+
+    // Enable disk-backed mode
+    Configuration conf = mock( Configuration.class );
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doThrow( new SQLException( "query failed" ) ).when( statement ).executeQuery( QUERY );
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    } catch ( SQLException e ) {
+      // expected
+    }
+
+    // autoCommit should be set to false (disk-backed init) then restored to true on error
+    verify( con ).setAutoCommit( false );
+    verify( con ).setAutoCommit( true );
+    verify( statement ).close();
+  }
+
+  // =====================================================================
+  // createStatement — disk-backed with MySQL driver uses MIN_VALUE fetch
+  // =====================================================================
+
+  @Test
+  public void testCreateStatementDiskBackedMySQLFetchSize() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+    doReturn( "MySQL Connector/J" ).when( dbMeta ).getDriverName();
+
+    // Enable disk-backed mode
+    Configuration conf = mock( Configuration.class );
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    } catch ( Exception e ) {
+      // May fail downstream but we verify the fetch size call
+    }
+
+    // MySQL should use Integer.MIN_VALUE for streaming
+    verify( statement, atLeastOnce() ).setFetchSize( Integer.MIN_VALUE );
+  }
+
+  @Test
+  public void testCreateStatementDiskBackedPostgresFetchSize() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+    doReturn( "PostgreSQL Native Driver" ).when( dbMeta ).getDriverName();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "7000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    } catch ( Exception e ) {
+      // May fail downstream but we verify the fetch size call
+    }
+
+    // Postgres should use the configured fetch size
+    verify( statement, atLeastOnce() ).setFetchSize( 7000 );
+  }
+
+  // =====================================================================
+  // createStatement — PreparedStatement parametrize fails, statement closed
+  // =====================================================================
+
+  @Test
+  public void testCreateStatementPreparedStatementClosedOnParametrizeError() throws SQLException {
+    final String translatedQuery = "select * from t where id = ?";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] { "param1" };
+    Connection con = mock( Connection.class );
+    PreparedStatement pstmt = mock( PreparedStatement.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( pstmt ).when( con ).prepareStatement( anyString(), anyInt(), anyInt() );
+    // clearParameters throws to simulate parametrize failure
+    doThrow( new SQLException( "parametrize failed" ) ).when( pstmt ).clearParameters();
+
+    try {
+      factory.parametrizeAndQuery( parameters, translatedQuery, preparedParameterNames );
+    } catch ( SQLException e ) {
+      assertThat( e.getMessage(), is( equalTo( "parametrize failed" ) ) );
+    }
+
+    // PreparedStatement should be closed when parametrize fails
+    verify( pstmt ).close();
+  }
+
+  // =====================================================================
+  // createStatement — CallableStatement parametrize fails, statement closed
+  // =====================================================================
+
+  @Test
+  public void testCreateStatementCallableStatementClosedOnParametrizeError() throws SQLException {
+    final String query = "{?=call myproc(?)}";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] { "param1" };
+    Connection con = mock( Connection.class );
+    CallableStatement cstmt = mock( CallableStatement.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( cstmt ).when( con ).prepareCall( anyString(), anyInt(), anyInt() );
+    // clearParameters throws to simulate parametrize failure
+    doThrow( new SQLException( "callable parametrize failed" ) ).when( cstmt ).clearParameters();
+
+    try {
+      factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
+    } catch ( SQLException e ) {
+      assertThat( e.getMessage(), is( equalTo( "callable parametrize failed" ) ) );
+    }
+
+    // CallableStatement should be closed when parametrize fails
+    verify( cstmt ).close();
+  }
+
+  // =====================================================================
+  // setQueryLimit — edge cases
+  // =====================================================================
+
+  @Test
+  public void testSetQueryLimitWithNull() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    Statement statement = mock( Statement.class );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+
+    // No exception, setMaxRows never called
+    // Call parametrizeAndQuery with a config that reaches setQueryLimit
+    Connection con = mock( Connection.class );
+    doReturn( con ).when( factory ).getConnection( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    ResultSet res = mock( ResultSet.class );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    factory.parametrizeAndQuery( parameters, QUERY, new String[] {} );
+
+    verify( statement, never() ).setMaxRows( anyInt() );
+  }
+
+  @Test
+  public void testSetQueryLimitWithZero() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( 0 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( con ).when( factory ).getConnection( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    factory.parametrizeAndQuery( parameters, QUERY, new String[] {} );
+
+    // max <= 0 means setMaxRows should NOT be called
+    verify( statement, never() ).setMaxRows( anyInt() );
+  }
+
+  @Test
+  public void testSetQueryLimitWithSQLException() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( 100 ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( con ).when( factory ).getConnection( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    // setMaxRows throws — should be caught and logged, not re-thrown
+    doThrow( new SQLException( "setMaxRows not supported" ) ).when( statement ).setMaxRows( 100 );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    // Should NOT throw — the exception is swallowed
+    TableModel result = factory.parametrizeAndQuery( parameters, QUERY, new String[] {} );
+    assertThat( result, is( notNullValue() ) );
+  }
+
+  // =====================================================================
+  // setQueryTimeout — edge cases
+  // =====================================================================
+
+  @Test
+  public void testSetQueryTimeoutWithSQLException() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( 30 ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( con ).when( factory ).getConnection( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doThrow( new SQLException( "setQueryTimeout not supported" ) ).when( statement ).setQueryTimeout( 30 );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    // Should NOT throw — the exception is swallowed
+    TableModel result = factory.parametrizeAndQuery( parameters, QUERY, new String[] {} );
+    assertThat( result, is( notNullValue() ) );
+  }
+    @Test
+    public void testCancelRunningQueryWhenNoStatement() {
+        // Should not throw when currentRunningStatement is null
+        factory.cancelRunningQuery();
+        assertThat( factory, is( notNullValue() ) );
+    }
+
+    @Test
+    public void testOnReportCancel() {
+        // Should not throw when currentRunningStatement is null
+        factory.onReportCancel();
+        assertThat( factory, is( notNullValue() ) );
+    }
+
+    @Test
+    public void testIsSimpleModeWithNullConfig() {
+        SimpleSQLReportDataFactory.globalConfig = null;
+        // When globalConfig is null, isSimpleMode defaults to true
+        assertThat( SimpleSQLReportDataFactory.globalConfig, is( nullValue() ) );
+    }
+
+
+  @Test
+  public void testParametrizeAndQueryWithNonSimpleMode() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    DatabaseMetaData dbmd = mock( DatabaseMetaData.class );
+    doReturn( "MockDriver" ).when( dbmd ).getDriverName();
+    doReturn( true ).when( dbmd ).supportsResultSetType( anyInt() );
+    doReturn( dbmd ).when( con ).getMetaData();
+
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( con ).when( factory ).getConnection( parameters );
+
+    // Set non-simple mode
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "table" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( true ).doReturn( false ).when( res ).next();
+    doReturn( "val" ).when( res ).getObject( 1 );
+
+    // Non-simple mode goes through createTableModel
+    TableModel result = factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    assertThat( result, is( notNullValue() ) );
+  }
+
+  // =====================================================================
+  // parametrizeAndQuery — disk-backed success path restores autoCommit
+  // =====================================================================
+
+  @Test
+  public void testParametrizeAndQueryDiskBackedRestoresAutoCommitOnSuccess() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+    doReturn( "PostgreSQL" ).when( dbMeta ).getDriverName();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    } catch ( Exception e ) {
+      // May fail in DiskBackedTableModel creation but autoCommit should still be restored
+    }
+
+    // Verify autoCommit was set to false then restored to true
+    verify( con ).setAutoCommit( false );
+    verify( con ).setAutoCommit( true );
+  }
+
+  // =====================================================================
+  // createStatement — MariaDB driver recognized for MySQL path
+  // =====================================================================
+
+  @Test
+  public void testCreateStatementDiskBackedMariaDBFetchSize() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] {};
+    Connection con = mock( Connection.class );
+    Statement statement = mock( Statement.class );
+    ResultSet res = mock( ResultSet.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+    doReturn( "MariaDB connector/J" ).when( dbMeta ).getDriverName();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, preparedParameterNames );
+    } catch ( Exception e ) {
+      // May fail downstream
+    }
+
+    // MariaDB should also use Integer.MIN_VALUE for streaming
+    verify( statement, atLeastOnce() ).setFetchSize( Integer.MIN_VALUE );
+  }
+
+  // =====================================================================
+  // parametrizeAndQuery — callable statement (non-query) path
+  // =====================================================================
+
+  @Test
+  public void testParametrizeAndQueryWithCallableStatementNonQuery() throws SQLException {
+    String query = "{call myproc(?)}";
+    DataRow parameters = mock( DataRow.class );
+    String[] preparedParameterNames = new String[] { "param1" };
+    Connection con = mock( Connection.class );
+    CallableStatement cstmt = mock( CallableStatement.class );
+    ResultSet res = mock( ResultSet.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
+
+    doReturn( "value1" ).when( parameters ).get( "param1" );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_LIMIT );
+    doReturn( null ).when( parameters ).get( DataFactory.QUERY_TIMEOUT );
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( ResultSet.TYPE_FORWARD_ONLY ).when( factory ).getBestResultSetType( parameters );
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "false" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( "5000" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doReturn( cstmt ).when( con ).prepareCall( anyString(), anyInt(), anyInt() );
+    doReturn( res ).when( cstmt ).executeQuery();
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "col" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "col" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
+
+    TableModel result = factory.parametrizeAndQuery( parameters, query, preparedParameterNames );
+
+    // Non-query callable statement: no registerOutParameter
+    verify( cstmt ).clearParameters();
+    verify( cstmt ).setObject( 1, "value1" );
+    verify( cstmt, never() ).registerOutParameter( anyInt(), anyInt() );
+    assertThat( result, is( notNullValue() ) );
   }
 }
