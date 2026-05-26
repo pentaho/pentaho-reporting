@@ -8,7 +8,7 @@
     <version>10.2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>classic-core</artifactId>
-  <version>10.2.0.0-SNAPSHOT</version>
+  <version>10.2.0.7-CUST-310</version>
   <properties>
     <powermock.version>1.6.3</powermock.version>
     <mockito-core.version>5.10.0</mockito-core.version>
@@ -24,46 +24,57 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libbase</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libdocbundle</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libfonts</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformat</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformula</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libloader</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>librepository</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libserializer</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libxml</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libswing</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>flute</artifactId>
+      <version>10.2.0.7-399</version>
     </dependency>
     <!-- apache poi 5.2.5 cannot be used together with poi-ooxml-schemas-4.1.2.jar.
    It needs to be used with either poi-ooxml-lite-5.2.1.jar or poi-ooxml-full-5.2.1.jar. -->
@@ -242,6 +253,7 @@
     <dependency>
       <groupId>org.pentaho.reporting.library</groupId>
       <artifactId>libformula</artifactId>
+      <version>10.2.0.7-399</version>
       <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
@@ -282,7 +294,7 @@
     </dependency>
   </dependencies>
   <build>
-    <plugins>
+   <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
