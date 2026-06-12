@@ -19,24 +19,25 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-import static jakarta.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_XML_TYPE;
+import static jakarta.ws.rs.core.MediaType.MULTIPART_FORM_DATA_TYPE;
 
 public class PublishRestUtil {
 
@@ -45,33 +46,45 @@ public class PublishRestUtil {
   public static final String REPORT_TITLE_KEY = "reportTitle";
   public static final String OVERWRITE_FILE_KEY = "overwriteFile";
   public static final String IMPORT_PATH_KEY = "importPath";
-
-  public static final String REPO_FILES_IMPORT = "api/repo/publish/file";
+  private static final String FILE_UPLOAD_FIELD = "fileUpload";
+  private static final int HTTP_RESPONSE_FAIL = 504;
+  private static final String SLASH = "/";
 
   private static final String REPO_FILES_IMPORT_WITH_OPTIONS = "api/repo/publish/fileWithOptions";
 
   private final String baseUrl;
   private final String username;
   private final String password;
+  private final String sessionId;
 
   private Client client = null;
 
   public PublishRestUtil( String baseUrl, String username, String password ) {
+    this( baseUrl, username, password, null );
+  }
+
+  public PublishRestUtil( String baseUrl, String username, String password, String sessionId ) {
     this.baseUrl = baseUrl.endsWith( "/" ) ? baseUrl : baseUrl + '/';
     this.username = username;
     this.password = password;
+    this.sessionId = sessionId;
 
     initRestService();
   }
 
-  /**
-   * Used for REST Jersey calls
-   */
+  @SuppressWarnings( "java:S2095" )
   private void initRestService() {
     ClientConfig clientConfig = new ClientConfig();
     clientConfig.register( MultiPartFeature.class );
-    HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
-    client = ClientBuilder.newClient( clientConfig ).register( feature );
+    if ( sessionId != null && !sessionId.isEmpty() ) {
+      final String cookieValue = "JSESSIONID=" + sessionId;
+      client = ClientBuilder.newClient( clientConfig )
+        .register( (jakarta.ws.rs.client.ClientRequestFilter) requestContext ->
+          requestContext.getHeaders().putSingle( "Cookie", cookieValue ) );
+    } else {
+      HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
+      client = ClientBuilder.newClient( clientConfig ).register( feature );
+    }
   }
 
   /**
@@ -107,68 +120,72 @@ public class PublishRestUtil {
    *   <li>{@code 500} - upload failed due to some internal server error</li>
    * </ul>
    *
-   * @param repositoryPath    repository folder where to upload the file; must be separated with /
-   * @param fileName          uploaded file's name; must not contain prohibited symbols
-   * @param fileProperties    the properties which should be applied to the file on repository
-   * @param fileInputStream   file's data stream
+   * @param repositoryPath repository folder where to upload the file; must be separated with /
+   * @param fileName       uploaded file's name; must not contain prohibited symbols
+   * @param fileProperties the properties which should be applied to the file on repository
+   * @param fileInputStream file's data stream
    * @return http response code
    * @see org.pentaho.platform.web.http.api.resources.RepositoryPublishResource
    */
-  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream, Properties fileProperties ) throws IOException {
-    String url = baseUrl + REPO_FILES_IMPORT_WITH_OPTIONS;
-    WebTarget target = client.target( url );
-    int responseCode = 504;
-    try ( ByteArrayOutputStream baos = new ByteArrayOutputStream() ) {
-      FormDataMultiPart fdmp = new FormDataMultiPart();
+  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream,
+                          Properties fileProperties ) throws IOException {
+    final String url = baseUrl + REPO_FILES_IMPORT_WITH_OPTIONS;
+    final WebTarget target = client.target( url );
+    int responseCode = HTTP_RESPONSE_FAIL;
+    try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          FormDataMultiPart fdmp = new FormDataMultiPart() ) {
 
-      String pathEncoded = URLEncoder.encode( repositoryPath + "/" + fileName, "UTF-8" );
-      String nameEncoded = URLEncoder.encode( fileName, "UTF-8" );
+      final String pathEncoded = URLEncoder.encode( repositoryPath + SLASH + fileName, StandardCharsets.UTF_8 );
+      final String nameEncoded = URLEncoder.encode( fileName, StandardCharsets.UTF_8 );
 
       if ( fileProperties == null ) {
         fileProperties = new Properties();
       }
-      fileProperties.storeToXML( baos, "file properties", "UTF-8" );
+      fileProperties.storeToXML( baos, "file properties", StandardCharsets.UTF_8 );
 
-      fdmp.bodyPart( new FormDataBodyPart( "properties", baos.toString( "UTF-8"  ), APPLICATION_XML_TYPE ) );
+      fdmp.bodyPart(
+        new FormDataBodyPart( "properties", baos.toString( StandardCharsets.UTF_8 ), APPLICATION_XML_TYPE ) );
       fdmp.field( IMPORT_PATH_KEY, pathEncoded, MULTIPART_FORM_DATA_TYPE );
-      fdmp.field( "fileUpload", fileInputStream, MULTIPART_FORM_DATA_TYPE );
-      fdmp.getField( "fileUpload" ).setContentDisposition( FormDataContentDisposition.name( "fileUpload" ).fileName( nameEncoded ).build() );
+      fdmp.field( FILE_UPLOAD_FIELD, fileInputStream, MULTIPART_FORM_DATA_TYPE );
+      fdmp.getField( FILE_UPLOAD_FIELD )
+        .setContentDisposition( FormDataContentDisposition.name( FILE_UPLOAD_FIELD ).fileName( nameEncoded ).build() );
 
-      Response response = target.request().post( Entity.entity( fdmp , MediaType.MULTIPART_FORM_DATA ) );
-
-      if ( response != null ) {
-        String message = response.readEntity( String.class );
-        logger.info( message );
-        responseCode = response.getStatus();
+      try ( Response response = target.request().post( Entity.entity( fdmp, MediaType.MULTIPART_FORM_DATA ) ) ) {
+        if ( response != null ) {
+          final String message = response.readEntity( String.class );
+          logger.info( message );
+          responseCode = response.getStatus();
+        }
       }
-    } catch ( Exception ex ) {
+    } catch ( RuntimeException ex ) {
       logger.error( ex.getMessage(), ex );
-      //throw new IOException(ex);
     }
     return responseCode;
   }
 
   /**
    * We need to keep the options of report. please use {@link #publishFile(String, byte[], Properties)}
-   * We keep the method for backward compatibility 
-   * 
-   * @since pentaho 8.1
+   * We keep the method for backward compatibility.
+   *
+   * @deprecated since 8.1, use {@link #publishFile(String, byte[], Properties)} instead.
    */
-  @Deprecated
+  @Deprecated( since = "8.1", forRemoval = false )
   public int publishFile( String filePath, byte[] data, boolean overwriteIfExists ) throws IOException {
-    Properties fileProperties =  new Properties();
+    Properties fileProperties = new Properties();
     fileProperties.setProperty( OVERWRITE_FILE_KEY, String.valueOf( overwriteIfExists ) );
     return publishFile( filePath, data, fileProperties );
   }
 
   /**
    * We need to keep the options of report. please use {@link #publishFile(String, String, InputStream, Properties)}
-   * We keep the method for backward compatibility 
-   * 
-   * @since pentaho 8.1
+   * We keep the method for backward compatibility.
+   *
+   * @deprecated since 8.1, use {@link #publishFile(String, String, InputStream, Properties)} instead.
    */
-  @Deprecated
-  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream, boolean overwriteIfExists ) throws IOException {
+  @SuppressWarnings("java:S1133")
+  @Deprecated( since = "8.1", forRemoval = false )
+  public int publishFile( String repositoryPath, String fileName, InputStream fileInputStream,
+                          boolean overwriteIfExists ) throws IOException {
     Properties fileProperties = new Properties();
     fileProperties.setProperty( OVERWRITE_FILE_KEY, String.valueOf( overwriteIfExists ) );
     return publishFile( repositoryPath, fileName, fileInputStream, fileProperties );

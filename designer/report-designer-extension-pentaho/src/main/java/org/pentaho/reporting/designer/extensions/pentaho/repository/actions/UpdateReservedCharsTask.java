@@ -13,6 +13,8 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
+import java.io.IOException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -26,6 +28,12 @@ import org.pentaho.reporting.engine.classic.core.util.HttpClientManager;
 import org.pentaho.reporting.engine.classic.core.util.HttpClientUtil;
 
 public class UpdateReservedCharsTask implements AuthenticatedServerTask {
+  private static final String SESSION_ID_OPTION = "sessionId";
+  private static final String COOKIE_HEADER = "Cookie";
+  private static final String SESSION_COOKIE_PREFIX = "JSESSIONID=";
+  private static final String RESERVED_CHARS_ERROR = "Failed to update reserved characters";
+  private static final String RESERVED_CHARS_DISPLAY_ERROR = "Failed to update reserved characters display";
+
   private AuthenticationData loginData;
 
   public UpdateReservedCharsTask( final AuthenticationData loginData ) {
@@ -38,15 +46,27 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
 
   private HttpClient createHttpClient() {
     HttpClientManager.HttpClientBuilderFacade clientBuilder = HttpClientManager.getInstance().createBuilder();
-    HttpClient client =
-      clientBuilder.setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
-        .setCredentials( loginData.getUsername(), loginData.getPassword() ).setCookieSpec( CookieSpecs.DEFAULT )
-        .build();
-
-    return client;
+    clientBuilder.setSocketTimeout( WorkspaceSettings.getInstance().getConnectionTimeout() * 1000 )
+      .setCookieSpec( CookieSpecs.DEFAULT );
+    final String sessionId = loginData.getOption( SESSION_ID_OPTION );
+    if ( sessionId == null || sessionId.isEmpty() ) {
+      clientBuilder.setCredentials( loginData.getUsername(), loginData.getPassword() );
+    }
+    return clientBuilder.build();
   }
 
-  private boolean checkResult( int result ) throws PublishException {
+  boolean isSsoSession() {
+    final String sessionId = loginData.getOption( SESSION_ID_OPTION );
+    return sessionId != null && !sessionId.isEmpty();
+  }
+
+  void applySsoCookie( HttpGet request ) {
+    if ( isSsoSession() ) {
+      request.setHeader( COOKIE_HEADER, SESSION_COOKIE_PREFIX + loginData.getOption( SESSION_ID_OPTION ) );
+    }
+  }
+
+  boolean checkResult( int result ) {
     return ( result == HttpStatus.SC_OK );
   }
 
@@ -62,9 +82,11 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
     HttpClient client = createHttpClient();
     final HttpGet reservedCharactersMethod =
       new HttpGet( loginData.getUrl() + "/api/repo/files/reservedCharacters" );
+    applySsoCookie( reservedCharactersMethod );
 
     final HttpGet reservedCharactersDisplayMethod =
       new HttpGet( loginData.getUrl() + "/api/repo/files/reservedCharactersDisplay" );
+    applySsoCookie( reservedCharactersDisplayMethod );
 
     try {
       HttpResponse httpResponse = client.execute( reservedCharactersMethod );
@@ -73,8 +95,8 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
         throw new PublishException( 1 );
       }
       PublishUtil.setReservedChars( HttpClientUtil.responseToString( httpResponse ) );
-    } catch ( Exception e ) {
-      throw new RuntimeException( e );
+    } catch ( PublishException | IOException e ) {
+      throw new IllegalStateException( RESERVED_CHARS_ERROR, e );
     }
 
     try {
@@ -84,8 +106,8 @@ public class UpdateReservedCharsTask implements AuthenticatedServerTask {
         throw new PublishException( 1 );
       }
       PublishUtil.setReservedCharsDisplay( HttpClientUtil.responseToString( httpResponse ) );
-    } catch ( Exception e ) {
-      throw new RuntimeException( e );
+    } catch ( PublishException | IOException e ) {
+      throw new IllegalStateException( RESERVED_CHARS_DISPLAY_ERROR, e );
     }
 
   }

@@ -52,13 +52,14 @@ public class RepositoryTable extends JTable {
      * @return the default table cell renderer
      * @see javax.swing.JComponent#isPaintingForPrint()
      */
+    @Override
     public Component getTableCellRendererComponent( final JTable table,
                                                     final Object value,
                                                     final boolean isSelected,
                                                     final boolean hasFocus,
                                                     final int row,
                                                     final int column ) {
-      if ( value instanceof Date == false ) {
+      if ( !( value instanceof Date ) ) {
         return super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
       }
 
@@ -115,6 +116,11 @@ public class RepositoryTable extends JTable {
 
   public FileObject getSelectedFileObject( final int rowIndex ) {
     return this.repositoryTableModel.getElementForRow( rowIndex );
+  }
+
+  public void setSessionExpiredListener(
+      final RepositoryTableModel.SessionExpiredListener listener ) {
+    repositoryTableModel.setSessionExpiredListener( listener );
   }
 
   public void refresh() {

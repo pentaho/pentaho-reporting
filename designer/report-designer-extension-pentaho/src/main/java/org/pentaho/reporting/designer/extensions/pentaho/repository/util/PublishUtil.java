@@ -55,6 +55,8 @@ public class PublishUtil {
 
   private static final String WEB_SOLUTION_PREFIX = "web-solution:";
   private static final String JCR_SOLUTION_PREFIX = "jcr-solution:";
+  private static final String HTTP_SCHEME = "http://";
+  private static final String HTTPS_SCHEME = "https://";
   public static final String SERVER_VERSION = "server-version";
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
@@ -78,22 +80,19 @@ public class PublishUtil {
       throw new IOException( "Path is empty." );
     }
 
-    final String urlPath = path.replaceAll( "%", "%25" ).replaceAll( "%2B", "+" ).replaceAll( "\\!", "%21" ).replaceAll( ":", "%3A" );
+    final String urlPath = path.replace( "%", "%25" ).replace( "%2B", "+" ).replace( "!", "%21" ).replace( ":", "%3A" );
     final FileObject connection = createVFSConnection( loginData );
     final FileObject object = connection.resolveFile( urlPath );
-    if ( object.exists() == false ) {
+    if ( !object.exists() ) {
       throw new FileNotFoundException( path );
     }
 
-    final InputStream inputStream = object.getContent().getInputStream();
-    try {
-      final ByteArrayOutputStream out = new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) );
+    try ( InputStream inputStream = object.getContent().getInputStream();
+          ByteArrayOutputStream out = new ByteArrayOutputStream( Math.max( 8192, (int) object.getContent().getSize() ) ) ) {
       IOUtils.getInstance().copyStreams( inputStream, out );
       final MasterReport report = loadReport( out.toByteArray(), path );
       final int index = context.addMasterReport( report );
       return context.getReportRenderContext( index );
-    } finally {
-      inputStream.close();
     }
   }
 
@@ -123,14 +122,12 @@ public class PublishUtil {
     ExternalToolLauncher.openURL( url );
   }
 
-  public static byte[] createBundleData( final MasterReport report ) throws PublishException, BundleWriterException {
+  public static byte[] createBundleData( final MasterReport report ) throws BundleWriterException {
     try {
       final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       BundleWriter.writeReportToZipStream( report, outputStream );
       return outputStream.toByteArray();
-    } catch ( final ContentIOException e ) {
-      throw new BundleWriterException( "Failed to write report", e );
-    } catch ( final IOException e ) {
+    } catch ( final ContentIOException | IOException e ) {
       throw new BundleWriterException( "Failed to write report", e );
     }
   }
@@ -146,9 +143,10 @@ public class PublishUtil {
         propertiesForPublish = new Properties();
       }
       //Force overwrite flag here so that the server does not fail with an error in case the report already exists in the JCR
-      fileProperties.setProperty( PublishRestUtil.OVERWRITE_FILE_KEY, Boolean.TRUE.toString() );
+      propertiesForPublish.setProperty( PublishRestUtil.OVERWRITE_FILE_KEY, Boolean.TRUE.toString() );
 
-      PublishRestUtil publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(), loginData.getPassword() );
+      PublishRestUtil publishRestUtil = new PublishRestUtil( loginData.getUrl(), loginData.getUsername(),
+          loginData.getPassword(), loginData.getOption( "sessionId" ) );
       responseCode = publishRestUtil.publishFile( path, data, propertiesForPublish );
     } else {
       final FileObject connection = createVFSConnection( loginData );
@@ -166,11 +164,11 @@ public class PublishUtil {
 
   /**
    * We need to keep the options of report. please use {@link #publish(byte[], String, AuthenticationData, Properties)}
-   * We keep the method for backward compatibility 
-   * 
-   * @since pentaho 8.1
+   * We keep the method for backward compatibility.
+   *
+   * @deprecated since 8.1, use {@link #publish(byte[], String, AuthenticationData, Properties)} instead.
    */
-  @Deprecated
+  @Deprecated( since = "8.1", forRemoval = false )
   public static int publish( final byte[] data, final String path, final AuthenticationData loginData ) throws IOException {
     return publish( data, path, loginData, new Properties() );
   }
@@ -209,6 +207,12 @@ public class PublishUtil {
     configBuilder.setTimeOut( fileSystemOptions, getTimeout( loginData ) * 1000 );
     configBuilder.setUserAuthenticator( fileSystemOptions, new StaticUserAuthenticator( normalizedUrl, loginData
         .getUsername(), loginData.getPassword() ) );
+
+    final String sessionId = loginData.getOption( "sessionId" );
+    if ( sessionId != null && !sessionId.isEmpty() ) {
+      configBuilder.setSessionId( fileSystemOptions, sessionId );
+    }
+
     return fileSystemManager.resolveFile( normalizedUrl, fileSystemOptions );
   }
 
@@ -223,27 +227,28 @@ public class PublishUtil {
     }
     final StringBuilder prefix = new StringBuilder( 100 );
     final String url2;
+    final String lowerUrl = baseURL.toLowerCase( Locale.ENGLISH );
     if ( version == SERVER_VERSION_LEGACY ) {
-      if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "http://" ) ) {  // NON-NLS   
-        url2 = baseURL.substring( "http://".length() ); // NON-NLS
+      if ( lowerUrl.startsWith( HTTP_SCHEME ) ) {  // NON-NLS
+        url2 = baseURL.substring( HTTP_SCHEME.length() ); // NON-NLS
         prefix.append( WEB_SOLUTION_PREFIX );
-        prefix.append( "http://" ); // NON-NLS
-      } else if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "https://" ) ) {  // NON-NLS     
-        url2 = baseURL.substring( "https://".length() );  // NON-NLS
+        prefix.append( HTTP_SCHEME ); // NON-NLS
+      } else if ( lowerUrl.startsWith( HTTPS_SCHEME ) ) {  // NON-NLS
+        url2 = baseURL.substring( HTTPS_SCHEME.length() );  // NON-NLS
         prefix.append( WEB_SOLUTION_PREFIX );
-        prefix.append( "https://" );  // NON-NLS
+        prefix.append( HTTPS_SCHEME );  // NON-NLS
       } else {
         throw new IllegalArgumentException( "Not a expected URL" );
       }
     } else {
-      if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "http://" ) ) {  // NON-NLS
-        url2 = baseURL.substring( "http://".length() ); // NON-NLS
+      if ( lowerUrl.startsWith( HTTP_SCHEME ) ) {  // NON-NLS
+        url2 = baseURL.substring( HTTP_SCHEME.length() ); // NON-NLS
         prefix.append( JCR_SOLUTION_PREFIX );
-        prefix.append( "http://" ); // NON-NLS
-      } else if ( baseURL.toLowerCase( Locale.ENGLISH ).startsWith( "https://" ) ) {  // NON-NLS     
-        url2 = baseURL.substring( "https://".length() );  // NON-NLS
+        prefix.append( HTTP_SCHEME ); // NON-NLS
+      } else if ( lowerUrl.startsWith( HTTPS_SCHEME ) ) {  // NON-NLS
+        url2 = baseURL.substring( HTTPS_SCHEME.length() );  // NON-NLS
         prefix.append( JCR_SOLUTION_PREFIX );
-        prefix.append( "https://" );  // NON-NLS
+        prefix.append( HTTPS_SCHEME );  // NON-NLS
       } else {
         throw new IllegalArgumentException( "Not a expected URL" );
       }
@@ -287,6 +292,31 @@ public class PublishUtil {
 
   public static void setReservedCharsDisplay( String reservedCharsDisplay ) {
     PublishUtil.reservedCharsDisplay = reservedCharsDisplay;
+  }
+
+  /**
+   * Returns {@code true} if the exception indicates an authentication or
+   * authorization failure (HTTP 401/403).
+   */
+  public static boolean isAuthenticationError( final Exception e ) {
+    Throwable current = e;
+    while ( current != null ) {
+      final String msg = current.getMessage();
+      if ( msg != null ) {
+        final String lower = msg.toLowerCase( Locale.ENGLISH );
+        if ( lower.contains( "invalid username or password" )
+            || lower.contains( "unauthorized" )
+            || lower.contains( "status code 401" )
+            || lower.contains( "status code 403" ) ) {
+          return true;
+        }
+      }
+      if ( current == current.getCause() ) {
+        break;
+      }
+      current = current.getCause();
+    }
+    return false;
   }
 
 }

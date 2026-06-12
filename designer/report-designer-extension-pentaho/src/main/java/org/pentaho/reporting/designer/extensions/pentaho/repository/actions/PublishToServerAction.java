@@ -31,12 +31,28 @@ import javax.swing.SwingUtilities;
  * User: Martin Date: 25.01.2006 Time: 11:26:24
  */
 public class PublishToServerAction extends AbstractReportContextAction {
+
+  /**
+   * Optional publish task factory. EE can override the publish flow; otherwise the default CE flow is used.
+   */
+  @FunctionalInterface
+  public interface PublishTaskFactory {
+    Runnable create( ReportDesignerContext context );
+  }
+
+  @SuppressWarnings( "java:S3077" )
+  private static volatile PublishTaskFactory publishTaskFactory;
+
+  public static void setPublishTaskFactory( final PublishTaskFactory factory ) {
+    publishTaskFactory = factory;
+  }
+
   public PublishToServerAction() {
     putValue( Action.NAME, Messages.getInstance().getString( "PublishToServerAction.Text" ) );
     putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString( "PublishToServerAction.Description" ) );
     final URL url =
-        PublishToServerAction.class
-            .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/PublishToServerIcon.png" );
+      PublishToServerAction.class
+        .getResource( "/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/PublishToServerIcon.png" );
     if ( url != null ) {
       putValue( Action.SMALL_ICON, new ImageIcon( url ) );
     }
@@ -57,26 +73,29 @@ public class PublishToServerAction extends AbstractReportContextAction {
     if ( activeContext.isChanged() ) {
       // ask the user and maybe save the report..
       final int option =
-          JOptionPane.showConfirmDialog( reportDesignerContext.getView().getParent(), Messages.getInstance().getString(
-              "PublishToServerAction.ReportModifiedWarning.Message" ), Messages.getInstance().getString(
-              "PublishToServerAction.ReportModifiedWarning.Title" ), JOptionPane.YES_NO_CANCEL_OPTION,
-              JOptionPane.WARNING_MESSAGE );
-      if ( option == JOptionPane.YES_OPTION ) {
-        if ( ( new SaveReportAction() ).saveReport( reportDesignerContext, activeContext, reportDesignerContext
-            .getView().getParent() ) == false ) {
-          return;
-        }
+        JOptionPane.showConfirmDialog( reportDesignerContext.getView().getParent(), Messages.getInstance().getString(
+            "PublishToServerAction.ReportModifiedWarning.Message" ), Messages.getInstance().getString(
+            "PublishToServerAction.ReportModifiedWarning.Title" ), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE );
+      if ( option == JOptionPane.YES_OPTION && !new SaveReportAction().saveReport( reportDesignerContext, activeContext, reportDesignerContext.getView().getParent() ) ) {
+        return;
       }
       if ( option == JOptionPane.CANCEL_OPTION ) {
         return;
       }
     }
 
-    final PublishToServerTask publishToServerTask =
-        new PublishToServerTask( reportDesignerContext, reportDesignerContext.getView().getParent() );
-    final LoginTask loginTask =
-        new LoginTask( reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask, null,
-            true );
+    // Route through EE tasks when configured; otherwise use the standard flow.
+    final PublishTaskFactory factory = publishTaskFactory;
+    if ( factory != null ) {
+      final Runnable eeTask = factory.create( reportDesignerContext );
+      if ( eeTask != null ) {
+        SwingUtilities.invokeLater( eeTask );
+        return;
+      }
+    }
+
+    final PublishToServerTask publishToServerTask = new PublishToServerTask( reportDesignerContext, reportDesignerContext.getView().getParent() );
+    final LoginTask loginTask = new LoginTask( reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask, null, true );
 
     SwingUtilities.invokeLater( loginTask );
 

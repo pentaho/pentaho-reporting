@@ -83,9 +83,11 @@ public class JCRSolutionFileModel implements SolutionFileModel {
   //this is required to retrieve a prpt - if true we get z ZIP file with .locale info
   private static final String SLASH = "/";
 
-  // ":" --> "%3A"
   private static final String ENCODED_COLON = RepositoryPathEncoder.encodeURIComponent( ":" );
 
+  // Lifecycle note: this    instance is intentionally retained for the life
+  // of the model and reused across operations; it is not a short-lived local.
+  @SuppressWarnings( "java:S2095" )
   private Client client;
   private String url;
   private RepositoryFileTreeDto root;
@@ -102,19 +104,37 @@ public class JCRSolutionFileModel implements SolutionFileModel {
                                final String username,
                                final String password,
                                final int timeout ) {
+    this( url, username, password, timeout, null );
+  }
+
+  @SuppressWarnings("java:S2095")
+  public JCRSolutionFileModel( final String url,
+                               final String username,
+                               final String password,
+                               final int timeout,
+                               final String sessionId ) {
     if ( url == null ) {
       throw new NullPointerException();
     }
     this.url = url;
-    descriptionEntries = new HashMap<FileName, String>();
+    descriptionEntries = new HashMap<>();
 
     CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
 
     final ClientConfig config = new ClientConfig();
     config.property( ClientProperties.FOLLOW_REDIRECTS, true );
     config.property( ClientProperties.READ_TIMEOUT, timeout );
-    HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
-    this.client = ClientBuilder.newClient( config ).register( feature );
+
+    if ( sessionId != null && !sessionId.isEmpty() ) {
+      // Session-based authentication: use JSESSIONID cookie instead of basic auth
+      final String cookieValue = "JSESSIONID=" + sessionId;
+      this.client = ClientBuilder.newClient( config )
+        .register( (jakarta.ws.rs.client.ClientRequestFilter) requestContext ->
+          requestContext.getHeaders().putSingle( "Cookie", cookieValue ) );
+    } else {
+      HttpAuthenticationFeature feature = HttpAuthenticationFeature.basic( username, password );
+      this.client = ClientBuilder.newClient( config ).register( feature );
+    }
     this.majorVersion = "999";
     this.minorVersion = "999";
     this.releaseVersion = "999";
@@ -126,7 +146,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
   // package-local constructor for testing purposes
   JCRSolutionFileModel( String url, Client client, boolean loadTreePartially ) {
     this.url = url;
-    this.descriptionEntries = new HashMap<FileName, String>();
+    this.descriptionEntries = new HashMap<>();
     this.client = client;
     this.loadTreePartially = loadTreePartially;
   }
@@ -149,10 +169,10 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     List<RepositoryFileTreeDto> originalChildren = original.getChildren();
     RepositoryFileTreeDtoProxy proxy = new RepositoryFileTreeDtoProxy( original, client, url );
     if ( originalChildren == null ) {
-      proxy.setChildren( Collections.<RepositoryFileTreeDto>emptyList() );
+      proxy.setChildren( Collections.emptyList() );
     } else {
       // pre-populating root's direct children
-      List<RepositoryFileTreeDto> proxiedChildren = new ArrayList<RepositoryFileTreeDto>( originalChildren.size() );
+      List<RepositoryFileTreeDto> proxiedChildren = new ArrayList<>( originalChildren.size() );
       for ( RepositoryFileTreeDto child : originalChildren ) {
         proxiedChildren.add( new RepositoryFileTreeDtoProxy( child, client, url ) );
       }
@@ -161,6 +181,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     return proxy;
   }
 
+  @SuppressWarnings( "java:S1874" )
   public void createFolder( final FileName file ) throws FileSystemException {
     try {
       final String path = URLEncoder
@@ -295,6 +316,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     return lastModifiedDate.getTime();
   }
 
+  @SuppressWarnings( "java:S1874" )
   private String getFormattedServiceUrl( final String urlService, final FileName file ) throws FileSystemException {
     if ( urlService == null ) {
       throw new NullPointerException();
@@ -336,39 +358,40 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     if ( path.length == 0 ) {
       return root;
     }
-    if ( "".equals( path[ 0 ] ) ) {
-      if ( path.length == 1 ) {
-        return root;
-      }
+    if ( "".equals( path[ 0 ] ) && path.length == 1 ) {
+      return root;
     }
     RepositoryFileTreeDto element = root;
     for ( final String pathSegment : path ) {
-      RepositoryFileTreeDto name = null;
       final List<RepositoryFileTreeDto> children = element.getChildren();
       if ( children == null ) {
         return null;
       }
-
-      for ( final RepositoryFileTreeDto child : children ) {
-        final RepositoryFileDto file = child.getFile();
-        if ( file == null ) {
-          throw new FileSystemException( BI_SERVER_NULL_OBJECT );
-        }
-        if ( pathSegment.equals( file.getName() ) ) {
-          name = child;
-          break;
-        }
-      }
-      if ( name == null ) {
+      final RepositoryFileTreeDto match = findChildByName( children, pathSegment );
+      if ( match == null ) {
         return null;
       }
-      element = name;
+      element = match;
     }
     return element;
   }
 
+  private RepositoryFileTreeDto findChildByName( final List<RepositoryFileTreeDto> children,
+                                                  final String name ) throws FileSystemException {
+    for ( final RepositoryFileTreeDto child : children ) {
+      final RepositoryFileDto file = child.getFile();
+      if ( file == null ) {
+        throw new FileSystemException( BI_SERVER_NULL_OBJECT );
+      }
+      if ( name.equals( file.getName() ) ) {
+        return child;
+      }
+    }
+    return null;
+  }
+
   protected String[] computeFileNames( FileName file ) {
-    final FastStack<String> stack = new FastStack<String>();
+    final FastStack<String> stack = new FastStack<>();
     while ( file != null ) {
       String name;
       try {
@@ -390,6 +413,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     return result;
   }
 
+  @SuppressWarnings("java:S1874")
   public byte[] getData( final FileName file ) throws FileSystemException {
     final String[] fileName = computeFileNames( file );
     final RepositoryFileTreeDto fileInfo = lookupNode( fileName );
@@ -404,14 +428,16 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     final String path = normalizePath( fileDto.getPath() );
     String urlPath = path;
     try {
-      urlPath = URLEncoder.encodeUTF8( path ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" );
+      urlPath = URLEncoder.encodeUTF8( path ).replace( "!", "%21" ).replace( "+", "%2B" );
     } catch ( Exception ex ) {
-    } //tcb
+      // unable to URL-encode path — fall back to original
+    }
     final String service = MessageFormat.format( DOWNLOAD_SERVICE, urlPath );
 
     return client.target( url + service ).request( MediaType.APPLICATION_XML_TYPE ).get( byte[].class );
   }
 
+  @SuppressWarnings("java:S1874")
   public void setData( final FileName file, final byte[] data ) throws FileSystemException {
     final String[] fileName = computeFileNames( file );
     final StringBuilder b = new StringBuilder();
@@ -423,7 +449,7 @@ public class JCRSolutionFileModel implements SolutionFileModel {
     }
 
     String service = MessageFormat.format( UPLOAD_SERVICE,
-      URLEncoder.encodeUTF8( normalizePath( b.toString() ).replaceAll( "\\!", "%21" ).replaceAll( "\\+", "%2B" ) ) );
+      URLEncoder.encodeUTF8( normalizePath( b.toString() ).replace( "!", "%21" ).replace( "+", "%2B" ) ) );
     final WebTarget target = client.target( url + service );
     final ByteArrayInputStream stream = new ByteArrayInputStream( data );
     Entity<InputStream> entity = Entity.entity( stream, MediaType.APPLICATION_OCTET_STREAM_TYPE );
