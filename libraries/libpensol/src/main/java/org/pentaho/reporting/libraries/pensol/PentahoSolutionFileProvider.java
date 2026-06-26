@@ -13,8 +13,6 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs2.Capability;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileSystem;
@@ -38,11 +36,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider {
-  private static final Log logger = LogFactory.getLog( PentahoSolutionFileProvider.class );
+  private final boolean bypassAuthentication;
 
-  private boolean bypassAuthentication = false;
-
-  public static final Collection capabilities = Collections.unmodifiableCollection( Arrays.asList(
+  public static final Collection<Capability> capabilities = Collections.unmodifiableCollection( Arrays.asList(
       Capability.GET_TYPE,
       Capability.GET_LAST_MODIFIED,
       Capability.LIST_CHILDREN,
@@ -61,15 +57,17 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
     setFileNameParser( LayeredFileNameParser.getInstance() );
 
     // check if can bypass authentication
+    boolean bypass = false;
     try {
       IPentahoSession session = PentahoSessionHolder.getSession();
       if ( session != null ) {
         // running locally => access directly bypassing authentication
-        this.bypassAuthentication = true;
+        bypass = true;
       }
     } catch ( NoClassDefFoundError e ) {
       // no server running
     }
+    this.bypassAuthentication = bypass;
   }
 
   /**
@@ -113,8 +111,9 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
         .getData( authData, UserAuthenticationData.PASSWORD, UserAuthenticatorUtils.toChar( outerName.getPassword() ) ) );
       final PentahoSolutionsFileSystemConfigBuilder configBuilder = new PentahoSolutionsFileSystemConfigBuilder();
       final int timeOut = configBuilder.getTimeOut( fileSystemOptions );
+      final String sessionId = configBuilder.getSessionId( fileSystemOptions );
 
-      final JCRSolutionFileModel model = new JCRSolutionFileModel( outerName.getURI(), username, password, timeOut );
+      final JCRSolutionFileModel model = new JCRSolutionFileModel( outerName.getURI(), username, password, timeOut, sessionId );
       return new JCRSolutionFileSystem( genericRootName, fileSystemOptions, model );
     } finally {
       UserAuthenticatorUtils.cleanup( authData );
@@ -150,7 +149,7 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
    * Get the filesystem capabilities.<br> These are the same as on the filesystem, but available before the first
    * filesystem was instanciated.
    */
-  public Collection getCapabilities() {
+  public Collection<Capability> getCapabilities() {
     return capabilities;
   }
 }

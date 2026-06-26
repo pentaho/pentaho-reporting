@@ -26,12 +26,46 @@ import java.net.URLDecoder;
 import java.util.Date;
 
 public class RepositoryTableModel extends AbstractTableModel {
+  /**
+   * Callback invoked when a {@code FileSystemException} indicates that the
+   * server session has expired (HTTP 401/403).
+   */
+  @FunctionalInterface
+  public interface SessionExpiredListener {
+    void onSessionExpired( FileSystemException cause );
+  }
+
   private FileObject selectedPath;
   private String[] filters;
   private boolean showHiddenFiles;
+  private transient SessionExpiredListener sessionExpiredListener;
 
   public RepositoryTableModel() {
     this.filters = new String[0];
+  }
+
+  public void setSessionExpiredListener( final SessionExpiredListener listener ) {
+    this.sessionExpiredListener = listener;
+  }
+
+  private void handleFileSystemException( final FileSystemException fse ) {
+    if ( PublishUtil.isAuthenticationError( fse ) && sessionExpiredListener != null ) {
+      sessionExpiredListener.onSessionExpired( fse );
+    } else {
+      UncaughtExceptionsModel.getInstance().addException( fse );
+    }
+  }
+
+  /**
+   * Determines whether a repository item should be displayed based on
+   * hidden-file settings and the configured filters.
+   */
+  private boolean isChildVisible( final FileObject child ) throws FileSystemException {
+    if ( !isShowHiddenFiles() && child.isHidden() ) {
+      return false;
+    }
+    return child.getType() == FileType.FOLDER
+      || PublishUtil.acceptFilter( filters, child.getName().getBaseName() );
   }
 
   public boolean isShowHiddenFiles() {
@@ -77,22 +111,14 @@ public class RepositoryTableModel extends AbstractTableModel {
 
       final FileObject[] children = selectedPath.getChildren();
       int count = 0;
-      for ( int i = 0; i < children.length; i++ ) {
-        final FileObject child = children[i];
-        if ( isShowHiddenFiles() == false && child.isHidden() ) {
-          continue;
+      for ( final FileObject child : children ) {
+        if ( isChildVisible( child ) ) {
+          count += 1;
         }
-        if ( child.getType() != FileType.FOLDER ) {
-          if ( PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
-            continue;
-          }
-        }
-
-        count += 1;
       }
       return count;
     } catch ( FileSystemException fse ) {
-      UncaughtExceptionsModel.getInstance().addException( fse );
+      handleFileSystemException( fse );
       return 0;
     }
   }
@@ -123,25 +149,17 @@ public class RepositoryTableModel extends AbstractTableModel {
 
       final FileObject[] children = selectedPath.getChildren();
       int count = 0;
-      for ( int i = 0; i < children.length; i++ ) {
-        final FileObject child = children[i];
-        if ( isShowHiddenFiles() == false && child.isHidden() ) {
-          continue;
-        }
-        if ( child.getType() != FileType.FOLDER ) {
-          if ( PublishUtil.acceptFilter( filters, child.getName().getBaseName() ) == false ) {
-            continue;
+      for ( final FileObject child : children ) {
+        if ( isChildVisible( child ) ) {
+          if ( count == row ) {
+            return child;
           }
+          count += 1;
         }
-
-        if ( count == row ) {
-          return child;
-        }
-        count += 1;
       }
       return null;
     } catch ( FileSystemException fse ) {
-      UncaughtExceptionsModel.getInstance().addException( fse );
+      handleFileSystemException( fse );
       return null;
     }
   }
@@ -167,8 +185,7 @@ public class RepositoryTableModel extends AbstractTableModel {
           throw new IndexOutOfBoundsException();
       }
     } catch ( FileSystemException fse ) {
-      // ignre the exception, assume the file is not valid
-      UncaughtExceptionsModel.getInstance().addException( fse );
+      handleFileSystemException( fse );
       return null;
     } catch ( UnsupportedEncodingException e ) {
       UncaughtExceptionsModel.getInstance().addException( e );

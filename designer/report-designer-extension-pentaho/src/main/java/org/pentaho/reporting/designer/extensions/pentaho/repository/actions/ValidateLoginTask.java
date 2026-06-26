@@ -20,6 +20,7 @@ import org.apache.commons.vfs2.FileType;
 import org.apache.commons.vfs2.VFS;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
+import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 
 import java.io.IOException;
@@ -45,9 +46,9 @@ public class ValidateLoginTask implements Runnable {
     loginComplete = false;
     try {
       loginComplete = validateLoginData();
-    } catch ( FileSystemException exception ) {
+    } catch ( FileSystemException exception1 ) {
       this.loginComplete = false;
-      this.exception = exception;
+      this.exception = exception1;
     }
   }
 
@@ -63,28 +64,47 @@ public class ValidateLoginTask implements Runnable {
     if ( loginData == null ) {
       return true;
     }
-    final FileObject vfsConnection = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
-    try {
+    try ( FileObject vfsConnection = PublishUtil.createVFSConnection( VFS.getManager(), loginData ) ) {
       final FileSystem fileSystem = vfsConnection.getFileSystem();
-      if ( fileSystem instanceof WebSolutionFileSystem ) {
-        final WebSolutionFileSystem webSolutionFileSystem = (WebSolutionFileSystem) fileSystem;
-        final Long l = (Long) webSolutionFileSystem.getAttribute( WebSolutionFileSystem.LAST_REFRESH_TIME_ATTRIBUTE );
-        if ( l != null ) {
-          if ( ( System.currentTimeMillis() - l ) > 500 ) {
-            webSolutionFileSystem.getLocalFileModel().refresh();
-          }
-        }
+      if ( fileSystem instanceof WebSolutionFileSystem webSolutionFileSystem ) {
+        refreshIfStale( webSolutionFileSystem,
+            WebSolutionFileSystem.LAST_REFRESH_TIME_ATTRIBUTE,
+            webSolutionFileSystem.getLocalFileModel() );
         return true;
       }
+      if ( fileSystem instanceof JCRSolutionFileSystem jcrFileSystem ) {
+        refreshIfStale( jcrFileSystem,
+            JCRSolutionFileSystem.LAST_REFRESH_TIME_ATTRIBUTE,
+            jcrFileSystem.getLocalFileModel() );
+        return true;
+      }
+      return vfsConnection.getType() == FileType.FOLDER;
     } catch ( FileSystemException fse ) {
-      // not all file systems support attributes ..
+      // refresh() threw — likely an expired session (HTTP 401/403).
+      // Re-throw so LoginTask can handle re-login.
+      throw fse;
     } catch ( IOException e ) {
       return false;
     }
-    final FileType type = vfsConnection.getType();
-    if ( type != FileType.FOLDER ) {
-      return false;
+  }
+
+  private void refreshIfStale( final FileSystem fileSystem,
+                                final String lastRefreshAttribute,
+                                final org.pentaho.reporting.libraries.pensol.SolutionFileModel fileModel )
+      throws IOException {
+    Long lastRefresh = null;
+    try {
+      lastRefresh = (Long) fileSystem.getAttribute( lastRefreshAttribute );
+    } catch ( FileSystemException fse ) {
+      // not all file systems support attributes — ignore and force a refresh
     }
-    return true;
+    if ( lastRefresh == null || ( System.currentTimeMillis() - lastRefresh ) > 500 ) {
+      try {
+        fileModel.refresh();
+      } catch ( RuntimeException re ) {
+        // Wrap HTTP errors for consistent handling.
+        throw new FileSystemException( re );
+      }
+    }
   }
 }

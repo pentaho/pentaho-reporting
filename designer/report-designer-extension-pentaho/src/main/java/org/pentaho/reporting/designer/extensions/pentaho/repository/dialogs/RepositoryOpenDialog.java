@@ -70,6 +70,8 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class RepositoryOpenDialog extends CommonDialog {
 
   protected class LevelUpAction extends AbstractAction {
@@ -102,7 +104,7 @@ public class RepositoryOpenDialog extends CommonDialog {
       try {
         setSelectedView( selectedView.getParent() );
       } catch ( FileSystemException e1 ) {
-        UncaughtExceptionsModel.getInstance().addException( e1 );
+        handleFileSystemException( e1 );
       }
     }
   }
@@ -144,7 +146,7 @@ public class RepositoryOpenDialog extends CommonDialog {
           table.refresh();
         }
       } catch ( FileSystemException e1 ) {
-        UncaughtExceptionsModel.getInstance().addException( e1 );
+        handleFileSystemException( e1 );
       }
     }
   }
@@ -221,7 +223,7 @@ public class RepositoryOpenDialog extends CommonDialog {
         if ( FileType.FOLDER.equals( selectedFileObject.getType() ) ) {
           setSelectedView( selectedFileObject );
         } else if ( FileType.FILE.equals( selectedFileObject.getType() ) ) {
-          if ( isDoubleClickConfirmsDialog() == false ) {
+          if ( !isDoubleClickConfirmsDialog() ) {
             return;
           }
 
@@ -252,7 +254,7 @@ public class RepositoryOpenDialog extends CommonDialog {
 
       try {
         if ( selectedFileObject.getType() == FileType.FILE ) {
-          fileNameTextField.setText( URLDecoder.decode( selectedFileObject.getName().getBaseName().replaceAll( "\\+",
+          fileNameTextField.setText( URLDecoder.decode( selectedFileObject.getName().getBaseName().replace( "+",
               "%2B" ), "UTF-8" ) );
         }
       } catch ( FileSystemException e1 ) {
@@ -301,7 +303,7 @@ public class RepositoryOpenDialog extends CommonDialog {
     public void actionPerformed( final ActionEvent e ) {
       if ( locationCombo.getSelectedItem() instanceof FileObject ) {
         final FileObject selectedItem = (FileObject) locationCombo.getSelectedItem();
-        if ( selectedItem.equals( getSelectedView() ) == false ) {
+        if ( !selectedItem.equals( getSelectedView() ) ) {
           setSelectedView( selectedItem );
         }
       }
@@ -338,6 +340,9 @@ public class RepositoryOpenDialog extends CommonDialog {
   private JComboBox locationCombo;
   private FileObject fileSystemRoot;
   private FileObject selectedView;
+  private volatile boolean sessionExpired;
+  private volatile boolean loginAgainRequested;
+  private boolean sessionExpiryHandlingEnabled;
 
   public RepositoryOpenDialog() {
     init();
@@ -367,6 +372,18 @@ public class RepositoryOpenDialog extends CommonDialog {
     table.addMouseListener( new TableInputHandler() );
     table.getSelectionModel().addListSelectionListener( new TableInputHandler() );
 
+    table.setSessionExpiredListener( cause -> {
+      if ( !sessionExpiryHandlingEnabled ) {
+        UncaughtExceptionsModel.getInstance().addException( cause );
+        return;
+      }
+      if ( sessionExpired ) {
+        return; // already handling session expiry
+      }
+      sessionExpired = true;
+      javax.swing.SwingUtilities.invokeLater( this::showSessionExpiredDialog );
+    } );
+
     super.init();
   }
 
@@ -384,6 +401,17 @@ public class RepositoryOpenDialog extends CommonDialog {
 
   protected FileObject getSelectedView() {
     return selectedView;
+  }
+
+  public String getLastBrowsePath() {
+    if ( selectedView == null ) {
+      return null;
+    }
+    try {
+      return selectedView.getName().getPathDecoded();
+    } catch ( Exception e ) {
+      return null;
+    }
   }
 
   public void setSelectedView( final FileObject selectedView ) {
@@ -444,6 +472,8 @@ public class RepositoryOpenDialog extends CommonDialog {
 
   public String performOpen( final AuthenticationData loginData, final String previousSelection )
     throws FileSystemException, UnsupportedEncodingException {
+    sessionExpired = false;
+    loginAgainRequested = false;
     fileSystemRoot = PublishUtil.createVFSConnection( VFS.getManager(), loginData );
     if ( previousSelection == null ) {
       setSelectedView( fileSystemRoot );
@@ -452,7 +482,7 @@ public class RepositoryOpenDialog extends CommonDialog {
       if ( view == null ) {
         setSelectedView( fileSystemRoot );
       } else {
-        if ( view.exists() == false ) {
+        if ( !view.exists() ) {
           setSelectedView( fileSystemRoot );
         } else if ( view.getType() == FileType.FOLDER ) {
           setSelectedView( view );
@@ -469,7 +499,7 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
 
     getConfirmAction().setEnabled( validateInputs( false ) );
-    if ( super.performEdit() == false || selectedView == null ) {
+    if ( !super.performEdit() || selectedView == null ) {
       return null;
     }
 
@@ -486,8 +516,8 @@ public class RepositoryOpenDialog extends CommonDialog {
     }
 
     final FileObject targetFile =
-        selectedView.resolveFile( fileNameTextField.getText().replaceAll( "\\%", "%25" ).replaceAll( "\\!", "%21" )
-            .replaceAll( ":", "%3A" ) );
+        selectedView.resolveFile( fileNameTextField.getText().replace( "%", "%25" ).replace( "!", "%21" )
+            .replace( ":", "%3A" ) );
     return targetFile.getName().getPathDecoded();
   }
 
@@ -584,16 +614,50 @@ public class RepositoryOpenDialog extends CommonDialog {
   }
 
   protected boolean validateInputs( final boolean onConfirm ) {
-    if ( StringUtils.isEmpty( fileNameTextField.getText() ) ) {
-      return false;
-    }
-    return true;
+    return !StringUtils.isEmpty( fileNameTextField.getText() );
   }
 
   public void refresh() throws IOException {
     final WebSolutionFileSystem fileSystem = (WebSolutionFileSystem) this.fileSystemRoot.getFileSystem();
     fileSystem.getLocalFileModel().refresh();
     table.refresh();
+  }
+
+  public boolean isSessionExpired() {
+    return sessionExpired;
+  }
+
+  public boolean isLoginAgainRequested() {
+    return loginAgainRequested;
+  }
+
+  public void setSessionExpiryHandlingEnabled( final boolean enabled ) {
+    this.sessionExpiryHandlingEnabled = enabled;
+  }
+
+  private void showSessionExpiredDialog() {
+    final String title = Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Title" );
+    final String message = Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Message" );
+    final String loginAgain = Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.LoginAgain" );
+    final String cancel = Messages.getInstance().getString( "RepositoryOpenDialog.SessionExpired.Cancel" );
+    final int choice = JOptionPane.showOptionDialog( this, message, title,
+      JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+      new Object[] { loginAgain, cancel }, loginAgain );
+    loginAgainRequested = ( choice == 0 );
+    setConfirmed( false );
+    setVisible( false );
+  }
+
+  private void handleFileSystemException( final FileSystemException e ) {
+    if ( sessionExpiryHandlingEnabled && PublishUtil.isAuthenticationError( e ) ) {
+      if ( sessionExpired ) {
+        return; // already handling session expiry
+      }
+      sessionExpired = true;
+      showSessionExpiredDialog();
+    } else {
+      UncaughtExceptionsModel.getInstance().addException( e );
+    }
   }
 
 }

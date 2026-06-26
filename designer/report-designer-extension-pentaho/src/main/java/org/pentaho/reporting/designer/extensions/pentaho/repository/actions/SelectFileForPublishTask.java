@@ -28,15 +28,22 @@ public class SelectFileForPublishTask {
 
   public SelectFileForPublishTask( final Component uiContext ) {
     final Window parent = LibSwingUtil.getWindowAncestor( uiContext );
-    if ( parent instanceof Frame ) {
-      repositoryBrowserDialog = new RepositoryPublishDialog( (Frame) parent );
-    } else if ( parent instanceof Dialog ) {
-      repositoryBrowserDialog = new RepositoryPublishDialog( (Dialog) parent );
+    if ( parent instanceof Frame frame ) {
+      repositoryBrowserDialog = new RepositoryPublishDialog( frame );
+    } else if ( parent instanceof Dialog dialog ) {
+      repositoryBrowserDialog = new RepositoryPublishDialog( dialog );
     } else {
       repositoryBrowserDialog = new RepositoryPublishDialog();
     }
 
     LibSwingUtil.centerFrameOnScreen( repositoryBrowserDialog );
+  }
+
+  /**
+   * Enables handling of expired repository sessions in the publish dialog.
+   */
+  public void setSessionExpiryHandlingEnabled( final boolean enabled ) {
+    repositoryBrowserDialog.setSessionExpiryHandlingEnabled( enabled );
   }
 
   public String selectFile( final AuthenticationData loginData,
@@ -74,5 +81,21 @@ public class SelectFileForPublishTask {
 
   public boolean isLockOutputType() {
     return repositoryBrowserDialog.isLockOutputType();
+  }
+
+  public boolean isSessionExpired() {
+    return repositoryBrowserDialog != null && repositoryBrowserDialog.isSessionExpired();
+  }
+
+  public boolean isLoginAgainRequested() {
+    return repositoryBrowserDialog != null && repositoryBrowserDialog.isLoginAgainRequested();
+  }
+
+  public String getLastBrowsePath() {
+    return repositoryBrowserDialog != null ? repositoryBrowserDialog.getLastBrowsePath() : null;
+  }
+
+  void setRepositoryBrowserDialog( final RepositoryPublishDialog repositoryBrowserDialog ) {
+    this.repositoryBrowserDialog = repositoryBrowserDialog;
   }
 }

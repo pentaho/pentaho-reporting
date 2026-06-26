@@ -27,9 +27,20 @@ public class SelectFileFromRepositoryTask {
   private Component uiContext;
   private RepositoryOpenDialog repositoryBrowserDialog;
   private String[] filters;
+  private boolean sessionExpiryHandlingEnabled;
 
   public SelectFileFromRepositoryTask( final Component uiContext ) {
     this.uiContext = uiContext;
+  }
+
+  /**
+   * Enables handling of expired repository sessions in the publish dialog.
+   */
+  public void setSessionExpiryHandlingEnabled( final boolean enabled ) {
+    this.sessionExpiryHandlingEnabled = enabled;
+    if ( repositoryBrowserDialog != null ) {
+      repositoryBrowserDialog.setSessionExpiryHandlingEnabled( enabled );
+    }
   }
 
   public String[] getFilters() {
@@ -44,10 +55,10 @@ public class SelectFileFromRepositoryTask {
                             final String selectedFile ) throws IOException {
     if ( repositoryBrowserDialog == null ) {
       final Window parent = LibSwingUtil.getWindowAncestor( uiContext );
-      if ( parent instanceof Frame ) {
-        repositoryBrowserDialog = new RepositoryOpenDialog( (Frame) parent );
-      } else if ( parent instanceof Dialog ) {
-        repositoryBrowserDialog = new RepositoryOpenDialog( (Dialog) parent );
+      if ( parent instanceof Frame frame ) {
+        repositoryBrowserDialog = new RepositoryOpenDialog( frame );
+      } else if ( parent instanceof Dialog dialog ) {
+        repositoryBrowserDialog = new RepositoryOpenDialog( dialog );
       } else {
         repositoryBrowserDialog = new RepositoryOpenDialog();
       }
@@ -55,9 +66,25 @@ public class SelectFileFromRepositoryTask {
       if ( filters != null ) {
         repositoryBrowserDialog.setFilters( filters );
       }
+      repositoryBrowserDialog.setSessionExpiryHandlingEnabled( sessionExpiryHandlingEnabled );
       LibSwingUtil.centerFrameOnScreen( repositoryBrowserDialog );
     }
-
     return ( repositoryBrowserDialog.performOpen( loginData, selectedFile ) );
+  }
+
+  public boolean isSessionExpired() {
+    return repositoryBrowserDialog != null && repositoryBrowserDialog.isSessionExpired();
+  }
+
+  public boolean isLoginAgainRequested() {
+    return repositoryBrowserDialog != null && repositoryBrowserDialog.isLoginAgainRequested();
+  }
+
+  public String getLastBrowsePath() {
+    return repositoryBrowserDialog != null ? repositoryBrowserDialog.getLastBrowsePath() : null;
+  }
+
+  void setRepositoryBrowserDialog( final RepositoryOpenDialog repositoryBrowserDialog ) {
+    this.repositoryBrowserDialog = repositoryBrowserDialog;
   }
 }

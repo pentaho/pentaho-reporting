@@ -19,10 +19,15 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.vfs2.FileContent;
 import org.apache.commons.vfs2.FileName;
@@ -31,7 +36,9 @@ import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileType;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockedStatic;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 
 public class RepositoryTableModelTest {
 
@@ -137,6 +144,95 @@ public class RepositoryTableModelTest {
         .getColumnName( 3 ) );
   }
 
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testGetColumnNameInvalidThrowsIndexOutOfBounds() {
+    final RepositoryTableModel repoTableModel = new RepositoryTableModel();
+    repoTableModel.getColumnName( 99 );
+  }
+
+  @Test
+  public void testHiddenFileVisibleWhenShowHiddenEnabled() throws Exception {
+
+    RepositoryTableModel model = new RepositoryTableModel();
+
+    model.setSelectedPath( fileObject );
+    model.setShowHiddenFiles( true );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+
+    doReturn( true ).when( childFile1 ).isHidden();
+    doReturn( FileType.FOLDER ).when( childFile1 ).getType();
+
+    doReturn( new FileObject[] { childFile1 } )
+      .when( fileObject ).getChildren();
+
+    assertEquals( 1, model.getRowCount() );
+  }
+
+  @Test
+  public void testFileRejectedByFilter() throws Exception {
+
+    RepositoryTableModel model = new RepositoryTableModel();
+
+    model.setSelectedPath( fileObject );
+    model.setShowHiddenFiles( true );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+
+    doReturn( false ).when( childFile1 ).isHidden();
+    doReturn( FileType.FILE ).when( childFile1 ).getType();
+
+    doReturn( childFileName1 ).when( childFile1 ).getName();
+    doReturn( "file1.txt" ).when( childFileName1 ).getBaseName();
+
+    doReturn( new FileObject[] { childFile1 } )
+      .when( fileObject ).getChildren();
+
+    try ( MockedStatic<PublishUtil> publishUtil =
+            mockStatic( PublishUtil.class ) ) {
+
+      publishUtil.when(
+          () -> PublishUtil.acceptFilter(
+            any(),
+            any() ) )
+        .thenReturn( false );
+
+      assertEquals( 0, model.getRowCount() );
+    }
+  }
+
+  @Test
+  public void testFileAcceptedByFilter() throws Exception {
+
+    RepositoryTableModel model = new RepositoryTableModel();
+
+    model.setSelectedPath( fileObject );
+    model.setShowHiddenFiles( true );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+
+    doReturn( false ).when( childFile1 ).isHidden();
+    doReturn( FileType.FILE ).when( childFile1 ).getType();
+
+    doReturn( childFileName1 ).when( childFile1 ).getName();
+    doReturn( "file1.prpt" ).when( childFileName1 ).getBaseName();
+
+    doReturn( new FileObject[] { childFile1 } )
+      .when( fileObject ).getChildren();
+
+    try ( MockedStatic<PublishUtil> publishUtil =
+            mockStatic( PublishUtil.class ) ) {
+
+      publishUtil.when(
+          () -> PublishUtil.acceptFilter(
+            any(),
+            any() ) )
+        .thenReturn( true );
+
+      assertEquals( 1, model.getRowCount() );
+    }
+  }
+
   @Test
   public void testGetElementForRow() {
     RepositoryTableModel repoTableModel = new RepositoryTableModel();
@@ -214,4 +310,272 @@ public class RepositoryTableModelTest {
     assertEquals( String.class, repoTableModel.getColumnClass( 1 ) );
   }
 
+  @Test
+  public void testGetValueAtDateColumnWithUnknownModifiedTimeReturnsNull() throws Exception {
+    final RepositoryTableModel repoTableModel = new RepositoryTableModel();
+    repoTableModel.setSelectedPath( fileObject );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+    doReturn( childFileName1 ).when( childFile1 ).getName();
+    doReturn( "file1.txt" ).when( childFileName1 ).getBaseName();
+    doReturn( childFileContent1 ).when( childFile1 ).getContent();
+    doReturn( -1L ).when( childFileContent1 ).getLastModifiedTime();
+    doReturn( new FileObject[] { childFile1 } ).when( fileObject ).getChildren();
+
+    assertNull( repoTableModel.getValueAt( 0, 2 ) );
+  }
+
+  @Test(expected = IndexOutOfBoundsException.class)
+  public void testGetValueAtInvalidColumnThrowsIndexOutOfBounds() throws Exception {
+    final RepositoryTableModel repoTableModel = new RepositoryTableModel();
+    repoTableModel.setSelectedPath( fileObject );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+    doReturn( childFileName1 ).when( childFile1 ).getName();
+    doReturn( "file1.txt" ).when( childFileName1 ).getBaseName();
+    doReturn( new FileObject[] { childFile1 } ).when( fileObject ).getChildren();
+    doReturn( childFileContent1 ).when( childFile1 ).getContent();
+
+    repoTableModel.getValueAt( 0, 99 );
+  }
+
+  @Test
+  public void testHiddenFileFilteredWhenShowHiddenDisabled() throws Exception {
+    final RepositoryTableModel repoTableModel = new RepositoryTableModel();
+    repoTableModel.setSelectedPath( fileObject );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+    doReturn( true ).when( childFile1 ).isHidden();
+    doReturn( false ).when( childFile2 ).isHidden();
+    doReturn( FileType.FILE ).when( childFile2 ).getType();
+    doReturn( childFileName2 ).when( childFile2 ).getName();
+    doReturn( "file2.prpt" ).when( childFileName2 ).getBaseName();
+    doReturn( new FileObject[] { childFile1, childFile2 } ).when( fileObject ).getChildren();
+
+    repoTableModel.setFilters( new String[] { ".prpt" } );
+    repoTableModel.setShowHiddenFiles( false );
+
+    assertEquals( 1, repoTableModel.getRowCount() );
+    assertEquals( childFile2, repoTableModel.getElementForRow( 0 ) );
+  }
+
+  @Test
+  public void testAuthenticationErrorTriggersSessionExpiredListener() throws Exception {
+    final RepositoryTableModel repoTableModel = new RepositoryTableModel();
+    repoTableModel.setSelectedPath( fileObject );
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+    when( fileObject.getChildren() ).thenThrow( new FileSystemException( "401" ) );
+
+    final AtomicBoolean called = new AtomicBoolean( false );
+    repoTableModel.setSessionExpiredListener( ex -> called.set( true ) );
+
+    try ( MockedStatic<PublishUtil> publishUtil = mockStatic( PublishUtil.class ) ) {
+      publishUtil.when( () -> PublishUtil.isAuthenticationError( any() ) ).thenReturn( true );
+
+      assertEquals( 0, repoTableModel.getRowCount() );
+      assertTrue( called.get() );
+    }
+  }
+
+  @Test
+  public void testNonAuthenticationErrorDoesNotTriggerSessionExpiredListener() throws Exception {
+    final RepositoryTableModel repoTableModel = new RepositoryTableModel();
+    repoTableModel.setSelectedPath( fileObject );
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+    when( fileObject.getChildren() ).thenThrow( new FileSystemException( "io" ) );
+
+    final AtomicBoolean called = new AtomicBoolean( false );
+    repoTableModel.setSessionExpiredListener( ex -> called.set( true ) );
+
+    try ( MockedStatic<PublishUtil> publishUtil = mockStatic( PublishUtil.class ) ) {
+      publishUtil.when( () -> PublishUtil.isAuthenticationError( any() ) ).thenReturn( false );
+      assertEquals( 0, repoTableModel.getRowCount() );
+      assertFalse( called.get() );
+    }
+  }
+
+  @Test
+  public void testGetValueAtHandlesFileSystemException() throws Exception {
+
+    RepositoryTableModel model = new RepositoryTableModel();
+    model.setSelectedPath( fileObject );
+
+    doReturn( FileType.FOLDER ).when( fileObject ).getType();
+    doReturn( new FileObject[] { childFile1 } ).when( fileObject ).getChildren();
+    doReturn( childFileName1 ).when( childFile1 ).getName();
+    doReturn( "file1.prpt" ).when( childFileName1 ).getBaseName();
+
+    when( childFile1.getContent() )
+      .thenThrow( new FileSystemException( "boom" ) );
+
+    assertNull( model.getValueAt( 0, 0 ) );
+  }
+
+  @Test
+  public void testGetValueAtUnsupportedEncodingCatch() throws Exception {
+
+    RepositoryTableModel model = new RepositoryTableModel();
+
+    try ( MockedStatic<java.net.URLDecoder> decoder =
+            mockStatic( java.net.URLDecoder.class ) ) {
+
+      decoder.when(
+          () -> java.net.URLDecoder.decode(
+            org.mockito.ArgumentMatchers.anyString(),
+            org.mockito.ArgumentMatchers.eq( "UTF-8" ) ) )
+        .thenThrow(
+          new UnsupportedEncodingException( "forced" ) );
+
+      model.setSelectedPath( fileObject );
+
+      doReturn( FileType.FOLDER ).when( fileObject ).getType();
+      doReturn( new FileObject[] { childFile1 } ).when( fileObject ).getChildren();
+      doReturn( childFileName1 ).when( childFile1 ).getName();
+      doReturn( "file1.prpt" ).when( childFileName1 ).getBaseName();
+
+      assertNull( model.getValueAt( 0, 1 ) );
+    }
+  }
+
+  @Test
+  public void testGetColumnClassAllBranches() {
+
+    RepositoryTableModel model = new RepositoryTableModel();
+
+    assertEquals(
+      Date.class,
+      model.getColumnClass( 2 ) );
+
+    assertEquals(
+      String.class,
+      model.getColumnClass( 0 ) );
+
+    assertEquals(
+      String.class,
+      model.getColumnClass( 1 ) );
+
+    assertEquals(
+      String.class,
+      model.getColumnClass( 3 ) );
+  }
+
+  @Test
+  public void testAuthenticationErrorWithNullListener() throws Exception {
+
+    RepositoryTableModel model =
+      new RepositoryTableModel();
+
+    model.setSelectedPath( fileObject );
+
+    doReturn( FileType.FOLDER )
+      .when( fileObject ).getType();
+
+    when(
+        fileObject.getChildren() )
+      .thenThrow(
+        new FileSystemException( "401" ) );
+
+    try ( MockedStatic<PublishUtil> publishUtil =
+            mockStatic( PublishUtil.class ) ) {
+
+      publishUtil.when(
+          () -> PublishUtil.isAuthenticationError(
+            any() ) )
+        .thenReturn( true );
+
+      assertEquals(
+        0,
+        model.getRowCount() );
+    }
+  }
+
+  @Test
+  public void testGetElementForRowHandlesFileSystemException() throws Exception {
+
+    RepositoryTableModel model =
+      new RepositoryTableModel();
+
+    model.setSelectedPath( fileObject );
+
+    doReturn( FileType.FOLDER )
+      .when( fileObject ).getType();
+
+    when(
+        fileObject.getChildren() )
+      .thenThrow(
+        new FileSystemException( "boom" ) );
+
+    assertNull(
+      model.getElementForRow( 0 ) );
+  }
+
+  @Test
+  public void testGetElementForRowReturnsNullWhenSelectedPathNull() {
+
+    RepositoryTableModel model =
+      new RepositoryTableModel();
+
+    assertNull(
+      model.getElementForRow( 0 ) );
+  }
+
+  @Test
+  public void testGetElementForRowReturnsNullWhenNotFolder()
+    throws Exception {
+
+    RepositoryTableModel model =
+      new RepositoryTableModel();
+
+    FileObject selected =
+      mock( FileObject.class );
+
+    model.setSelectedPath( selected );
+
+    when( selected.getType() )
+      .thenReturn( FileType.FILE );
+
+    assertNull(
+      model.getElementForRow( 0 ) );
+  }
+
+  @Test
+  public void testGetElementForRowReturnsNullWhenRowNotFound()
+    throws Exception {
+
+    RepositoryTableModel model =
+      new RepositoryTableModel();
+
+    FileObject selected =
+      mock( FileObject.class );
+
+    FileObject child =
+      mock( FileObject.class );
+
+    org.apache.commons.vfs2.FileName name =
+      mock( org.apache.commons.vfs2.FileName.class );
+
+    model.setSelectedPath( selected );
+
+    when( selected.getType() )
+      .thenReturn( FileType.FOLDER );
+
+    when( selected.getChildren() )
+      .thenReturn( new FileObject[] { child } );
+
+    when( child.isHidden() )
+      .thenReturn( false );
+
+    when( child.getType() )
+      .thenReturn( FileType.FOLDER );
+
+    when( child.getName() )
+      .thenReturn( name );
+
+    when( name.getBaseName() )
+      .thenReturn( "test.prpt" );
+
+    // only row 0 exists, ask for row 5
+    assertNull(
+      model.getElementForRow( 5 ) );
+  }
 }
