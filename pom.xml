@@ -69,7 +69,7 @@
     <pentaho-metadata.version>11.1.0.0-SNAPSHOT</pentaho-metadata.version>
     <pentaho.pentaho-versionchecker.version>${project.version}</pentaho.pentaho-versionchecker.version>
     <jsonpath.vesrion>1.0</jsonpath.vesrion>
-    <!-- [PPP-6549] ognl.version removed: now inherited from pentaho-ce-jar-parent-pom (CVE-2016-3093 fix, 3.0.21) -->
+    <!-- [PPP-6549] ognl.version removed: now inherited from pentaho-ce-jar-parent-pom (CVE-2016-3093 fix) -->
     <contiperf.version>2.2.0</contiperf.version>
     <feed4j.version>1.0</feed4j.version>
     <launcher.version>11.1.0.0-SNAPSHOT</launcher.version>
