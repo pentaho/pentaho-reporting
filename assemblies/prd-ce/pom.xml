@@ -538,6 +538,58 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <!--
+              Security remediation: the transitively-bundled org.apache.tinkerpop:gremlin-shaded jar
+              (report-designer/lib/gremlin-shaded-*.jar) ships redundant Jackson provenance metadata
+              (META-INF/maven/com.fasterxml.jackson.core/**) and unrelocated multi-release Jackson
+              classes (META-INF/versions/*/com/fasterxml/**). JFrog Xray flags these as a vulnerable
+              jackson-databind even though the runtime classes are relocated under
+              org/apache/tinkerpop/shaded/jackson and are unaffected. Strip only the misleading
+              metadata/MRJAR entries from the staged jar before the assembly zips report-designer;
+              the relocated runtime classes are preserved so gremlin keeps working.
+            -->
+            <id>strip-gremlin-shaded-jackson-metadata</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <taskdef name="for" classname="net.sf.antcontrib.logic.ForTask" classpathref="maven.plugin.classpath"/>
+                <for param="gremlinJar">
+                  <path>
+                    <fileset dir="${stage.dir.designer}/lib" includes="gremlin-shaded-*.jar"/>
+                  </path>
+                  <sequential>
+                    <echo message="Stripping Jackson provenance/MRJAR metadata from @{gremlinJar}"/>
+                    <zip destfile="@{gremlinJar}.stripped">
+                      <zipfileset src="@{gremlinJar}" excludes="META-INF/maven/com.fasterxml.jackson.core/**,META-INF/versions/*/com/fasterxml/**"/>
+                    </zip>
+                    <move file="@{gremlinJar}.stripped" tofile="@{gremlinJar}"/>
+                  </sequential>
+                </for>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+        </dependencies>
+      </plugin>
     </plugins>
   </build>
 
