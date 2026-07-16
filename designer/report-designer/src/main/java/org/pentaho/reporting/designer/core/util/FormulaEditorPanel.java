@@ -13,7 +13,6 @@
 
 package org.pentaho.reporting.designer.core.util;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -45,6 +44,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A text field that acts as a simple input for formulas with a button to invoke the formula editor if needed.
@@ -302,7 +302,7 @@ public class FormulaEditorPanel extends JPanel {
           continue;
         }
         fields.add( new DataSchemaFieldDefinition( columnName, attributes, dataAttributeContext ) );
-        if ( ObjectUtils.equals( parameter, columnName ) ) {
+        if ( Objects.equals( parameter, columnName ) ) {
           break;
         }
       }
