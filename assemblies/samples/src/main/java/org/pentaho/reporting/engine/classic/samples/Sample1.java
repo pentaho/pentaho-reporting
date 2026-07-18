@@ -2,13 +2,14 @@
  *
  * Pentaho
  *
- * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
+ * Copyright (C) 2024 - 2026 by Pentaho Canada Inc. : http://www.pentaho.com
  *
  * Use of this software is governed by the Business Source License included
  * in the LICENSE.TXT file.
  *
- * Change Date: 2029-07-20
+ * Change Date: 2030-06-15
  ******************************************************************************/
+
 
 
 package org.pentaho.reporting.engine.classic.samples;
@@ -92,7 +93,7 @@ public class Sample1 extends AbstractReportGenerator {
 
   /**
    * Simple command line application that will generate a PDF version of the report. In this report,
-   * the report definition has already been created with the Hitachi Vantara Report Designer application and
+   * the report definition has already been created with the Pentaho Report Designer application and
    * it located in the same package as this class. The data query is located in that report definition
    * as well, and there are a few report-modifying parameters that will be passed to the engine at runtime.
    * <p/>
