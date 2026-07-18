@@ -2,13 +2,14 @@
  *
  * Pentaho
  *
- * Copyright (C) 2024 by Hitachi Vantara, LLC : http://www.pentaho.com
+ * Copyright (C) 2024 - 2026 by Pentaho Canada Inc. : http://www.pentaho.com
  *
  * Use of this software is governed by the Business Source License included
  * in the LICENSE.TXT file.
  *
- * Change Date: 2029-07-20
+ * Change Date: 2030-06-15
  ******************************************************************************/
+
 package org.pentaho.reporting.engine.classic.core.modules.misc.connections;
 
 import org.pentaho.database.model.IDatabaseConnection;
@@ -123,7 +124,7 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService {
       throw new IllegalArgumentException();
     }
     if ( ObjectUtilities.equal( id, databaseConnection.getId() ) == false ) {
-      // the Hitachi Vantara-datasources API is ill defined and allows bad behaviour.
+      // the Pentaho-datasources API is ill defined and allows bad behaviour.
       throw new IllegalArgumentException();
     }
     if ( deletedMembersById.contains( id ) ) {
