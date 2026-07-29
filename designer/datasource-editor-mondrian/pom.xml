@@ -75,7 +75,7 @@
       <artifactId>jaxrpc-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.googlecode.jsendnsca</groupId>
+      <groupId>com.github.jsendnsca</groupId>
       <artifactId>jsendnsca</artifactId>
     </dependency>
     <dependency>
