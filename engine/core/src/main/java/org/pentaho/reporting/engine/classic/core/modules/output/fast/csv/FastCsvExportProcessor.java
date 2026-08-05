@@ -148,7 +148,7 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
       final TableModel tableModel = extractTableModel( startState );
 
       final int rowCount = tableModel.getRowCount();
-      final int columnCount = computeRealColumnCount( tableModel );
+      final int columnCount = tableModel.getColumnCount();
 
       // Phase 1: advance state machine through structural headers
       ProcessState state = advanceThroughHeaders( startState );
@@ -200,16 +200,9 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
     return tableModel;
   }
 
-  private int computeRealColumnCount( final TableModel tableModel ) {
-    final int totalColumns = tableModel.getColumnCount();
-    int realCount = 0;
-    for ( int col = 0; col < totalColumns; col++ ) {
-      final String name = tableModel.getColumnName( col );
-      if ( name == null || !name.startsWith( ClassicEngineBoot.INDEX_COLUMN_PREFIX ) ) {
-        realCount++;
-      }
-    }
-    return realCount;
+  private boolean isIndexColumn( final TableModel tableModel, final int column ) {
+    final String name = tableModel.getColumnName( column );
+    return name != null && name.startsWith( ClassicEngineBoot.INDEX_COLUMN_PREFIX );
   }
 
   private ProcessState advanceThroughHeaders( ProcessState state ) throws ReportProcessingException {
@@ -284,7 +277,7 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
     line.setLength( 0 );
     boolean firstCol = true;
     for ( int col = 0; col < columnCount; col++ ) {
-      if ( isHiddenColumn( formatters, col ) ) {
+      if ( isIndexColumn( tableModel, col ) || isHiddenColumn( formatters, col ) ) {
         continue;
       }
       if ( !firstCol ) {
@@ -327,7 +320,7 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
     line.setLength( 0 );
     boolean firstCol = true;
     for ( int col = 0; col < columnCount; col++ ) {
-      if ( isHiddenColumn( formatters, col ) ) {
+      if ( isIndexColumn( tableModel, col ) || isHiddenColumn( formatters, col ) ) {
         continue;
       }
       if ( !firstCol ) {
@@ -392,7 +385,7 @@ public class FastCsvExportProcessor extends AbstractReportProcessor {
     final Map<String, Integer> nameToIndex = new HashMap<>();
     for ( int col = 0; col < columnCount; col++ ) {
       final String name = tableModel.getColumnName( col );
-      if ( name != null ) {
+      if ( !isIndexColumn( tableModel, col ) && name != null ) {
         nameToIndex.put( name, col );
       }
     }
