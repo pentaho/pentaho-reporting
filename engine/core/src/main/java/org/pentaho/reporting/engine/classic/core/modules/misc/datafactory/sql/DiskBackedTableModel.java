@@ -159,7 +159,6 @@ public class DiskBackedTableModel extends AbstractTableModel
 
   /**
    * Reads all rows from the ResultSet and writes them directly to a temp file.
-   * Uses aggressive GC every 1lakh rows to prevent JDBC driver buffer accumulation.
    */
   private void spill( final ResultSet rs ) throws SQLException, IOException {
     tempFile = File.createTempFile( "pentaho_report_data_", ".tmp" );
@@ -168,8 +167,6 @@ public class DiskBackedTableModel extends AbstractTableModel
             new java.io.BufferedOutputStream( new FileOutputStream( tempFile ), 1048576 ) );
           DataOutputStream dos = new DataOutputStream( cos ) ) {
       while ( rs.next() ) {
-        // ensureOffsetCapacity() will NOT expand since rowOffsets is pre-allocated to 5M
-        // This prevents any Array.copyOf() operations that could trigger GC pauses
         ensureOffsetCapacity( rowCount );
         rowOffsets[ rowCount ] = cos.getBytesWritten();
 
@@ -197,13 +194,6 @@ public class DiskBackedTableModel extends AbstractTableModel
           logger.info( "DiskBackedTableModel: row " + rowCount + ", disk: " + diskMB
               + " MB, heap: " + usedMB + "/" + maxMB + " MB (" + heapPercent + "%)" );
 
-          // Escalating memory management strategy
-          if ( usedMB > ( maxMB * 75 / 100 ) ) {
-            // Heap is 75%+ full — aggressive recovery attempt
-            logger.warn( "WARN: Heap usage at " + heapPercent + "% at row " + rowCount
-                + ". Initiating aggressive garbage collection." );
-
-          }
         }
       }
 
