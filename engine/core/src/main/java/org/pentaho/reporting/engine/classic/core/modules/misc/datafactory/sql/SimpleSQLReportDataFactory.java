@@ -21,7 +21,6 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
-import org.pentaho.reporting.engine.classic.core.event.async.AsyncReportStatusListener;
 import org.pentaho.reporting.engine.classic.core.event.async.IAsyncReportListener;
 import org.pentaho.reporting.engine.classic.core.event.async.IReportCancelEvent;
 import org.pentaho.reporting.engine.classic.core.event.async.ReportListenerThreadHolder;
@@ -44,7 +43,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.concurrent.Callable;
 
 /**
  * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
@@ -267,37 +265,204 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
 
   protected TableModel parametrizeAndQuery( final DataRow parameters, final String translatedQuery,
       final String[] preparedParameterNames ) throws SQLException {
-    final boolean callableStatementQuery = isCallableStatementQuery( translatedQuery );
-    final boolean callableStatementUsed = callableStatementQuery || isCallableStatement( translatedQuery );
-    final Statement statement;
+    final boolean callableStatementUsed =
+        isCallableStatementQuery( translatedQuery ) || isCallableStatement( translatedQuery );
+    final Connection conn = getConnection( parameters );
+    final boolean useDiskBacked = isUseDiskBacked();
+
+    boolean originalAutoCommit = false;
+    if ( useDiskBacked ) {
+      originalAutoCommit = conn.getAutoCommit();
+      conn.setAutoCommit( false );
+    }
+
+    // Create the appropriate Statement type in one place.
+    // The statement is NOT closed here on success — the downstream TableModel factory
+    // (generateDefaultTableModel / createTableModel / generateDiskBackedTableModel)
+    // takes ownership of closing the ResultSet and its Statement.
+    Statement statement = null;
+    try {
+      statement = createStatement(
+          parameters, translatedQuery, preparedParameterNames, callableStatementUsed, conn, useDiskBacked );
+      setQueryLimit( parameters, statement );
+      setQueryTimeout( parameters, statement );
+
+      // Track the currently running statement for cancellation support
+      final ResultSet res;
+      try {
+        currentRunningStatement = statement;
+        res = performQuery( statement, translatedQuery, preparedParameterNames );
+      } finally {
+        currentRunningStatement = null;
+      }
+
+      // NOTE: Do NOT close the statement here. The ResultSet is still open and will be
+      // consumed by the TableModel factory. Closing the Statement would close the ResultSet
+      // per the JDBC specification, causing downstream failures.
+
+      if ( useDiskBacked ) {
+        try {
+          return ResultSetTableModelFactory.getInstance().generateDiskBackedTableModel( res, columnNameMapping );
+        } finally {
+          restoreAutoCommit( conn, originalAutoCommit );
+        }
+      }
+
+      if ( isSimpleMode() ) {
+        return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
+      }
+      return ResultSetTableModelFactory.getInstance().createTableModel( res, columnNameMapping, true );
+
+    } catch ( final SQLException | RuntimeException e ) {
+      // On any error, close the statement to prevent resource leaks
+      closeStatementQuietly( statement );
+      if ( useDiskBacked ) {
+        restoreAutoCommit( conn, originalAutoCommit );
+      }
+      throw e;
+    }
+  }
+
+  /**
+   * Creates and configures the appropriate Statement (plain, PreparedStatement, or CallableStatement)
+   * based on the query type and parameters. The caller takes ownership of closing the returned Statement.
+   */
+  private Statement createStatement( final DataRow parameters, final String translatedQuery,
+      final String[] preparedParameterNames, final boolean callableStatementUsed,
+      final Connection conn, final boolean useDiskBacked ) throws SQLException {
+
     if ( preparedParameterNames.length == 0 ) {
-      statement =
-          getConnection( parameters ).createStatement( getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
-    } else {
-      if ( callableStatementUsed ) {
-        final CallableStatement pstmt =
-          getConnection( parameters ).prepareCall( translatedQuery, getBestResultSetType( parameters ),
-              ResultSet.CONCUR_READ_ONLY );
+      final Statement stmt = conn.createStatement( getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+      if ( useDiskBacked ) {
+        configureDiskBackedFetchSize( conn, stmt );
+      }
+      return stmt;
+    }
+
+    if ( callableStatementUsed ) {
+      final CallableStatement pstmt = conn.prepareCall(
+          translatedQuery, getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+      try {
         if ( isCallableStatementQuery( translatedQuery ) ) {
           pstmt.registerOutParameter( 1, Types.OTHER );
           parametrize( parameters, preparedParameterNames, pstmt, false, 1 );
         } else {
           parametrize( parameters, preparedParameterNames, pstmt, false, 0 );
         }
-        statement = pstmt;
-      } else {
-        final PreparedStatement pstmt =
-          getConnection( parameters ).prepareStatement( translatedQuery, getBestResultSetType( parameters ),
-              ResultSet.CONCUR_READ_ONLY );
-        parametrize( parameters, preparedParameterNames, pstmt, isExpandArrays(), 0 );
-        statement = pstmt;
+        if ( useDiskBacked ) {
+          configureDiskBackedFetchSize( conn, pstmt );
+        }
+        return pstmt;
+      } catch ( final SQLException | RuntimeException e ) {
+        closeStatementQuietly( pstmt );
+        throw e;
       }
     }
 
+    final PreparedStatement pstmt = conn.prepareStatement(
+        translatedQuery, getBestResultSetType( parameters ), ResultSet.CONCUR_READ_ONLY );
+    try {
+      parametrize( parameters, preparedParameterNames, pstmt, isExpandArrays(), 0 );
+      if ( useDiskBacked ) {
+        configureDiskBackedFetchSize( conn, pstmt );
+      }
+      return pstmt;
+    } catch ( final SQLException | RuntimeException e ) {
+      closeStatementQuietly( pstmt );
+      throw e;
+    }
+  }
+
+  /**
+   * Configures the fetch size for disk-backed streaming based on the JDBC driver type.
+   */
+  private static void configureDiskBackedFetchSize( final Connection conn, final Statement statement )
+      throws SQLException {
+    final String driverName = conn.getMetaData().getDriverName();
+    setFetchSize( driverName == null ? null : driverName.toLowerCase(), statement );
+  }
+
+  /**
+   * Closes a Statement quietly, logging any errors but not re-throwing them.
+   */
+  private static void closeStatementQuietly( final Statement statement ) {
+    if ( statement != null ) {
+      try {
+        statement.close();
+      } catch ( final SQLException e ) {
+        logger.warn( "Failed to close statement: " + e.getMessage() );
+      }
+    }
+  }
+
+  /**
+   * Restores the connection's autoCommit setting, logging any errors.
+   */
+  private static void restoreAutoCommit( final Connection conn, final boolean originalAutoCommit ) {
+    try {
+      conn.setAutoCommit( originalAutoCommit );
+    } catch ( final SQLException sqle ) {
+      logger.warn( "Failed to restore autoCommit: " + sqle.getMessage() );
+    }
+  }
+
+
+  private static boolean isSimpleMode() {
+        // Original code path — in-memory TableModel
+        // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
+    boolean simpleMode = true;
+    if ( globalConfig != null ) {
+      simpleMode = "simple".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
+                  ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) );
+    }
+    return simpleMode;
+  }
+
+  private static boolean isUseDiskBacked() {
+    if ( globalConfig == null ) {
+      return true;
+    }
+    return "true".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
+                        ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL ) );
+  }
+
+  private static void setFetchSize( String driverName, Statement statement ) throws SQLException {
+    if ( driverName != null && ( driverName.contains( "mysql" ) || driverName.contains( "mariadb" ) ) ) {
+      statement.setFetchSize( Integer.MIN_VALUE );
+    }
+    else {
+      int fetchSize = 5000;
+        if (globalConfig != null) {
+            String value = globalConfig.getConfigProperty(ResultSetTableModelFactory.FETCH_SIZE);
+
+            if (value == null) {
+                statement.setFetchSize( fetchSize );
+                return;
+            }
+
+            value = value.trim();
+            if (value.isEmpty()) {
+                statement.setFetchSize( fetchSize );
+                return;
+            }
+
+            try {
+                fetchSize = Integer.parseInt(value);
+            } catch (NumberFormatException e) {
+                logger.warn(
+                        "Invalid fetch size value '" + value +
+                                "', using default fetch size " + fetchSize, e);
+            }
+        }
+      statement.setFetchSize( fetchSize );
+    }
+  }
+
+  private static void setQueryLimit( DataRow parameters, Statement statement ) {
     final Object queryLimit = parameters.get( DataFactory.QUERY_LIMIT );
     try {
-      if ( queryLimit instanceof Number ) {
-        final Number i = (Number) queryLimit;
+      if ( queryLimit instanceof Number queryLimitNumber ) {
+        final Number i = queryLimitNumber;
         final int max = i.intValue();
         if ( max > 0 ) {
           statement.setMaxRows( max );
@@ -309,6 +474,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
     // manufacturer instead.
       logger.warn( "Driver indicated error: Failed to set query-limit: " + queryLimit, sqle );
     }
+  }
+
+  private static void setQueryTimeout( DataRow parameters, Statement statement ) {
     final Object queryTimeout = parameters.get( DataFactory.QUERY_TIMEOUT );
     try {
       if ( queryTimeout instanceof Number ) {
@@ -321,27 +489,6 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
     } catch ( SQLException sqle ) {
       logger.warn( "Driver indicated error: Failed to set query-timeout: " + queryTimeout, sqle );
     }
-
-    // Track the currently running statement - just in case someone needs to cancel it
-    final ResultSet res;
-    try {
-      currentRunningStatement = statement;
-      res = performQuery( statement, translatedQuery, preparedParameterNames );
-    } finally {
-      currentRunningStatement = null;
-    }
-
-    // equalsIgnore, as this is what the ResultSetTableModelFactory uses.
-    boolean simpleMode = true;
-    if ( globalConfig != null ) {
-      simpleMode = "simple".equalsIgnoreCase( globalConfig.getConfigProperty( //$NON-NLS-1$
-              ResultSetTableModelFactory.RESULTSET_FACTORY_MODE ) );
-    }
-
-    if ( simpleMode ) {
-      return ResultSetTableModelFactory.getInstance().generateDefaultTableModel( res, columnNameMapping );
-    }
-    return ResultSetTableModelFactory.getInstance().createTableModel( res, columnNameMapping, true );
   }
 
   public ResultSet performQuery( Statement statement, final String translatedQuery, final String[] preparedParameterNames )
