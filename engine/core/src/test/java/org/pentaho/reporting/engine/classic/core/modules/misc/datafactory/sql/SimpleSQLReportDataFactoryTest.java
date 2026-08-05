@@ -20,6 +20,7 @@ import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
 import javax.swing.table.TableModel;
@@ -533,23 +534,41 @@ public class SimpleSQLReportDataFactoryTest {
   }
 
   // =====================================================================
-  // performQuery — fetchSize config handling
+  // createStatement — fetchSize config handling
   // =====================================================================
 
   @Test
-  public void testPerformQueryWithNullFetchSizeConfig() throws SQLException {
+  public void testCreateStatementDiskBackedWithNullDriverAndFetchSizeUsesDefault() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
     Statement statement = mock( Statement.class );
     ResultSet res = mock( ResultSet.class );
-    doReturn( res ).when( statement ).executeQuery( QUERY );
+    Connection con = mock( Connection.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+    ResultSetMetaData rsmd = mock( ResultSetMetaData.class );
 
-    // Set globalConfig to return null for POSTGRES_FETCH_SIZE
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+    doReturn( null ).when( dbMeta ).getDriverName();
+
     Configuration conf = mock( Configuration.class );
-    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE);
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    doReturn( "simple" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.RESULTSET_FACTORY_MODE );
+    doReturn( null ).when( conf ).getConfigProperty( ResultSetTableModelFactory.FETCH_SIZE );
+    SimpleSQLReportDataFactory.globalConfig = conf;
 
-    ResultSet result = factory.performQuery( statement, QUERY, new String[] {} );
+    doReturn( statement ).when( con ).createStatement( anyInt(), anyInt() );
+    doReturn( res ).when( statement ).executeQuery( QUERY );
+    doReturn( rsmd ).when( res ).getMetaData();
+    doReturn( 1 ).when( rsmd ).getColumnCount();
+    doReturn( "column" ).when( rsmd ).getColumnLabel( 1 );
+    doReturn( "column" ).when( rsmd ).getColumnName( 1 );
+    doReturn( false ).when( res ).next();
 
-    verify( statement ).executeQuery( QUERY );
-    assertThat( result, is( equalTo( res ) ) );
+    final TableModel result = factory.parametrizeAndQuery( parameters, QUERY, new String[] {} );
+
+    verify( statement ).setFetchSize( 5000 );
+    ( (CloseableTableModel) result ).close();
   }
 
   @Test
@@ -639,6 +658,32 @@ public class SimpleSQLReportDataFactoryTest {
     verify( con ).setAutoCommit( false );
     verify( con ).setAutoCommit( true );
     verify( statement ).close();
+  }
+
+  @Test
+  public void testParametrizeAndQueryRestoresAutoCommitWhenStatementCreationFails() throws SQLException {
+    DataRow parameters = mock( DataRow.class );
+    Connection con = mock( Connection.class );
+    DatabaseMetaData dbMeta = mock( DatabaseMetaData.class );
+
+    doReturn( con ).when( factory ).getConnection( parameters );
+    doReturn( true ).when( con ).getAutoCommit();
+    doReturn( dbMeta ).when( con ).getMetaData();
+
+    Configuration conf = mock( Configuration.class );
+    doReturn( "true" ).when( conf ).getConfigProperty( ResultSetTableModelFactory.DISK_BACKED_TABLE_MODEL );
+    SimpleSQLReportDataFactory.globalConfig = conf;
+
+    doThrow( new SQLException( "statement creation failed" ) ).when( con ).createStatement( anyInt(), anyInt() );
+
+    try {
+      factory.parametrizeAndQuery( parameters, QUERY, new String[] {} );
+    } catch ( final SQLException e ) {
+      assertThat( e.getMessage(), is( equalTo( "statement creation failed" ) ) );
+    }
+
+    verify( con ).setAutoCommit( false );
+    verify( con ).setAutoCommit( true );
   }
 
   // =====================================================================
