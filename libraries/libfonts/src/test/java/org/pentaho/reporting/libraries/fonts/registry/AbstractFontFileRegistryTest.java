@@ -19,6 +19,8 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -31,43 +33,75 @@ public class AbstractFontFileRegistryTest {
   private AbstractFontFileRegistry registry;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     registry = new DummyFontFileRegistry();
     registry = spy( registry );
   }
 
   @Test
-  public void registerWindowsFontPaths_WithSlashes() throws Exception {
-    assertRegistersWindowsFontPaths( "c:/qwerty;c:/Windows/System32;c:/asdfg", "c:\\Windows\\Fonts" );
+  public void registerWindowsFontPaths_WithSlashes() {
+    stubWindows( "c:/qwerty;c:/Windows/System32;c:/asdfg" );
+
+    registry.registerDefaultFontPath();
+
+    assertRegistered( "c:\\Windows\\Fonts" );
   }
 
   @Test
-  public void registerWindowsFontPaths_WithBackslashes() throws Exception {
-    assertRegistersWindowsFontPaths( "c:\\qwerty;c:\\Windows\\System32;c:\\asdfg", "c:\\Windows\\Fonts" );
+  public void registerWindowsFontPaths_WithBackslashes() {
+    stubWindows( "c:\\qwerty;c:\\Windows\\System32;c:\\asdfg" );
+
+    registry.registerDefaultFontPath();
+
+    assertRegistered( "c:\\Windows\\Fonts" );
   }
 
-  private void assertRegistersWindowsFontPaths( String directories, String expectedFontPath ) {
+  /**
+   * The Pentaho Server start scripts replace 'java.library.path' with their own native library folder, leaving no
+   * 'System32' entry to derive the font directory from.
+   */
+  @Test
+  public void registerWindowsFontPaths_WithoutSystem32OnLibraryPath() {
+    stubWindows( "c:\\pentaho-server\\pentaho-solutions\\native-lib\\win64" );
+    doReturn( "c:\\Windows" ).when( registry ).safeSystemGetEnv( "WINDIR" );
+
+    registry.registerDefaultFontPath();
+
+    assertRegistered( "c:\\Windows\\Fonts" );
+  }
+
+  @Test
+  public void registerWindowsFontPaths_IncludesPerUserFonts() {
+    stubWindows( "c:\\Windows\\System32" );
+    doReturn( "c:\\Users\\pentaho\\AppData\\Local" ).when( registry ).safeSystemGetEnv( "LOCALAPPDATA" );
+
+    registry.registerDefaultFontPath();
+
+    assertRegistered( "c:\\Users\\pentaho\\AppData\\Local\\Microsoft\\Windows\\Fonts" );
+  }
+
+  private void stubWindows( String libraryPath ) {
     doReturn( "windows" ).when( registry ).safeSystemGetProperty( eq( "os.name" ), anyString() );
     doReturn( "\\" ).when( registry ).safeSystemGetProperty( eq( "file.separator" ), anyString() );
     doReturn( ";" ).when( registry ).safeSystemGetProperty( eq( "path.separator" ), anyString() );
-    doReturn( directories ).when( registry ).safeSystemGetProperty( eq( "java.library.path" ), nullable( String.class ) );
+    doReturn( libraryPath ).when( registry ).safeSystemGetProperty( eq( "java.library.path" ), nullable( String.class ) );
+    doReturn( null ).when( registry ).safeSystemGetEnv( anyString() );
 
     doNothing().when( registry ).loadFromCache( anyString() );
     doNothing().when( registry ).storeToCache( anyString() );
-    doNothing().when( registry ).registerFontFile( any( File.class ), anyString() );
+    doNothing().when( registry ).registerFontPath( any( File.class ), anyString() );
+  }
 
+  private void assertRegistered( String expectedFontPath ) {
     ArgumentCaptor<File> captor = ArgumentCaptor.forClass( File.class );
+    verify( registry, atLeastOnce() ).registerFontPath( captor.capture(), anyString() );
 
-    registry.registerDefaultFontPath();
-    verify( registry, atLeastOnce() )
-      .registerFontPath( captor.capture(), ArgumentCaptor.forClass( String.class ).capture() );
-
-    String actual = captor.getAllValues().get( 0 ).getAbsolutePath();
-    // this test is likely to be run on Linux by CI
-    // since we cannot prevent inserting slash as a file separator by java.io.File,
-    // we are forced to replace it manually
-    actual = actual.replaceAll( "/", "\\\\" ).toUpperCase();
-    // Linux also adds current dir to the path it cannot recognize, so let's check the end of the resulting path
-    assertTrue( actual, actual.endsWith( expectedFontPath.toUpperCase() ) );
+    // java.io.File keeps the foreign separator when this test runs on Linux, so compare normalised paths.
+    List<String> registered = new ArrayList<String>();
+    for ( File path : captor.getAllValues() ) {
+      registered.add( path.getPath().replace( '/', '\\' ).toUpperCase() );
+    }
+    assertTrue( "expected " + expectedFontPath + " among " + registered,
+      registered.contains( expectedFontPath.toUpperCase() ) );
   }
 }

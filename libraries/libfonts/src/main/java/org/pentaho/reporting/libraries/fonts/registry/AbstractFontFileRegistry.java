@@ -35,6 +35,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -46,6 +48,8 @@ import java.util.StringTokenizer;
  */
 public abstract class AbstractFontFileRegistry implements FontRegistry {
   private static final Log logger = LogFactory.getLog( AbstractFontFileRegistry.class );
+  private static final String FILE_SEPARATOR_PROPERTY = "file.separator";
+  private static final String USER_HOME_PROPERTY = "user.home";
 
   private HashMap<String, FontFileRecord> seenFiles;
   private HashMap<String, DefaultFontFamily> fontFamilies;
@@ -99,13 +103,13 @@ public abstract class AbstractFontFileRegistry implements FontRegistry {
 
     final String osname = safeSystemGetProperty( "os.name", "<protected by system security>" );
     final String jrepath = safeSystemGetProperty( "java.home", "." );
-    final String fs = safeSystemGetProperty( "file.separator", File.separator );
+    final String fs = safeSystemGetProperty( FILE_SEPARATOR_PROPERTY, File.separator );
 
     logger.debug( "Running on operating system: " + osname );
     logger.debug( "Character encoding used as default: " + encoding );
 
     if ( StringUtils.startsWithIgnoreCase( osname, "mac os x" ) ) {
-      final String userhome = safeSystemGetProperty( "user.home", "." );
+      final String userhome = safeSystemGetProperty( USER_HOME_PROPERTY, "." );
       logger.debug( "Detected MacOS." );
       registerFontPath( new File( userhome + "/Library/Fonts" ), encoding );
       registerFontPath( new File( "/Library/Fonts" ), encoding );
@@ -284,49 +288,115 @@ public abstract class AbstractFontFileRegistry implements FontRegistry {
   }
 
   /**
-   * Registers the default windows font path. Once a font was found in the old seenFiles map and confirmed, that this
+   * Registers the default windows font paths. Once a font was found in the old seenFiles map and confirmed, that this
    * font still exists, it gets copied into the confirmedFiles map.
    *
    * @param encoding the default font encoding.
    */
   private void registerWindowsFontPath( final String encoding ) {
     logger.debug( "Found 'Windows' in the OS name, assuming DOS/Win32 structures" );
-    // Assume windows
-    // If you are not using windows, ignore this. This just checks if a windows system
-    // directory exist and includes a font dir.
 
-    String fontPath = null;
+    // Keyed by the lower-cased path, as the Windows file system is case-insensitive.
+    final LinkedHashMap<String, String> fontPaths = new LinkedHashMap<>();
+    // The Windows directory published by the operating system is authoritative. Unlike 'java.library.path' it
+    // cannot be replaced by the launcher, and application servers commonly override 'java.library.path' with
+    // their own native-library folder, which would otherwise leave the registry without a single system font.
+    addWindowsFontPath( fontPaths, safeSystemGetEnv( "WINDIR" ) );
+    addWindowsFontPath( fontPaths, safeSystemGetEnv( "SystemRoot" ) );
+    final String windowsDir = findWindowsDirectoryFromLibraryPath();
+    if ( windowsDir != null ) {
+      addWindowsFontPath( fontPaths, windowsDir );
+    }
+    addPerUserWindowsFontPath( fontPaths );
+
+    if ( fontPaths.isEmpty() ) {
+      logger.warn( "Unable to locate the Windows font directory. No system fonts will be available, and all "
+        + "output will fall back to the built-in default fonts. Set the 'WINDIR' environment variable or declare "
+        + "the font directories via the 'org.pentaho.reporting.libraries.fonts.extra-font-dirs.*' configuration "
+        + "keys." );
+      return;
+    }
+
+    for ( final String fontPath : fontPaths.values() ) {
+      logger.debug( "Fonts located in \"" + fontPath + '\"' );
+      registerFontPath( new File( fontPath ), encoding );
+    }
+  }
+
+  /**
+   * Derives the Windows directory from the 'java.library.path' system property by locating its 'System32' entry.
+   *
+   * @return the Windows directory, or null if the library path does not contain a 'System32' entry.
+   */
+  private String findWindowsDirectoryFromLibraryPath() {
     final String windirs = safeSystemGetProperty( "java.library.path", null );
-    final String fs = safeSystemGetProperty( "file.separator", File.separator );
+    if ( windirs == null ) {
+      return null;
+    }
 
-    if ( windirs != null ) {
-      final StringTokenizer strtok = new StringTokenizer
-        ( windirs, safeSystemGetProperty( "path.separator", File.pathSeparator ) );
-      while ( strtok.hasMoreTokens() ) {
-        final String token = strtok.nextToken();
+    final String fs = safeSystemGetProperty( FILE_SEPARATOR_PROPERTY, File.separator );
+    final StringTokenizer strtok = new StringTokenizer
+      ( windirs, safeSystemGetProperty( "path.separator", File.pathSeparator ) );
+    while ( strtok.hasMoreTokens() ) {
+      final String token = strtok.nextToken();
+      if ( !StringUtils.endsWithIgnoreCase( token, "System32" ) ) {
+        continue;
+      }
 
-        if ( StringUtils.endsWithIgnoreCase( token, "System32" ) ) {
-          // found windows folder ;-)
-          final int lastBackslash = token.lastIndexOf( fs );
-          if ( lastBackslash != -1 ) {
-            fontPath = token.substring( 0, lastBackslash ) + fs + "Fonts";
-            break;
-          }
-          // try with forward slashs. Some systems may use the unix-semantics instead.
-          // (Windows accepts both characters as path-separators for historical reasons)
-          final int lastSlash = token.lastIndexOf( '/' );
-          if ( lastSlash != -1 ) {
-            fontPath = token.substring( 0, lastSlash ) + fs + "Fonts";
-            break;
-          }
-        }
+      // found windows folder ;-)
+      final int lastBackslash = token.lastIndexOf( fs );
+      if ( lastBackslash != -1 ) {
+        return token.substring( 0, lastBackslash );
+      }
+      // try with forward slashes. Some systems may use the unix-semantics instead.
+      // (Windows accepts both characters as path-separators for historical reasons)
+      final int lastSlash = token.lastIndexOf( '/' );
+      if ( lastSlash != -1 ) {
+        return token.substring( 0, lastSlash );
       }
     }
-    logger.debug( "Fonts located in \"" + fontPath + '\"' );
-    if ( fontPath != null ) {
-      final File file = new File( fontPath );
-      registerFontPath( file, encoding );
+    return null;
+  }
+
+  /**
+   * Adds the 'Fonts' sub-directory of the given Windows directory to the set of font paths to scan.
+   *
+   * @param fontPaths  the collected font paths, keyed by their lower-cased form.
+   * @param windowsDir the Windows directory, possibly null.
+   */
+  private void addWindowsFontPath( final LinkedHashMap<String, String> fontPaths, final String windowsDir ) {
+    if ( StringUtils.isEmpty( windowsDir, true ) ) {
+      return;
     }
+
+    final String fs = safeSystemGetProperty( FILE_SEPARATOR_PROPERTY, File.separator );
+    final String trimmed = windowsDir.trim();
+    final String separator = ( trimmed.endsWith( fs ) || trimmed.endsWith( "/" ) ) ? "" : fs;
+    addFontPath( fontPaths, trimmed + separator + "Fonts" );
+  }
+
+  /**
+   * Adds the per-user font directory introduced with Windows 10. Fonts installed without administrator rights are
+   * stored there and never appear in the system font directory.
+   *
+   * @param fontPaths the collected font paths, keyed by their lower-cased form.
+   */
+  private void addPerUserWindowsFontPath( final LinkedHashMap<String, String> fontPaths ) {
+    String localAppData = safeSystemGetEnv( "LOCALAPPDATA" );
+    final String fs = safeSystemGetProperty( FILE_SEPARATOR_PROPERTY, File.separator );
+    if ( StringUtils.isEmpty( localAppData, true ) ) {
+      final String userHome = safeSystemGetProperty( USER_HOME_PROPERTY, null );
+      if ( StringUtils.isEmpty( userHome, true ) ) {
+        return;
+      }
+      localAppData = userHome.trim() + fs + "AppData" + fs + "Local";
+    }
+    addFontPath( fontPaths, localAppData.trim() + fs + "Microsoft" + fs + "Windows" + fs + "Fonts" );
+  }
+
+  private void addFontPath( final LinkedHashMap<String, String> fontPaths, final String fontPath ) {
+    final String key = fontPath.toLowerCase( Locale.ROOT );
+    fontPaths.computeIfAbsent( key, ignored -> fontPath );
   }
 
   /**
@@ -423,6 +493,14 @@ public abstract class AbstractFontFileRegistry implements FontRegistry {
     }
   }
 
+  protected String safeSystemGetEnv( final String name ) {
+    try {
+      return System.getenv( name );
+    } catch ( SecurityException se ) {
+      return null;
+    }
+  }
+
 
   protected boolean isCacheValid( final HashMap cachedSeenFiles ) {
     final Iterator iterator = cachedSeenFiles.entrySet().iterator();
@@ -450,7 +528,7 @@ public abstract class AbstractFontFileRegistry implements FontRegistry {
       return null;
     }
 
-    final String homeDirectory = safeSystemGetProperty( "user.home", null );
+    final String homeDirectory = safeSystemGetProperty( USER_HOME_PROPERTY, null );
     if ( homeDirectory == null ) {
       return null;
     }
