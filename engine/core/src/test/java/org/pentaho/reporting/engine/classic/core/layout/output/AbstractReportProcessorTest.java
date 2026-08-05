@@ -14,6 +14,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -98,6 +99,14 @@ public class AbstractReportProcessorTest {
     public void processorSetUp() throws Exception {
         processor = new DummyReportProcessor(new MasterReport());
     }
+
+  @After
+  public void processorTearDown() {
+    if ( processor != null ) {
+      processor.close();
+      processor = null;
+    }
+  }
 
   @Test
   public void testConsrtruction() throws Exception {

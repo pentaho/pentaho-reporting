@@ -1226,15 +1226,15 @@ public class FastCsvExportProcessorTest {
   }
 
   // =====================================================================
-  // Test with INDEX_COLUMN_PREFIX columns (covers computeRealColumnCount)
+  // Test with INDEX_COLUMN_PREFIX columns
   // =====================================================================
 
   @Test
   public void testProcessReportFiltersIndexColumns() throws ReportProcessingException {
-    // Use a custom TableModel that has INDEX_COLUMN_PREFIX columns
+    // Place the index column first to verify that real columns retain their original indices.
     DefaultTableModel tableModel = new DefaultTableModel(
-        new Object[][] { { "RealVal", "IndexVal" } },
-        new Object[] { "RealCol", ClassicEngineBoot.INDEX_COLUMN_PREFIX + "0" } );
+      new Object[][] { { "IndexVal", "RealVal", "LastVal" } },
+      new Object[] { ClassicEngineBoot.INDEX_COLUMN_PREFIX + "0", "RealCol", "LastCol" } );
     TableDataFactory dataFactory = new TableDataFactory();
     dataFactory.addTable( "default", tableModel );
     report.setDataFactory( dataFactory );
@@ -1244,16 +1244,17 @@ public class FastCsvExportProcessorTest {
       processor.processReport();
       String output = outputStream.toString( StandardCharsets.UTF_8 );
       assertFalse( "Output should not be empty", output.isEmpty() );
+      assertTrue( "Output should contain the real column header", output.contains( "RealCol" ) );
       assertTrue( "Output should contain RealVal", output.contains( "RealVal" ) );
-      // The index column should still appear since computeRealColumnCount only determines count
-      // but writeColumnHeaders iterates through all columns
+      assertTrue( "Output should contain the later real column", output.contains( "LastVal" ) );
+      assertFalse( "Output should not contain index column data", output.contains( "IndexVal" ) );
     } finally {
       processor.close();
     }
   }
 
   // =====================================================================
-  // Test with null column name (covers computeRealColumnCount null branch)
+  // Test with null column name
   // =====================================================================
 
   @Test
