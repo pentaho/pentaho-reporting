@@ -17,7 +17,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.io.OutputStream;
-
+import java.io.BufferedOutputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
@@ -45,7 +45,7 @@ import com.lowagie.text.pdf.PdfWriter;
 @SuppressWarnings( "HardCodedStringLiteral" )
 public class PdfDocumentWriter {
   private static final Log logger = LogFactory.getLog( PdfDocumentWriter.class );
-
+    private static final int WRITE_BUFFER_SIZE = 65536;
   /**
    * A useful constant for specifying the PDF creator.
    */
@@ -87,7 +87,9 @@ public class PdfDocumentWriter {
     this.imageCache = new LFUMap<ResourceKey, com.lowagie.text.Image>( 50 );
     this.resourceManager = resourceManager;
     this.metaData = metaData;
-    this.out = out;
+    // Wrap in BufferedOutputStream to avoid expensive synchronous network I/O
+    // on each flush when multiple PDF jobs run in parallel on the server.
+    this.out = new BufferedOutputStream( out, WRITE_BUFFER_SIZE );
     this.config = metaData.getConfiguration();
   }
 
