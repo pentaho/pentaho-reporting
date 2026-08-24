@@ -17,6 +17,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.EmptyReportException;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
@@ -108,11 +109,16 @@ public class Backlog7181IT {
     verify( mock, atLeastOnce() ).reportProcessingUpdate( any( ReportProgressEvent.class ) );
 
     try ( ByteArrayOutputStream stream = new ByteArrayOutputStream() ) {
-      FastCsvReportUtil.process( new MasterReport(), stream, mock );
+      try {
+        FastCsvReportUtil.process( new MasterReport(), stream, mock );
+        Assert.fail( "Expected an exception when processing a report with no data" );
+      } catch ( EmptyReportException e ) {
+        Assert.assertEquals( "Report did not generate any content.", e.getMessage() );
+      }
     }
 
     verify( mock, times( 2 ) ).reportProcessingStarted( any( ReportProgressEvent.class ) );
-    verify( mock, times( 2 ) ).reportProcessingFinished( any( ReportProgressEvent.class ) );
+    verify( mock, times( 1 ) ).reportProcessingFinished( any( ReportProgressEvent.class ) );
   }
 
 
