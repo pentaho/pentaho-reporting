@@ -21,8 +21,10 @@ import org.pentaho.reporting.engine.classic.core.cache.EhCacheDataCache;
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
+import javax.cache.spi.CachingProvider;
 import javax.swing.table.DefaultTableModel;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -35,27 +37,36 @@ public class CacheKillingIT {
     key.addAttribute( "Test", "test" );
     dataCache.put( key, new DefaultTableModel() );
 
-    final CacheManager cacheManager = Caching.getCachingProvider().getCacheManager();
-    // Note: EHCacheProvider will dynamically create these
-    // caches if they don't exist.
-    for ( String cacheName : cacheManager.getCacheNames() ) {
-      Cache<?, ?> cache = cacheManager.getCache( cacheName );
-      if ( cache != null ) {
-        cache.clear();
-        cacheManager.destroyCache( cacheName );
+    final CachingProvider cachingProvider = Caching.getCachingProvider();
+    final URL cacheConfig = getClass().getResource( "/ehcache.xml" );
+    assertNotNull( "EhCache configuration resource is missing", cacheConfig );
+    final CacheManager cacheManager = cachingProvider.getCacheManager(
+      cacheConfig.toURI(), cachingProvider.getDefaultClassLoader() );
+    try {
+      // Note: EHCacheProvider will dynamically create these
+      // caches if they don't exist.
+      for ( String cacheName : cacheManager.getCacheNames() ) {
+        Cache<?, ?> cache = cacheManager.getCache( cacheName );
+        if ( cache != null ) {
+          cache.clear();
+          cacheManager.destroyCache( cacheName );
+        }
       }
+
+      assertNull( cacheManager.getCache( "libloader-bundles" ) );
+      assertNull( cacheManager.getCache( "libloader-data" ) );
+      assertNull( cacheManager.getCache( "libloader-factory" ) );
+      assertNull( cacheManager.getCache( "report-dataset-cache" ) );
+
+      cacheManager.close();
+
+      assertNull( dataCache.get( key ) );
+      dataCache.put( key, new DefaultTableModel() );
+      assertNotNull( dataCache.get( key ) );
+    } finally {
+      cachingProvider.getCacheManager(
+        cacheConfig.toURI(), cachingProvider.getDefaultClassLoader() ).close();
     }
-
-    assertNull( cacheManager.getCache( "libloader-bundles" ) );
-    assertNull( cacheManager.getCache( "libloader-data" ) );
-    assertNull( cacheManager.getCache( "libloader-factory" ) );
-    assertNull( cacheManager.getCache( "report-dataset-cache" ) );
-
-    cacheManager.close();
-
-    assertNull( dataCache.get( key ) );
-    dataCache.put( key, new DefaultTableModel() );
-    assertNotNull( dataCache.get( key ) );
 
   }
 
@@ -66,25 +77,33 @@ public class CacheKillingIT {
     key.addAttribute( "Test", "test" );
     dataCache.put( key, new DefaultTableModel() );
 
-    final CacheManager cacheManager = Caching.getCachingProvider().getCacheManager();
-    // Note: EHCacheProvider will dynamically create these
-    // caches if they don't exist.
-    for ( String cacheName : cacheManager.getCacheNames() ) {
-      Cache<?, ?> cache = cacheManager.getCache( cacheName );
-      if ( cache != null ) {
-        cache.clear();
-        cacheManager.destroyCache( cacheName );
+    final CachingProvider cachingProvider = Caching.getCachingProvider();
+    final URL cacheConfig = getClass().getResource( "/ehcache.xml" );
+    assertNotNull( "EhCache configuration resource is missing", cacheConfig );
+    final CacheManager cacheManager = cachingProvider.getCacheManager(
+      cacheConfig.toURI(), cachingProvider.getDefaultClassLoader() );
+    try {
+      // Note: EHCacheProvider will dynamically create these
+      // caches if they don't exist.
+      for ( String cacheName : cacheManager.getCacheNames() ) {
+        Cache<?, ?> cache = cacheManager.getCache( cacheName );
+        if ( cache != null ) {
+          cache.clear();
+          cacheManager.destroyCache( cacheName );
+        }
       }
+
+      assertNull( cacheManager.getCache( "libloader-bundles" ) );
+      assertNull( cacheManager.getCache( "libloader-data" ) );
+      assertNull( cacheManager.getCache( "libloader-factory" ) );
+      assertNull( cacheManager.getCache( "report-dataset-cache" ) );
+
+      assertNull( dataCache.get( key ) );
+      dataCache.put( key, new DefaultTableModel() );
+      assertNotNull( dataCache.get( key ) );
+    } finally {
+      cacheManager.close();
     }
-
-    assertNull( cacheManager.getCache( "libloader-bundles" ) );
-    assertNull( cacheManager.getCache( "libloader-data" ) );
-    assertNull( cacheManager.getCache( "libloader-factory" ) );
-    assertNull( cacheManager.getCache( "report-dataset-cache" ) );
-
-    assertNull( dataCache.get( key ) );
-    dataCache.put( key, new DefaultTableModel() );
-    assertNotNull( dataCache.get( key ) );
 
   }
 }
