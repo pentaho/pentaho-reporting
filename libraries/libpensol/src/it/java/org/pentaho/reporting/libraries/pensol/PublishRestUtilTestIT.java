@@ -20,7 +20,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.pentaho.reporting.libraries.pensol.resources.TestRepositoryPublishResource;
 
@@ -45,7 +44,6 @@ public class PublishRestUtilTestIT extends JerseyTest {
     testPublish( TestRepositoryPublishResource.RETURN_200, 200 );
   }
 
-  @Ignore
   @Test
   public void publishUnauthorized() throws Exception {
     testPublish( TestRepositoryPublishResource.RETURN_401, 401 );
@@ -56,7 +54,6 @@ public class PublishRestUtilTestIT extends JerseyTest {
     testPublish( TestRepositoryPublishResource.RETURN_422, 422 );
   }
 
-  @Ignore
   @Test
   public void publishCrashingServer() throws Exception {
     testPublish( TestRepositoryPublishResource.RETURN_500, 500 );
