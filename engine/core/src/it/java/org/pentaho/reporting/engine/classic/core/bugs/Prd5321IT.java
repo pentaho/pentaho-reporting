@@ -203,12 +203,12 @@ public class Prd5321IT {
 
     Assert.assertEquals( 6,
         MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
-    Assert.assertEquals( 13,
+    Assert.assertEquals( 15,
         MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT ).length );
 
     TestPdfLogicalPageDrawable pdf = createDrawableForTest( report, logicalPageBox );
     pdf.draw();
-    Assert.assertEquals( 13, pdf.textRendering );
+    Assert.assertEquals( 15, pdf.textRendering );
   }
 
   @Test

@@ -79,6 +79,8 @@ public class Prd5180IT {
     CSVReportUtil.createCSV( report, boutSlow, "UTF-8" );
     String htmlFast = boutFast.toString( "UTF-8" );
     String htmlSlow = boutSlow.toString( "UTF-8" );
+    //This fails due to divergences between fast and slow csv exporters;
+    //The fix for this will be handled in PRD-6278.
     Assert.assertEquals( htmlSlow, htmlFast );
   }
 
