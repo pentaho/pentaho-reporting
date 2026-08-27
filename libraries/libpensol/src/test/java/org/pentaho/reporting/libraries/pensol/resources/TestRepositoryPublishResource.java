@@ -14,6 +14,7 @@
 
 package org.pentaho.reporting.libraries.pensol.resources;
 
+import org.mockito.ArgumentMatchers;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.pentaho.platform.api.engine.PentahoAccessControlException;
@@ -22,9 +23,10 @@ import org.pentaho.platform.web.http.api.resources.services.RepositoryPublishSer
 
 import jakarta.ws.rs.Path;
 import java.io.InputStream;
+import java.util.Optional;
+import java.util.Properties;
 
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -43,7 +45,7 @@ public class TestRepositoryPublishResource extends RepositoryPublishResourceReve
   public TestRepositoryPublishResource() throws Exception {
     repositoryPublishService = mock( RepositoryPublishService.class );
     doAnswer( this ).when( repositoryPublishService )
-      .publishFile( anyString(), any( InputStream.class ), anyBoolean() );
+      .publishFile( anyString(), any( InputStream.class ), ArgumentMatchers.<Optional<Properties>>any() );
   }
 
 
