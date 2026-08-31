@@ -62,10 +62,6 @@
       <artifactId>commons-configuration2</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.healthmarketscience.jackcess</groupId>
-      <artifactId>jackcess</artifactId>
-    </dependency>
-    <dependency>
       <groupId>javadbf</groupId>
       <artifactId>javadbf</artifactId>
     </dependency>
@@ -88,10 +84,6 @@
     <dependency>
       <groupId>ldapjdk</groupId>
       <artifactId>ldapjdk</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.mnode.mstor</groupId>
-      <artifactId>mstor</artifactId>
     </dependency>
     <dependency>
       <groupId>org.odftoolkit</groupId>
