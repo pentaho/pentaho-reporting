@@ -14,7 +14,6 @@
 package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
-import org.junit.Ignore;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -37,18 +36,18 @@ public class Prd3857IT extends TestCase {
     ClassicEngineBoot.getInstance().start();
   }
 
-//  @Ignore
-//  public void testGoldRun() throws Exception {
-//    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3239.prpt" );
-//    final ResourceManager mgr = new ResourceManager();
-//    mgr.registerDefaults();
-//    final Resource directly = mgr.createDirectly( file, MasterReport.class );
-//    final MasterReport report = (MasterReport) directly.getResource();
-//    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
-//
-//    DebugReportRunner.createXmlFlow( report );
-//    DebugReportRunner.showDialog( report );
-//  }
+  public void testGoldRun() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3239.prpt" );
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
+    report.getReportConfiguration().setConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY, "false" );
+
+    DebugReportRunner.createXmlFlow( report );
+    DebugReportRunner.showDialog( report );
+  }
 
   public void testGoldRun3857Visually() throws Exception {
     final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3857-001.prpt" );
