@@ -14,12 +14,11 @@ package org.pentaho.reporting.engine.classic.extensions.modules.connections;
 
 import org.apache.commons.dbcp2.ConnectionFactory;
 import org.apache.commons.dbcp2.DriverConnectionFactory;
+import org.apache.commons.dbcp2.PoolableConnection;
 import org.apache.commons.dbcp2.PoolableConnectionFactory;
 import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.pool2.impl.BaseObjectPoolConfig;
-import org.apache.commons.pool2.BaseObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.pentaho.database.DatabaseDialectException;
 import org.pentaho.database.IDatabaseDialect;
@@ -46,7 +45,8 @@ public class PooledDatasourceHelper {
   private PooledDatasourceHelper() {
   }
 
-  public static PoolingDataSource setupPooledDataSource( final IDatabaseConnection databaseConnection )
+  public static PoolingDataSource<PoolableConnection> setupPooledDataSource(
+      final IDatabaseConnection databaseConnection )
     throws DatasourceServiceException {
     try {
       final DataSourceCacheManager cacheManager =
@@ -116,21 +116,6 @@ public class PooledDatasourceHelper {
 //        whenExhaustedActionType = BaseObjectPoolConfig.DEFAULT_BLOCK_WHEN_EXHAUSTED;
 //      }
 
-
-      // As the name says, this is a generic pool; it returns basic Object-class objects.
-      final GenericObjectPool pool = new GenericObjectPool( null );
-      final PoolingDataSource poolingDataSource = new PoolingDataSource( pool );
-      //pool.setWhenExhaustedAction( whenExhaustedActionType );
-
-      // Tuning the connection pool
-      pool.setMaxTotal( maxActiveConnection );
-      pool.setMaxIdle( maxIdleConnection );
-      pool.setMaxWait( Duration.ofMillis( waitTime ) );
-      pool.setMinIdle( minIdleConnection );
-      pool.setTestWhileIdle( testWhileIdle );
-      pool.setTestOnReturn( testOnReturn );
-      pool.setTestOnBorrow( testOnBorrow );
-      pool.setTestWhileIdle( testWhileIdle );
       /*
        * ConnectionFactory creates connections on behalf of the pool. Here, we use the DriverManagerConnectionFactory
        * because that essentially uses DriverManager as the source of connections.
@@ -151,6 +136,19 @@ public class PooledDatasourceHelper {
       pcf.setValidationQuery( validQuery );
       pcf.setDefaultReadOnly( false );
       pcf.setDefaultAutoCommit( true );
+
+      final GenericObjectPool<PoolableConnection> pool = new GenericObjectPool<>( pcf );
+      pcf.setPool( pool );
+      final PoolingDataSource<PoolableConnection> poolingDataSource = new PoolingDataSource<>( pool );
+
+      // Tuning the connection pool
+      pool.setMaxTotal( maxActiveConnection );
+      pool.setMaxIdle( maxIdleConnection );
+      pool.setMaxWait( Duration.ofMillis( waitTime ) );
+      pool.setMinIdle( minIdleConnection );
+      pool.setTestWhileIdle( testWhileIdle );
+      pool.setTestOnReturn( testOnReturn );
+      pool.setTestOnBorrow( testOnBorrow );
 
       /*
        * initialize the pool to X connections
