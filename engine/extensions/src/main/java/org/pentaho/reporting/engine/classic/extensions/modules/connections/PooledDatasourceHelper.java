@@ -20,8 +20,6 @@ import org.apache.commons.dbcp2.PoolableConnectionFactory;
 import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.pool2.impl.BaseObjectPoolConfig;
-import org.apache.commons.pool2.BaseObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.pentaho.database.DatabaseDialectException;
 import org.pentaho.database.IDatabaseDialect;
