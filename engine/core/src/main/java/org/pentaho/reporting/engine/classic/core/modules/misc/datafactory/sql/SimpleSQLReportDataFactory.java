@@ -281,10 +281,10 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
     // The statement is NOT closed here on success — the downstream TableModel factory
     // (generateDefaultTableModel / createTableModel / generateDiskBackedTableModel)
     // takes ownership of closing the ResultSet and its Statement.
-    Statement statement = null;
+    final Statement statement = createStatement(
+        parameters, translatedQuery, preparedParameterNames, callableStatementUsed, conn, useDiskBacked );
+
     try {
-      statement = createStatement(
-          parameters, translatedQuery, preparedParameterNames, callableStatementUsed, conn, useDiskBacked );
       setQueryLimit( parameters, statement );
       setQueryTimeout( parameters, statement );
 
@@ -379,8 +379,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
    */
   private static void configureDiskBackedFetchSize( final Connection conn, final Statement statement )
       throws SQLException {
-    final String driverName = conn.getMetaData().getDriverName();
-    setFetchSize( driverName == null ? null : driverName.toLowerCase(), statement );
+    final String driverName = conn.getMetaData().getDriverName().toLowerCase();
+    setFetchSize( driverName, statement );
   }
 
   /**
@@ -437,13 +437,11 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
             String value = globalConfig.getConfigProperty(ResultSetTableModelFactory.FETCH_SIZE);
 
             if (value == null) {
-                statement.setFetchSize( fetchSize );
                 return;
             }
 
             value = value.trim();
             if (value.isEmpty()) {
-                statement.setFetchSize( fetchSize );
                 return;
             }
 
@@ -451,7 +449,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory implements I
                 fetchSize = Integer.parseInt(value);
             } catch (NumberFormatException e) {
                 logger.warn(
-                        "Invalid fetch size value '" + value +
+                        "Invalid POSTGRES_FETCH_SIZE value '" + value +
                                 "', using default fetch size " + fetchSize, e);
             }
         }

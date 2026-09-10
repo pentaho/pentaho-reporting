@@ -816,7 +816,7 @@ public class DiskBackedTableModelTest {
   }
 
   // =====================================================================
-  // getValueAt after close() throws NullPointerException
+  // getValueAt after close() — raf is null, should return empty/null
   // =====================================================================
 
   @Test
