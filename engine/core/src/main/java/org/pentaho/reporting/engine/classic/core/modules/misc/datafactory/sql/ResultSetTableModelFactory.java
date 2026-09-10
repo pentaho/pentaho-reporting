@@ -74,8 +74,8 @@ public final class ResultSetTableModelFactory {
   public static final String DISK_BACKED_TABLE_MODEL
           = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.useDiskBackedModel";
 
-  public static final String FETCH_SIZE
-            = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.fetchSize";
+  public static final String POSTGRES_FETCH_SIZE
+            = "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.postgresFetchSize";
 
   private static final String LEGACY_COLUMN_MAPPING = "legacy"; //$NON-NLS-1$
 
