@@ -75,7 +75,6 @@
     <swt-linux.version>4.3.2</swt-linux.version>
     <swingx.version>1.6.1</swingx.version>
     <pentaho-karaf.version>11.1.0.0-SNAPSHOT</pentaho-karaf.version>
-    <commons-configuration.version>1.9</commons-configuration.version>
     <commons-collections.version>3.2.2</commons-collections.version>
     <joda.version>2.10.2</joda.version>
     <xmlgraphics-commons.version>2.9</xmlgraphics-commons.version>
@@ -1065,17 +1064,6 @@
         <artifactId>pentaho-big-data-plugin</artifactId>
         <version>${big-data-plugin.version}</version>
         <type>zip</type>
-        <exclusions>
-          <exclusion>
-            <artifactId>*</artifactId>
-            <groupId>*</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>commons-configuration</groupId>
-        <artifactId>commons-configuration</artifactId>
-        <version>${commons-configuration.version}</version>
         <exclusions>
           <exclusion>
             <artifactId>*</artifactId>
