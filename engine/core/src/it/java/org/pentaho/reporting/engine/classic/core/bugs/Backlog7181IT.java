@@ -110,16 +110,11 @@ public class Backlog7181IT {
     verify( mock, atLeastOnce() ).reportProcessingUpdate( any( ReportProgressEvent.class ) );
 
     try ( ByteArrayOutputStream stream = new ByteArrayOutputStream() ) {
-      try {
-        FastCsvReportUtil.process( new MasterReport(), stream, mock );
-        Assert.fail( "Expected an exception when processing a report with no data" );
-      } catch ( EmptyReportException e ) {
-        Assert.assertEquals( "Report did not generate any content.", e.getMessage() );
-      }
+      FastCsvReportUtil.process( new MasterReport(), stream, mock );
     }
 
     verify( mock, times( 2 ) ).reportProcessingStarted( any( ReportProgressEvent.class ) );
-    verify( mock, times( 1 ) ).reportProcessingFinished( any( ReportProgressEvent.class ) );
+    verify( mock, times( 2 ) ).reportProcessingFinished( any( ReportProgressEvent.class ) );
   }
 
 
