@@ -575,6 +575,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     if ( !allowScriptEval ) {
       logger.error( "Scripts are prevented from running by default in order to avoid"
         + " potential remote code execution.  The system administrator must enable this capability." );
+      return originalChart;
     }
 
     final LegacyDataRowWrapper legacyDataRowWrapper = new LegacyDataRowWrapper();
