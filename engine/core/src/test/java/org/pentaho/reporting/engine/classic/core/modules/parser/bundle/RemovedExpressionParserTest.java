@@ -19,9 +19,12 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.elementfactory.LabelElementFactory;
 import org.pentaho.reporting.engine.classic.core.elementfactory.TextFieldElementFactory;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.engine.classic.core.function.FormulaFunction;
+import org.pentaho.reporting.engine.classic.core.function.ItemHideFunction;
 import org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.compat.CompatibilityMapperUtil;
@@ -84,7 +87,7 @@ public class RemovedExpressionParserTest {
 
   @Test
   public void testReportWithRemovedExpressionsFailsToLoadByDefault() throws Exception {
-    final byte[] bundle = replaceClassName( writeReport(), BSHExpression.class.getName(), RHINO_EXPRESSION );
+    final byte[] bundle = useRemovedExpressions( writeReport() );
     try {
       load( bundle );
       fail( "Removed expressions must be rejected unless the parser has been told to ignore them" );
@@ -96,25 +99,60 @@ public class RemovedExpressionParserTest {
   @Test
   public void testReportWithRemovedExpressionsLoadsWhenIgnoreIsEnabled() throws Exception {
     setIgnoreRemovedExpressions( "true" );
-    final byte[] bundle = replaceClassName( writeReport(), BSHExpression.class.getName(), RHINO_EXPRESSION );
-    // function, attribute expression and style expression
-    assertEquals( 3, countOccurrences( bundle, RHINO_EXPRESSION ) );
+    final byte[] bundle = useRemovedExpressions( writeReport() );
+    // function, attribute expression, style expression, layout processor and sub-report function
+    assertEquals( 5, countOccurrences( bundle, RHINO_EXPRESSION ) );
     final MasterReport loaded = load( bundle );
 
-    assertEquals( 2, loaded.getExpressions().size() );
+    assertEquals( 3, loaded.getExpressions().size() );
     assertNotNull( loaded.getExpressions().get( "Kept1" ) );
     assertNotNull( loaded.getExpressions().get( "Kept2" ) );
+    assertNotNull( loaded.getExpressions().get( "KeptFunction" ) );
     assertNull( loaded.getExpressions().get( "Removed" ) );
+    assertNull( loaded.getExpressions().get( "LayoutProcessor" ) );
 
     final Element label = loaded.getReportHeader().getElement( 0 );
     assertNull( label.getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE ) );
     assertNull( label.getStyleExpression( ElementStyleKeys.BACKGROUND_COLOR ) );
+
+    final SubReport subReport = loaded.getReportHeader().getSubReport( 0 );
+    assertEquals( 1, subReport.getExpressions().size() );
+    assertNotNull( subReport.getExpressions().get( "SubKept" ) );
+    assertNull( subReport.getExpressions().get( "SubRemoved" ) );
+  }
+
+  @Test
+  public void testSupportedExpressionsAreStillParsed() throws Exception {
+    final MasterReport loaded = load( writeReport() );
+
+    final FormulaExpression kept = (FormulaExpression) loaded.getExpressions().get( "Kept1" );
+    assertEquals( "=1", kept.getFormula() );
+    assertEquals( Boolean.FALSE, kept.getFailOnError() );
+    assertEquals( "Kept1-type", kept.getElementType() );
+
+    final FormulaFunction function = (FormulaFunction) loaded.getExpressions().get( "KeptFunction" );
+    assertEquals( "=0", function.getInitial() );
+    assertEquals( "=[KeptFunction] + 1", function.getFormula() );
+    assertEquals( 2, function.getDependencyLevel() );
+
+    assertNotNull( loaded.getExpressions().get( "LayoutProcessor" ) );
+  }
+
+  @Test
+  public void testFormulaExpressionDeclaredByClassIsStillParsed() throws Exception {
+    final String formulaClass = FormulaExpression.class.getName();
+    final byte[] bundle =
+        replaceClassName( writeReport(), "name=\"Kept1\"", "name=\"Kept1\" class=\"" + formulaClass + "\"" );
+    final MasterReport loaded = load( bundle );
+
+    final FormulaExpression kept = (FormulaExpression) loaded.getExpressions().get( "Kept1" );
+    assertEquals( "Kept1-type", kept.getElementType() );
   }
 
   @Test
   public void testReportStillRendersWhenFieldReferencesRemovedFunction() throws Exception {
     setIgnoreRemovedExpressions( "true" );
-    final MasterReport loaded = load( replaceClassName( writeReport(), BSHExpression.class.getName(), RHINO_EXPRESSION ) );
+    final MasterReport loaded = load( useRemovedExpressions( writeReport() ) );
 
     final ByteArrayOutputStream html = new ByteArrayOutputStream();
     HtmlReportUtil.createStreamHTML( loaded, html );
@@ -139,6 +177,8 @@ public class RemovedExpressionParserTest {
     final FormulaExpression kept1 = new FormulaExpression();
     kept1.setName( "Kept1" );
     kept1.setFormula( "=1" );
+    kept1.setFailOnError( Boolean.FALSE );
+    kept1.setElementType( "Kept1-type" );
     report.addExpression( kept1 );
 
     final BSHExpression removed = new BSHExpression();
@@ -149,6 +189,18 @@ public class RemovedExpressionParserTest {
     kept2.setName( "Kept2" );
     kept2.setFormula( "=2" );
     report.addExpression( kept2 );
+
+    final FormulaFunction keptFunction = new FormulaFunction();
+    keptFunction.setName( "KeptFunction" );
+    keptFunction.setInitial( "=0" );
+    keptFunction.setFormula( "=[KeptFunction] + 1" );
+    keptFunction.setDependencyLevel( 2 );
+    report.addExpression( keptFunction );
+
+    // written as a layout-processor expression
+    final ItemHideFunction layoutProcessor = new ItemHideFunction();
+    layoutProcessor.setName( "LayoutProcessor" );
+    report.addExpression( layoutProcessor );
 
     final LabelElementFactory factory = new LabelElementFactory();
     factory.setText( "label" );
@@ -163,9 +215,24 @@ public class RemovedExpressionParserTest {
     fieldFactory.setFieldname( "Removed" );
     report.getReportHeader().addElement( fieldFactory.createElement() );
 
+    final SubReport subReport = new SubReport();
+    final BSHExpression subRemoved = new BSHExpression();
+    subRemoved.setName( "SubRemoved" );
+    subReport.addExpression( subRemoved );
+    final FormulaExpression subKept = new FormulaExpression();
+    subKept.setName( "SubKept" );
+    subKept.setFormula( "=3" );
+    subReport.addExpression( subKept );
+    report.getReportHeader().addSubReport( subReport );
+
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     BundleWriter.writeReportToZipStream( report, out );
     return out.toByteArray();
+  }
+
+  private static byte[] useRemovedExpressions( final byte[] bundle ) throws IOException {
+    final byte[] withoutBsh = replaceClassName( bundle, BSHExpression.class.getName(), RHINO_EXPRESSION );
+    return replaceClassName( withoutBsh, ItemHideFunction.class.getName(), RHINO_EXPRESSION );
   }
 
   private static MasterReport load( final byte[] bundle ) throws ResourceException {
