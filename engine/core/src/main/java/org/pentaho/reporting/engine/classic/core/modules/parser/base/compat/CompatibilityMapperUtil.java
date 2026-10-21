@@ -14,7 +14,16 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.compat;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+
 public final class CompatibilityMapperUtil {
+  /**
+   * When set to "true", expressions that have been removed from the engine are skipped while parsing instead of
+   * failing the whole report. Meant for design tools that need to open and migrate old reports.
+   */
+  public static final String IGNORE_REMOVED_EXPRESSIONS_KEY =
+      "org.pentaho.reporting.engine.classic.core.modules.parser.base.IgnoreRemovedExpressions";
+
   private static CompatiblityMapping mapping = new DefaultCompatibilityMapping();
 
   private CompatibilityMapperUtil() {
@@ -22,6 +31,18 @@ public final class CompatibilityMapperUtil {
 
   public static String mapClassName( final String className ) {
     return mapping.mapClassName( className );
+  }
+
+  /**
+   * Checks whether the expression has been removed from the engine and the parser has been configured to skip such
+   * expressions. If this returns false for a removed expression, the parser fails as for any unknown class.
+   */
+  public static boolean isIgnoredExpression( final String mappedClassName ) {
+    if ( !mapping.isRemovedExpression( mappedClassName ) ) {
+      return false;
+    }
+    return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig()
+        .getConfigProperty( IGNORE_REMOVED_EXPRESSIONS_KEY, "false" ) );
   }
 
   public static String mapConfigurationKey( final String key ) {

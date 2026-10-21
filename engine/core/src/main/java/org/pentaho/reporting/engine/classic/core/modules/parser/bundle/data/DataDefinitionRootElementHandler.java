@@ -111,7 +111,7 @@ public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler {
         expressionsList.add( (Expression) readHandler.getObject() );
       }
     }
-    final Expression[] expressions = expressionsList.toArray( new Expression[expressionHandlers.size()] );
+    final Expression[] expressions = expressionsList.toArray( new Expression[expressionsList.size()] );
 
     dataDefinition =
         new DataDefinition( reportParameterDefinition, primaryDataFactory, primaryQuery, primaryQueryLimit,

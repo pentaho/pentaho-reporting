@@ -14,6 +14,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaFunction;
@@ -28,6 +30,8 @@ import org.xml.sax.SAXException;
 import java.beans.IntrospectionException;
 
 public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
+  private static final Log logger = LogFactory.getLog( ExpressionReadHandler.class );
+
   /**
    * The dependency level attribute.
    */
@@ -88,6 +92,11 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
 
     if ( expression == null && className != null ) {
       final String mappedName = CompatibilityMapperUtil.mapClassName( className );
+      if ( CompatibilityMapperUtil.isIgnoredExpression( mappedName ) ) {
+        logger.warn( "Expression '" + expressionName + "' of class '" + className
+            + "' is no longer supported and has been ignored. " + getLocator() );
+        return;
+      }
       expression = (Expression) ObjectUtilities.loadAndInstantiate( mappedName, getClass(), Expression.class );
       if ( expression == null ) {
         throw new ParseException( "Expression '" + className + "' is not valid.", getLocator() );

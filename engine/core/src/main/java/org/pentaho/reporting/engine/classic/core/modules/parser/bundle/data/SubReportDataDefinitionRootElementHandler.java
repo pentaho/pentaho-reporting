@@ -110,10 +110,12 @@ public class SubReportDataDefinitionRootElementHandler extends AbstractXmlReadHa
     final ArrayList<Expression> expressionsList = new ArrayList<Expression>();
     for ( int i = 0; i < expressionHandlers.size(); i++ ) {
       final ExpressionReadHandler readHandler = (ExpressionReadHandler) expressionHandlers.get( i );
-      expressionsList.add( (Expression) readHandler.getObject() );
+      if ( readHandler.getObject() != null ) {
+        expressionsList.add( (Expression) readHandler.getObject() );
+      }
     }
 
-    final Expression[] expressions = expressionsList.toArray( new Expression[expressionHandlers.size()] );
+    final Expression[] expressions = expressionsList.toArray( new Expression[expressionsList.size()] );
     dataDefinition =
         new SubReportDataDefinition( importMappings, exportMappings, dataFactory, primaryQuery, primaryQueryLimit,
             primaryQueryTimeout, expressions );
