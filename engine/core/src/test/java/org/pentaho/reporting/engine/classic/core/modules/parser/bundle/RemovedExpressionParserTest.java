@@ -51,7 +51,7 @@ public class RemovedExpressionParserTest {
       "org.pentaho.reporting.engine.classic.extensions.modules.rhino.RhinoExpression";
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
