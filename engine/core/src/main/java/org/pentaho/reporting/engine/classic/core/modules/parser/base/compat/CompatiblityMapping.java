@@ -17,6 +17,12 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.base.compat;
 public interface CompatiblityMapping {
   public String mapClassName( String className );
 
+  /**
+   * Checks whether the given (already mapped) expression class has been removed from the engine and should be ignored
+   * by the parsers instead of failing the report.
+   */
+  public boolean isRemovedExpression( String mappedClassName );
+
   public String mapConfigurationKey( String key );
 
   public String mapConfigurationValue( String key, String mappedKey, String value );

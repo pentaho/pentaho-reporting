@@ -83,6 +83,11 @@ public class StyleExpressionHandler extends AbstractPropertyXmlReadHandler {
     if ( expression == null && className != null ) {
 
       final String mappedClassName = CompatibilityMapperUtil.mapClassName( className );
+      if ( CompatibilityMapperUtil.isIgnoredExpression( mappedClassName ) ) {
+        logger.warn( "Style expression '" + expressionName + "' of class '" + className
+            + "' is no longer supported and has been ignored. " + getLocator() );
+        return;
+      }
       expression = (Expression) ObjectUtilities.loadAndInstantiate( mappedClassName, getClass(), Expression.class );
       if ( expression == null ) {
         throw new ParseException( "Expression '" + className + "' is not valid. The specified class was not found.",

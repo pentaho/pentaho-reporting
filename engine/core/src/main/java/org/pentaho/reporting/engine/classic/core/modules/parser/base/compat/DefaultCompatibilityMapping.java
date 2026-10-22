@@ -17,7 +17,9 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.base.compat;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
 
 public class DefaultCompatibilityMapping implements CompatiblityMapping {
   private static final String OLD_DEMO = "org.jfree.report.demo.";
@@ -29,6 +31,10 @@ public class DefaultCompatibilityMapping implements CompatiblityMapping {
   private static final String OLD_CORE = "org.jfree.report.";
   private static final String NEW_CORE = "org.pentaho.reporting.engine.classic.core.";
   private static final String JREFINERY_CORE = "com.jrefinery.report.";
+
+  // Expressions removed for security reasons (CVE-2025-11158).
+  private static final Set<String> REMOVED_EXPRESSIONS = Collections.singleton(
+      "org.pentaho.reporting.engine.classic.extensions.modules.rhino.RhinoExpression" );
 
   private HashMap classMappings;
   private static final String JREFINERY_PDFOUTPUT_CONFIG =
@@ -70,6 +76,10 @@ public class DefaultCompatibilityMapping implements CompatiblityMapping {
       return NEW_CORE + className.substring( JREFINERY_CORE.length() );
     }
     return className;
+  }
+
+  public boolean isRemovedExpression( final String mappedClassName ) {
+    return mappedClassName != null && REMOVED_EXPRESSIONS.contains( mappedClassName );
   }
 
   public String mapConfigurationKey( final String key ) {

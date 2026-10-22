@@ -14,6 +14,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaFunction;
@@ -28,6 +30,8 @@ import org.xml.sax.SAXException;
 import java.beans.IntrospectionException;
 
 public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
+  private static final Log logger = LogFactory.getLog( ExpressionReadHandler.class );
+
   /**
    * The dependency level attribute.
    */
@@ -53,54 +57,61 @@ public class ExpressionReadHandler extends AbstractPropertyXmlReadHandler {
     final String expressionName = attrs.getValue( getUri(), "name" );
     final String elementType = attrs.getValue( getUri(), "elementType" );
     final String className = attrs.getValue( getUri(), "class" );
-    final String formula = attrs.getValue( getUri(), "formula" );
-    final String failOnError = attrs.getValue( getUri(), "failOnError" );
     if ( className == null ) {
-      final String initial = attrs.getValue( getUri(), "initial" );
-      if ( initial != null ) {
-        final FormulaFunction function = new FormulaFunction();
-        function.setInitial( initial );
-        function.setFormula( formula );
-        this.expression = function;
-        this.expression.setName( expressionName );
-        this.expression.setDependencyLevel( depLevel );
-        if ( this.expression instanceof FormulaExpression ) {
-          ( ( FormulaExpression ) this.expression ).setElementType( elementType );
-        }
-        this.originalClassName = FormulaFunction.class.getName();
-        this.expressionClassName = FormulaFunction.class.getName();
-      } else {
-        final FormulaExpression expression = new FormulaExpression();
-        expression.setFormula( formula );
-        if ( failOnError != null ) {
-          expression.setFailOnError( Boolean.parseBoolean( failOnError ) );
-        }
-        this.expression = expression;
-        this.expression.setName( expressionName );
-        this.expression.setDependencyLevel( depLevel );
-        if ( this.expression instanceof FormulaExpression ) {
-          ( ( FormulaExpression ) this.expression ).setElementType( elementType );
-        }
-        this.originalClassName = FormulaExpression.class.getName();
-        this.expressionClassName = FormulaExpression.class.getName();
-      }
+      parseFormulaExpression( attrs, expressionName, elementType, depLevel );
+    } else {
+      parseClassExpression( className, expressionName, elementType, depLevel );
     }
+  }
 
-    if ( expression == null && className != null ) {
-      final String mappedName = CompatibilityMapperUtil.mapClassName( className );
-      expression = (Expression) ObjectUtilities.loadAndInstantiate( mappedName, getClass(), Expression.class );
-      if ( expression == null ) {
-        throw new ParseException( "Expression '" + className + "' is not valid.", getLocator() );
+  private void parseFormulaExpression( final PropertyAttributes attrs, final String expressionName,
+                                       final String elementType, final int depLevel ) {
+    final String formula = attrs.getValue( getUri(), "formula" );
+    final String initial = attrs.getValue( getUri(), "initial" );
+    if ( initial != null ) {
+      final FormulaFunction function = new FormulaFunction();
+      function.setInitial( initial );
+      function.setFormula( formula );
+      function.setName( expressionName );
+      function.setDependencyLevel( depLevel );
+      this.expression = function;
+      this.originalClassName = FormulaFunction.class.getName();
+      this.expressionClassName = FormulaFunction.class.getName();
+    } else {
+      final String failOnError = attrs.getValue( getUri(), "failOnError" );
+      final FormulaExpression formulaExpression = new FormulaExpression();
+      formulaExpression.setFormula( formula );
+      if ( failOnError != null ) {
+        formulaExpression.setFailOnError( Boolean.parseBoolean( failOnError ) );
       }
-      expression.setName( expressionName );
-      expression.setDependencyLevel( depLevel );
-      if ( this.expression instanceof FormulaExpression ) {
-        ( ( FormulaExpression ) this.expression ).setElementType( elementType );
-      }
-      this.originalClassName = className;
-      this.expressionClassName = mappedName;
+      formulaExpression.setName( expressionName );
+      formulaExpression.setDependencyLevel( depLevel );
+      formulaExpression.setElementType( elementType );
+      this.expression = formulaExpression;
+      this.originalClassName = FormulaExpression.class.getName();
+      this.expressionClassName = FormulaExpression.class.getName();
     }
+  }
 
+  private void parseClassExpression( final String className, final String expressionName, final String elementType,
+                                     final int depLevel ) throws ParseException {
+    final String mappedName = CompatibilityMapperUtil.mapClassName( className );
+    if ( CompatibilityMapperUtil.isIgnoredExpression( mappedName ) ) {
+      logger.warn( "Expression '" + expressionName + "' of class '" + className
+          + "' is no longer supported and has been ignored. " + getLocator() );
+      return;
+    }
+    expression = (Expression) ObjectUtilities.loadAndInstantiate( mappedName, getClass(), Expression.class );
+    if ( expression == null ) {
+      throw new ParseException( "Expression '" + className + "' is not valid.", getLocator() );
+    }
+    expression.setName( expressionName );
+    expression.setDependencyLevel( depLevel );
+    if ( expression instanceof FormulaExpression ) {
+      ( (FormulaExpression) expression ).setElementType( elementType );
+    }
+    this.originalClassName = className;
+    this.expressionClassName = mappedName;
   }
 
   /**

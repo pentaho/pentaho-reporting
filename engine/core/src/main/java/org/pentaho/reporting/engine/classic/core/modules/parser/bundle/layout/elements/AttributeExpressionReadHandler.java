@@ -76,6 +76,11 @@ public class AttributeExpressionReadHandler extends AbstractXmlReadHandler {
 
     if ( expression == null && expressionClassName != null ) {
 
+      if ( CompatibilityMapperUtil.isIgnoredExpression( expressionClassName ) ) {
+        logger.warn( "Attribute expression '" + name + "' of class '" + originalExpressionClass
+            + "' is no longer supported and has been ignored. " + getLocator() );
+        return;
+      }
       expression = ObjectUtilities.loadAndInstantiate( expressionClassName, getClass(), Expression.class );
       if ( expression == null ) {
         throw new ParseException( "Expression '" + expressionClassName + "' is not valid.", getLocator() );
