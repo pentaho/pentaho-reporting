@@ -69,9 +69,11 @@ public class LayoutProcessorReadHandler extends AbstractXmlReadHandler {
     final ArrayList<Expression> expressionsList = new ArrayList<Expression>();
     for ( int i = 0; i < expressionHandlers.size(); i++ ) {
       final ExpressionReadHandler readHandler = (ExpressionReadHandler) expressionHandlers.get( i );
-      expressionsList.add( (Expression) readHandler.getObject() );
+      if ( readHandler.getObject() != null ) {
+        expressionsList.add( (Expression) readHandler.getObject() );
+      }
     }
-    this.expressions = expressionsList.toArray( new Expression[expressionHandlers.size()] );
+    this.expressions = expressionsList.toArray( new Expression[expressionsList.size()] );
   }
 
   public Expression[] getExpressions() {
