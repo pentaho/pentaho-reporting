@@ -77,22 +77,7 @@ public class SampleDataModuleInitializer implements ModuleInitializer {
       final InputStreamReader inReader = new InputStreamReader( in );
       final BufferedReader bin = new BufferedReader( inReader );
       try {
-        final Statement statement = connection.createStatement();
-        try {
-          String line;
-          while ( ( line = bin.readLine() ) != null ) {
-            if ( line.startsWith( "CREATE SCHEMA " ) ||
-              line.startsWith( "CREATE USER SA " ) ||
-              line.startsWith( "GRANT DBA TO SA" ) ) {
-              // ignore the error, HSQL sucks
-            } else {
-              statement.addBatch( StringEscapeUtils.unescapeJava( line ) );
-            }
-          }
-          statement.executeBatch();
-        } finally {
-          statement.close();
-        }
+        executeScript( connection, bin );
       } finally {
         bin.close();
       }
@@ -100,6 +85,30 @@ public class SampleDataModuleInitializer implements ModuleInitializer {
       connection.commit();
     } finally {
       connection.close();
+    }
+  }
+
+  /**
+   * Runs a sample data script with one statement per line, as a single batch: the first failing statement aborts the
+   * load. Package-private so that tests can check the shipped scripts with exactly this logic.
+   */
+  static void executeScript( final Connection connection, final BufferedReader reader )
+    throws SQLException, IOException {
+    final Statement statement = connection.createStatement();
+    try {
+      String line;
+      while ( ( line = reader.readLine() ) != null ) {
+        if ( line.startsWith( "CREATE SCHEMA " ) ||
+          line.startsWith( "CREATE USER SA " ) ||
+          line.startsWith( "GRANT DBA TO SA" ) ) {
+          // ignore the error, HSQL sucks
+        } else {
+          statement.addBatch( StringEscapeUtils.unescapeJava( line ) );
+        }
+      }
+      statement.executeBatch();
+    } finally {
+      statement.close();
     }
   }
 }
