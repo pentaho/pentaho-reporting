@@ -38,6 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -53,7 +54,7 @@ public class SampleDataScriptTest {
   @Rule
   public TemporaryFolder tempFolder = new TemporaryFolder();
 
-  @Parameter( 0 )
+  @Parameter()
   public String name;
 
   @Parameter( 1 )
@@ -87,9 +88,11 @@ public class SampleDataScriptTest {
       }
       connection.commit();
 
-      // The JNDI connections log in as pentaho_user (and pentaho_admin), so the users must exist
-      try ( Connection user = DriverManager.getConnection( url, "pentaho_user", "password" ) ) {
-        assertRowCountsMatchInserts( user );
+      // The JNDI connections log in as pentaho_user (SampleData) and pentaho_admin (SampleDataAdmin)
+      for ( String jndiUser : new String[] { "pentaho_user", "pentaho_admin" } ) {
+        try ( Connection user = DriverManager.getConnection( url, jndiUser, "password" ) ) {
+          assertRowCountsMatchInserts( user );
+        }
       }
       try ( Statement statement = connection.createStatement() ) {
         statement.execute( "SHUTDOWN" );
@@ -125,7 +128,7 @@ public class SampleDataScriptTest {
         expected.merge( matcher.group( 1 ).toUpperCase(), 1, Integer::sum );
       }
     }
-    assertTrue( "No INSERT statements in " + script, !expected.isEmpty() );
+    assertFalse( "No INSERT statements in " + script, expected.isEmpty() );
     try ( Statement statement = connection.createStatement() ) {
       for ( Map.Entry<String, Integer> table : expected.entrySet() ) {
         try ( ResultSet rs = statement.executeQuery( "SELECT COUNT(*) FROM " + table.getKey() ) ) {
